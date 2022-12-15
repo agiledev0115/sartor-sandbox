@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Sartor</title>
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="/images/Gradient-1-app-concept-black.png" />
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+        <!-- Typography CSS -->
+        <link rel="stylesheet" href="/css/typography.css" />
+        <!-- Style CSS -->
+        <link rel="stylesheet" href="/css/style.css" />
+        <!-- Responsive CSS -->
+        <link rel="stylesheet" href="/css/responsive.css" />
+        <!-- cookie css-->
+        <link rel="stylesheet" href="/css/cookie.css">
+        <link rel="stylesheet" href="/css/bootstrap-tokenfield.min.css" />
+        <link rel="stylesheet" href="/css/tokenfield-typeahead.min.css" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script src='https://cdn.tiny.cloud/1/2l9dc5iogllnh95fxoa1d2ckskpr1awrdk62cnpezexukdnp/tinymce/5/tinymce.min.js' referrerpolicy="origin">
+        </script>
+        <script>
+          tinymce.init({
+            selector: '#mytextarea'
+          });
+        </script>
+    </head>
+    <body class="two-sidebar">
+        <!-- loader Start -->
+        <div id="loading">
+           <div id="loading-center">
+           </div>
+        </div>
+        <!-- Body -->
+        <%- body %>
+        <!-- Cookie notification popup -->
+        <div id="cookieNotice" class="light display-right" style="display: none;">
+          <div id="closeIcon" style="display: none;">
+          </div>
+          <div class="title-wrap">
+            <h4 style="color: #FFF">Cookie Consent</h4>
+          </div>
+          <div class="content-wrap">
+            <div class="msg-wrap">
+              <p>We use cookies to personalize your experience. By continuing to visit this site you agree to our use of cookies. Check our <a style="color: rgba(36, 11, 104, 0.952);" href="javascript:;" target="_blank">Terms of Use</a></p>
+              <div class="btn-wrap">
+                <button class="btn btn-primary" onclick="acceptCookieConsent();">Accept</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <!-- Appear JavaScript -->
+        <script src="/js/jquery.appear.js"></script>
+        <!-- Countdown JavaScript -->
+        <script src="/js/countdown.min.js"></script>
+        <!-- Counterup JavaScript -->
+        <script src="/js/waypoints.min.js"></script>
+        <script src="/js/jquery.counterup.min.js"></script>
+        <!-- Wow JavaScript -->
+        <script src="/js/wow.min.js"></script>
+        <!-- Apexcharts JavaScript -->
+        <script src="/js/apexcharts.js"></script>
+        <!-- Slick JavaScript -->
+        <script src="/js/slick.min.js"></script>
+        <!-- Select2 JavaScript -->
+        <script src="/js/select2.min.js"></script>
+        <!-- Owl Carousel JavaScript -->
+        <script src="/js/owl.carousel.min.js"></script>
+        <!-- Magnific Popup JavaScript -->
+        <script src="/js/jquery.magnific-popup.min.js"></script>
+        <!-- Smooth Scrollbar JavaScript -->
+        <script src="/js/smooth-scrollbar.js"></script>
+        <!-- lottie JavaScript -->
+        <script src="/js/lottie.js"></script>
+        <!-- am core JavaScript -->
+        <script src="/js/core.js"></script>
+        <!-- am charts JavaScript -->
+        <script src="/js/charts.js"></script>
+        <!-- am animated JavaScript -->
+        <script src="/js/animated.js"></script>
+        <!-- am kelly JavaScript -->
+        <script src="/js/kelly.js"></script>
+        <!-- am maps JavaScript -->
+        <script src="/js/maps.js"></script>
+        <!-- am worldLow JavaScript -->
+        <script src="/js/worldLow.js"></script>
+        <!-- Chart Custom JavaScript -->
+        <script src="/js/chart-custom.js"></script>
+        <!-- Custom JavaScript -->
+        <script src="/js/custom.js"></script>
+        <% if(url == '/dashboard') { %>
+          <script>
+            if (jQuery("#dailySales").length) {
+              var options = {
+                  series: [{
+                  name: 'daily Sales',
+                  data:[
+                    <% 
+                      switch(user.role){ 
+                        case 'super_admin': 
+                        case 'admin':
+                          if(order.length!=0){ var i=1; order.forEach(function(data){ %> <%- JSON.stringify(data.amount) %>, <% i++; }); } 
+                          break;
+                        case 'salers':
+                          if(soldit.length!=0){ 
+                            var price = 0;
+                            var i=1; soldit.forEach(function(data){
+                              if(user.id == data.products.created_by._id)
+                              {
+                                price = data.products.price;
+                              }
+                               %>
+                            <%- JSON.stringify(price) %>,
+                            <%  i++;
+                            });
+                          }
+                          break;
+                        default:
+                      }
+                    %>
+                  ]
+                }],
+                colors: ["#4e37b2"],
+                  chart: {
+                    height: 200,
+                    type: 'area',
+                    sparkline: {
+                      enabled: true,
+                    }
+                  },
+                dataLabels: {
+                  enabled: false
+                },
+                stroke: {
+                  curve: 'smooth'
+                },
+                xaxis: {
+                  type: 'datetime',
+                  categories: [
+                    <% 
+                    switch(user.role)
+                    {
+                      case 'admin':
+                      case 'super_admin':
+                        if(order.length!=0)
+                        { 
+                          var i=1; order.forEach(function(data){ %> <%- JSON.stringify(data.created_at) %>, <% i++; }); 
+                        }
+                        break;
+                      case 'salers':
+                          if(soldit.length!=0){ 
+                            var created_at = '';
+                            var i=1; soldit.forEach(function(data){
+                              if(user.id == data.products.created_by._id)
+                              {
+                                created_at = data.created_at;
+                              }
+                               %>
+                            <%- JSON.stringify(created_at) %>,
+                            <%  i++;
+                            });
+                          }
+                          break;
+                      default:
+                    }
+                    %>
+                  ]
+                },
+                tooltip: {
+                  x: {
+                    format: 'dd/MM/yy HH:mm:ss'
+                  },
+                },
+              };
+              var chart = new ApexCharts(document.querySelector("#dailySales"), options);
+              chart.render();
+            }
+
+
+            if (jQuery("#monthlyReport").length) {
+              options = {
+                series: [{
+                  name: "Net Profit",
+                  data: [
+                    <% switch(user.role) 
+                      {
+                        case 'admin':
+                        case 'super_admin':
+                          var mon = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                          if(annual.length!=0){
+                            var month = '';
+                            for(let x=0; x < mon.length; x++){
+                              month = mon[x];
+                              var n = 1; var sum = 0;
+                              annual.forEach(function(datan){
+                                if(month == datan.checkMonth)
+                                { sum += datan.amount; }
+                                else { sum += 0 }
+                                n++;
+                              }); %>
+                              <%- JSON.stringify(sum) %>,
+                              <%
+                            }
+                          }
+                          break;
+                        case 'salers':
+                        var mon = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                          if(annaulreport.length!=0){
+                            var month = '';
+                            for(let x=0; x < mon.length; x++){
+                              month = mon[x];
+                              var n = 1; var sum = 0;
+                                for(let r = 0; r < soldit.length; r++){
+                                  if(month == soldit[r].checkMonth){
+                                    if(user.id == soldit[r].products.created_by._id)
+                                    {
+                                      sum += soldit[r].products.price; 
+                                    }
+                                  }
+                                }
+                                %>
+                              <%- JSON.stringify(sum) %>,
+                              <%
+                            }
+                          }
+                      }
+                    %>
+                  ]
+                }],
+                chart: {
+                  type: "bar",
+                  height: 200
+                },
+                colors: ["#827af3"],
+                plotOptions: {
+                  bar: {
+                    horizontal: !1,
+                    columnWidth: "55%",
+                    endingShape: "rounded"
+                  }
+                },
+                dataLabels: {
+                  enabled: !1
+                },
+                stroke: {
+                  show: !0,
+                  width: 2,
+                  colors: ["transparent"]
+                },
+                xaxis: {
+                  categories: ["Jan","Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct","Nov","Dec"]
+                },
+                yaxis: {},
+                fill: {
+                  opacity: 1
+                },
+                tooltip: {
+                  y: {
+                    formatter: function(e) {
+                      return "$ " + e + " thousands"
+                    }
+                  }
+                }
+              };
+              (chart = new ApexCharts(document.querySelector("#monthlyReport"), options)).render()
+          }
+          
+          if(jQuery('#pieSales').length){
+              var options = {
+                series: [
+                  <%  switch(user.role) 
+                      {
+                        case 'admin':
+                        case 'super_admin':
+                          if(ABrands.length != 0)
+                          {
+                            var n = 1; 
+                            ABrands.forEach(function(datan){
+                              var salescount = 0; var sum = 0;
+                              var percentage = 0;
+                              for(let y = 0; y < soldit.length; y++)
+                              {
+                                if(datan.id == soldit[y].brands._id)
+                                { 
+                                  var occur = soldit.filter(function(item){
+                                          return item.brands._id == datan.id
+                                  }).length;
+                                  var hundred = soldit.length / 100;
+                                  var per = occur * 100;
+                                  var percentage = per / soldit.length;
+                                  
+                                }
+                              }
+                              %>
+                              
+                              <%- JSON.stringify(Math.round(percentage)) %>,
+                              <%
+                              n++;
+                            });                              
+                          }
+                          break;
+                        default:
+                      }
+                  %>
+                ],
+                chart: {
+                height: 200,
+                type: 'radialBar',
+              },
+              colors: ["#827af3", "#6ce6f4", "#a09e9e", "#fbc647","#2085ec", "#72b4eb", "#0a417a", "#8464a0", "#cea9bc", "#323232"],
+              plotOptions: {
+                radialBar: {
+                  dataLabels: {
+                    name: {
+                      fontSize: '22px',
+                    },
+                    value: {
+                      fontSize: '16px',
+                    },
+                    total: {
+                      show: true,
+                      label: 'Total',
+                      formatter: function (w) {
+                        // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+                        return <%= soldit.length %>
+                      }
+                    }
+                  }
+                }
+              },
+              labels: [
+                <%    switch(user.role) 
+                      {
+                        case 'admin':
+                        case 'super_admin':
+                          if(ABrands.length != 0)
+                          {
+                            var n = 1; var salescount = 0;
+                            ABrands.forEach(function(datan){ %>
+                              <%- JSON.stringify(datan.title) %>,
+                              <%
+                              n++;
+                            });
+                          }
+                          break;
+                        default:
+                      }
+                  %>
+              ],
+              };
+
+              var chart = new ApexCharts(document.querySelector("#pieSales"), options);
+              chart.render();
+          }
+          </script>
+        <% } %>
+        <script src="/js/cookie.js"></script>
+    </body>
+</html>

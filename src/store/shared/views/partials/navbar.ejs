@@ -1,0 +1,239 @@
+      <!-- TOP Nav Bar -->
+         <div class="iq-top-navbar">
+            <div class="iq-navbar-custom">
+               <div class="iq-sidebar-logo">
+                  <div class="top-logo">
+                     <a href="index.html" class="logo">
+                    <img src="/images/logo.gif" class="img-fluid" alt="">
+                        <span>Sartor</span>
+                     </a>
+                  </div>
+               </div>
+               <nav class="navbar navbar-expand-lg navbar-light p-0">
+                  <div class="navbar-left">
+                  
+                      
+                      <% str = url;
+                      newStr = str.replace('/', ''); %>
+                  <div class="iq-search-bar">
+                     <form action="/search" method="post" class="searchbox">
+                        <input type="text" class="text search-input" name="<%= newStr %>" placeholder="Type here to search...">
+                        <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                        <div class="searchbox-datalink">
+                        <h6 class="pl-3 pt-3">Pages</h6>
+                        <ul class="m-0 pl-3 pr-3 pb-3">
+                            <li class="iq-bg-primary-hover rounded"><a href="/dashboard" class="nav-link router-link-exact-active router-link-active pr-2"><i class="ri-home-4-line pr-2"></i>Dashboard</a></li>
+                            <li class="iq-bg-primary-hover rounded"><a href="/category" class="nav-link"><i class="ri-message-line pr-2"></i>Category</a></li>
+                            <li class="iq-bg-primary-hover rounded"><a href="/brands" class="nav-link"><i class="ri-calendar-2-line pr-2"></i>Brands</a></li>
+                            <li class="iq-bg-primary-hover rounded"><a href="/products" class="nav-link"><i class="ri-profile-line pr-2"></i>Products</a></li>
+                        </ul>
+                        </div>
+                    </form>
+                  </div>
+               </div>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
+                  <i class="ri-menu-3-line"></i>
+                  </button>
+                  <div class="iq-menu-bt align-self-center">
+                     <div class="wrapper-menu">
+                        <div class="main-circle"><i class="ri-arrow-left-s-line"></i></div>
+                        <div class="hover-circle"><i class="ri-arrow-right-s-line"></i></div>
+                     </div>
+                  </div>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                     <ul class="navbar-nav ml-auto navbar-list">
+                        <li class="nav-item">
+                           <a class="search-toggle iq-waves-effect language-title" href="#"><img src="/images/small/flag-01.png" alt="img-flaf" class="img-fluid mr-1" style="height: 16px; width: 16px;" /> English <i ></i></a>
+                           
+                        </li>
+                        <!--needs to be fix notify-->          
+                        <li class="nav-item">
+                           <a href="#" class="search-toggle iq-waves-effect">
+                              <div id="lottie-beil"></div>
+                              <% if(typeof notify !=='undefined' ){ %>
+                                 <% for (let noti in notify) { %> 
+                                    <% if (noti.is_read != false) { %>
+                                    <span class="bg-danger dots"></span>
+                                    <% } %>
+                                 <% } %>
+                              <% } %>
+                           </a>
+                           <div class="iq-sub-dropdown">
+                              <div class="iq-card shadow-none m-0">
+                                 <div class="iq-card-body p-0 ">
+                                    <% if(typeof notify !=='undefined' ){ %>
+                                       <div class="bg-primary p-3">
+                                          <h5 class="mb-0 text-white">All Notifications
+                                             <small class="badge  badge-light float-right pt-1">
+                                                <% let notis = 0; %>
+                                                <% for (let noti of notify) { %> 
+                                                   <% if (!noti.is_read) { %>
+                                                      <% notis++; %>
+                                                   <% } %>
+                                                <% } %>
+                                                <%= notis %>
+                                             </small>
+                                          </h5>
+                                       </div>
+                                       
+                                       <% if (notify.length > 0) { %>
+                                          <% for (let noti of notify) { %>
+                                             <form id="mform" method="post" action="/notifi/read">
+                                                <input type="hidden" name="notifiId" value="<%= noti._id %>">
+                                                <input type="hidden" name="invoiceId" value="<%= noti.order %>">
+                                                <a onclick="document.getElementById('mform').submit();" href="javascript:{}" <% if (noti.is_read) { %> class="iq-sub-card" <% } else { %> class="iq-sub-card bg-light bg-darken-lg" <% } %>>
+                                                   <div class="media align-items-center">
+                                                      <div class="">
+                                                         <img class="avatar-40 rounded" src="<%= noti.customers.picture %>" alt="">
+                                                      </div>
+                                                      <div class="media-body ml-3">
+                                                         <h6 class="mb-0 "><%= noti.customers.full_name %></h6>
+                                                         <small class="float-right font-size-12">Just Now</small>
+                                                         <p class="mb-0"><%= noti.products.name %></p>
+                                                      </div>
+                                                   </div>
+                                                </a>
+                                             </form>
+                                          <% } %>
+                                       <% } else { %>
+                                       <span class="m-2"><h5>There are no notifications so far.</h5></span>
+                                       <% } %>
+                                    <% } %>
+
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+                         
+                        <!--need to be fix-->         
+                        <li class="nav-item dropdown">
+                           
+                           <a href="#" class="search-toggle iq-waves-effect">
+                             <div id="lottie-mail"></div>
+                              <span class="bg-primary count-mail"></span>
+                           </a>
+
+                           <div class="iq-sub-dropdown">
+                              <div class="iq-card shadow-none m-0">
+                                 <div class="iq-card-body p-0 ">
+                                    
+                                    <div class="bg-primary p-3">
+                                       <h5 class="mb-0 text-white">All Messages<small class="badge  badge-light float-right pt-1"><%= typeof count_unread != "undefined" ? count_unread : 0 %></small></h5>
+                                    </div>
+                                    
+                                    <% if(typeof chats !== 'undefined'){ %>
+
+                                       <% if (chats.length> 0) { %>
+                                          <% for (let chat of chats) { %>
+                                             <form id="chatform" method="post" action="/message/read">
+                                                <input type="hidden" name="chatID" value="<%= chat._id %>">
+                                                
+                                                <a onclick="document.getElementById('chatform').submit();" href="javascript:{}" <% if (chat.is_read) { %>
+                                                   class="iq-sub-card" <% } else { %> class="iq-sub-card bg-light bg-darken-lg" <% } %>>
+                                                   <div class="media align-items-center">
+                                                      <div class="">
+                                                         <img class="avatar-40 rounded" src="<%= chat.customer.picture %>" alt="">
+                                                      </div>
+                                                      <div class="media-body ml-3">
+                                                         <h6 class="mb-0 "><%= chat.message %></h6>
+                                                         <small class="float-left font-size-12"><%= moment(chat.created_at).format("hh:mm A MM/DD/YY") %></small>
+                                                      </div>
+                                                   </div>
+                                                </a>
+
+                                             </form>
+                                          <% } %>
+                                       <% } else { %>
+                                          <span class="m-2">
+                                             <h5>There are no unread messages so far.</h5>
+                                          </span>
+                                       <% } %>
+                                    <% } %>
+
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+
+                     </ul>
+                  </div>
+                   
+                   
+                   
+                  <ul class="navbar-list">
+                     <li>
+                        <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center bg-primary rounded">
+                            <% if(user.internal.picture == null) { %>
+                            <img src="/images/default-user.png" class="img-fluid rounded mr-3" alt="user">
+                            <% } else { %>
+                            <img src="/<%= user.internal.picture %>" class="img-fluid rounded mr-3" alt="user">
+                            <% } %>
+                           
+                           <div class="caption">
+                              <h6 class="mb-0 line-height text-white"><%= user.internal.last_name; %></h6>
+                              <span class="font-size-12 text-white">Available</span>
+                           </div>
+                        </a>
+                     <div class="iq-sub-dropdown iq-user-dropdown">
+                   <div class="iq-card shadow-none m-0">
+                      <div class="iq-card-body p-0 ">
+                         <div class="bg-primary p-3">
+                            <h5 class="mb-0 text-white line-height">Hello <%= user.internal.first_name; %> <%= user.internal.last_name; %></h5>
+                            <span class="text-white font-size-12">Available</span>
+                         </div>
+                         <a href="/profile" class="iq-sub-card iq-bg-primary-hover">
+                            <div class="media align-items-center">
+                               <div class="rounded iq-card-icon iq-bg-primary">
+                                  <i class="ri-file-user-line"></i>
+                               </div>
+                               <div class="media-body ml-3">
+                                  <h6 class="mb-0 ">My Profile</h6>
+                                  <p class="mb-0 font-size-12">View personal profile details.</p>
+                               </div>
+                            </div>
+                         </a>
+                         <% switch(user.role)
+                         {
+                           case 'salers':
+                             %>
+                           <a href="/showcase" class="iq-sub-card iq-bg-primary-hover">
+                              <div class="media align-items-center">
+                                 <div class="rounded iq-card-icon iq-bg-primary">
+                                    <i class="ri-archive-line"></i>
+                                 </div>
+                                 <div class="media-body ml-3">
+                                    <h6 class="mb-0 ">Brand ShowCase</h6>
+                                    <p class="mb-0 font-size-12">Control your Brand description, video and images</p>
+                                 </div>
+                              </div>
+                           </a>
+
+                        <%    break;
+                           default: 
+                           }
+                        %>
+                         <a href="/app/logout" class="iq-sub-card iq-bg-primary-danger-hover">
+                           <div class="media align-items-center">
+                              <div class="rounded iq-card-icon iq-bg-danger">
+                                 <i class="ri-login-box-line ml-2"></i>
+                              </div>
+                              <div class="media-body ml-3">
+                                 <h6 class="mb-0 ">Logout</h6>
+                                 <p class="mb-0 font-size-12">Safely Log out from Sartar</p>
+                              </div>
+                           </div>
+                        </a>
+                         
+                      </div>
+                   </div>
+                </div>
+             </li>
+          </ul>
+       </nav>
+               
+
+            </div>
+         </div>
+         <!-- TOP Nav Bar END -->
+
+

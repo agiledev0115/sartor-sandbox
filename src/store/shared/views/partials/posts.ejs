@@ -1,0 +1,166 @@
+<% if (typeof posts != 'undefined') { %>
+  <% if (posts.length){ %>
+    <% for (let post of posts) { %>
+      <div class="iq-card" id="post_<%= post._id %>" data-post-id="<%= post._id %>">
+        <div class="iq-card-body p-0">
+          <div class="user-post-data p-3">
+            <div class="d-flex flex-wrap">
+              <div class="media-support-user-img mr-3">
+                <img class="rounded-circle img-fluid" src="<%= post.brand.img %>" alt="">
+              </div>
+              <div class="media-support-info mt-2">
+
+                <h5 class="mb-0"><a href="#" class=""><%= post.brand.title %></a></h5>
+              </div>
+              <div class="iq-card-header-toolbar d-flex align-items-center">
+                <div class="dropdown">
+                  
+                  <span class="dropdown-toggle text-primary" id="dropdown<%= post._id %>" data-toggle="dropdown">
+                    <a href="#" class="text-secondary"><%= timeSince(post.created_at) %> 
+                      <% if (!post.brand._id.equals(user.internal.brands._id)) { %>
+                       <i class="ri-more-2-line ml-3"></i>
+                      <% } %>
+                    </a>
+                  </span>
+
+                  <% if (!post.brand._id.equals(user.internal.brands._id)) { %>
+                    <div class="dropdown-menu dropdown-menu-right p-0">
+                      <a class="dropdown-item" href="#"><i class="ri-user-unfollow-line mr-2"></i>Unfollow</a>
+                      <!-- <a class="dropdown-item" href="#"><i class="ri-share-forward-line mr-2"></i>Share</a>
+                      <a class="dropdown-item" href="#"><i class="ri-file-copy-line mr-2"></i>Copy Link</a> -->
+                    </div>
+                  <% } %>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Main Post Content -->
+          <div class="user-post">
+            <!-- <a href="javascript:void();"><img src="images/page-img/p1.jpg" alt="post-image" class="img-fluid" /></a> -->
+            <p class="pl-2"><%= post.description %></p>
+            <div id="photo-grid">
+              <div class="grid-component">
+                <div
+                  class="__image_container"
+                  style="width: 100%; height: 400px; border-radius: 2px; overflow: hidden"
+                >
+                  <% if (post.media.length){ %>
+                    <% let classes = {1: "__single", 2: "__double", 3: "__triple", 4: "__quarter"}; %>
+                    <% let img_class = classes[post.media.length] || '__single'; %>
+                    <% for(let media of post.media) { %>
+                      <% if(media.type == "image"){ %>
+                        <img
+                          data-image-count="<%= post.media.length %>"
+                          src="/<%= media.path %>"
+                          class="__image_body <%= img_class %>"
+                        />
+                        <!-- style="background-image: url(/<%= media.path %>)" -->
+                      <% } else if (media.type == "video") { %>
+                        <video class="__image_body __single" controls>
+                          <source src="/<%= media.path %>" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
+                      <% } %>
+                    <% } %>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- End Post -->
+          <div class="comment-area p-3">
+            <div class="d-flex justify-content-between align-items-center">
+              
+              <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center feather-icon mr-3">
+                  <a href="javascript:void(0);">
+                    <i 
+                      data-value="<%= post.likes.liked == true ? 1 : 0 %>"  
+                      id="like_button_<%= post._id %>"
+                      data-post-id="<%= post._id %>"
+                      class="cursor-pointer like-showcase <%= post.likes.liked == true ? 'ri-heart-fill' : 'ri-heart-line' %>"></i>
+                  </a>
+                  <span class="ml-1" id="likes_count_<%= post._id %>"><%= post.likes.count || 0 %></span>
+                </div>
+                <div class="d-flex align-items-center message-icon">
+                  <a href="javascript:void();"><i class="ri-chat-4-line text-primary"></i></a>
+                  <span class="ml-1" id="comments_count_<%= post._id %>"><%= post.comments.count || 0 %></span>
+                </div>
+              </div>
+              
+              <!-- <div class="d-flex align-items-center">
+                <div class="iq-media-group">
+                  <a href="#" class="iq-media">
+                    <img class="img-fluid avatar-40 rounded-circle" src="images/user/05.jpg" alt="">
+                  </a>
+                  <a href="#" class="iq-media">
+                    <img class="img-fluid avatar-40 rounded-circle" src="images/user/06.jpg" alt="">
+                  </a>
+                  <a href="#" class="iq-media">
+                    <img class="img-fluid avatar-40 rounded-circle" src="images/user/07.jpg" alt="">
+                  </a>
+                  <a href="#" class="iq-media">
+                    <img class="img-fluid avatar-40 rounded-circle" src="images/user/08.jpg" alt="">
+                  </a>
+                  <a href="#" class="iq-media">
+                    <img class="img-fluid avatar-40 rounded-circle" src="images/user/09.jpg" alt="">
+                  </a>
+                </div>
+                <span class="ml-2">+140 more</span>
+              </div> -->
+            </div>
+            
+            <hr>
+
+            <ul class="post-comments p-0 m-0" id="comments_<%= post._id %>">
+              <% if (typeof post.comments.comments != "undefined") { %>
+                <% if (post.comments.comments.length) { %>
+                  <% for( let comment of post.comments.comments ) { %>
+                    <li class="mb-2">
+                      <div class="d-flex flex-wrap">
+                        <div class="user-img">
+                          <img src="<%= comment.created_by.img %>" alt="userimg" class="avatar-35 rounded-circle img-fluid">
+                        </div>
+                        <div class="comment-data-block ml-3">
+                          <h6><%= comment.created_by.title %> </h6>
+                          <p class="mb-0"><%= comment.comment %></p>
+                          <div class="d-flex flex-wrap align-items-center comment-activity">
+                            <!-- <a href="javascript:void();">like</a>
+                            <a href="javascript:void();">reply</a>
+                            <a href="javascript:void();">translate</a> -->
+                            <span><%= timeSince(comment.created_at) %> </span>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                <% } %>
+                  <% } else{ %>
+                    <li class="mb-2">
+                      <div class="d-flex flex-wrap">
+                        <span>No comments</span>
+                      </div>
+                    </li>
+                  <% } %>
+                <% } %>
+              
+
+            </ul>
+
+            <form class="comment-text d-flex align-items-center mt-3" id="comments_form_<%= post._id %>" action="javascript:void(0);">
+              <input type="text" name="comment" data-post-id="<%= post._id %>"  class="form-control rounded" placeholder="Lovely!">
+              <div class="comment-attagement d-flex">
+                <a href="javascript:void(0);"><i class="ri-user-smile-line mr-2"></i></a>
+                <a href="javascript:void(0);"><i class="ri-send-plane-line mr-2 post-comment" data-post-id="<%= post._id %>"></i></a>
+                <!-- <a href="javascript:void();"><i class="ri-camera-line mr-2"></i></a> -->
+              </div>
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+    <% } %>
+  <% } %>
+<% } %>

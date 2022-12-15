@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <!-- Style CSS -->
+        <link rel="stylesheet" href="css/curtin.css" />
+        <!-- Responsive CSS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    </head>
+    <body>
+        <!-- The parent component -->
+        <!-- The parent component -->
+        <!-- The parent component -->
+
+        <div class="curtain">
+            <!-- The component wrapper -->
+            <div class="curtain__wrapper">
+                <!-- The checkbox hack! -->
+
+                <input type="checkbox" checked id="yousendit" value="1" onclick="return yousendit();" />
+
+                <!-- The left curtain panel -->
+                <div class="curtain__panel curtain__panel--left">
+                    <img src="images/gradient-use-on-black-no-text.png" class="img-fluid" alt="" />
+                </div>
+                <!-- curtain__panel -->
+
+                <!-- The prize behind the curtain panels -->
+
+                <!-- The right curtain panel -->
+                <div class="curtain__panel curtain__panel--right">
+                    <h1>ALPHA</h1>
+                    <div>
+                        <h2>PROGRAM</h2>
+                    </div>
+
+                    <div><p>By clicking i 'i acknowledge' you have accepted to the rules and policy set by sartor policy</p></div>
+
+                    <a href="/buttons/6" class="bn6">I Acknowledge</a>
+                </div>
+                <!-- curtain__panel -->
+
+                <div class="curtain__prize"></div>
+            </div>
+            <!-- curtain__wrapper -->
+        </div>
+        <!-- curtain -->
+    </body>
+</html>
+
+<script>
+    function yousendit(checked) {
+        var elm = document.getElementById("yousendit");
+        if (checked != elm.checked) {
+            setTimeout(function () {
+                location.href = "/dashboard";
+            }, 200);
+        }
+    }
+</script>

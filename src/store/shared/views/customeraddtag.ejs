@@ -1,0 +1,84 @@
+<!-- Sidebar  -->
+<%- include ("./partials/sidebars") %>
+
+<!-- TOP Nav Bar -->
+<%- include ("./partials/navbar") %>
+<!-- TOP Nav Bar END -->
+
+<!-- Page Content  -->
+
+<head>
+  <style>
+    .form-control {
+      line-height: 20px;
+    }
+  </style>
+</head>
+
+<div id="content-page" class="content-page">
+  <div class="container-fluid bg-white p-5">
+    <div class="container mt-3 p-0">
+      <a class="d-inline-block w-100" href="/customerdatainfo/<%= cust.id %>">Back</a>
+      <div class="row no-gutters">
+        <div class="col-sm-5 align-self-center m-auto">
+          <form action="/customerdatainfo/addtag" method="POST">
+            <div class="form-group">
+              <% if (cust.tags.length > 0) { %>
+                <input type="text" class="form-control" id="tokenfield-typeahead" value="
+                <% for(let tag of cust.tags) { %>
+                  <%= tag %>,
+                <% } %>
+                " name="tags" />
+              <% } else { %> 
+                <input type="text" class="form-control" id="tokenfield-typeahead" value="" name="tags" />
+              <% } %> 
+            </div>
+            <input type="hidden" name="id" value="<%= cust.id %>">
+            <div class="d-inline-block w-100">
+              <button type="submit" class="btn btn-primary">Add Tags</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap-tokenfield.min.js"></script>
+<script src="/js/typeahead.bundle.min.js"></script>
+<script>
+  let engine = new Bloodhound({
+    local: [{
+      value: 'red'
+    }, {
+      value: 'blue'
+    }, {
+      value: 'green'
+    }, {
+      value: 'yellow'
+    }, {
+      value: 'violet'
+    }, {
+      value: 'brown'
+    }, {
+      value: 'purple'
+    }, {
+      value: 'black'
+    }, {
+      value: 'white'
+    }],
+    datumTokenizer: function (d) {
+      return Bloodhound.tokenizers.whitespace(d.value);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace
+  });
+
+  engine.initialize();
+
+  $('#tokenfield-typeahead').tokenfield({
+    typeahead: [null, {
+      source: engine.ttAdapter()
+    }]
+  });
+</script>

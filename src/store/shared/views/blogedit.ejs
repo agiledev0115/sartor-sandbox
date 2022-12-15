@@ -1,0 +1,131 @@
+<div class="wrapper">
+  <!-- Sidebar  -->
+  <%- include ("./partials/sidebars") %>
+  
+  <!-- TOP Nav Bar -->
+  <%- include ("./partials/navbar") %>
+  <!-- TOP Nav Bar END -->
+  <!-- Page Content  -->
+  <div id="content-page" class="content-page">
+     <div class="container-fluid">
+        <div class="row">
+           <div class="col-lg-8 row m-0 p-0">
+              <div class="col-md-12">
+                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                      <div class="iq-card-header d-flex justify-content-between">
+                          <div class="iq-card-body">
+                              <h4 class="card-title">Blog</h4>
+                              <form action="/app/blog/update" method="POST" enctype="multipart/form-data">
+                                  <div class="form-row">
+                                      <%- include ('./partials/messages') %>
+                                      <div class="col-md-12 mb-3">
+                                          <label for="validationDefault01">Title</label>
+                                          <input type="text" class="form-control" id="validationDefault01" name="title" placeholder="Blog Title" value="<%= blog.title %>" required>
+                                          <input type="hidden" name="created_by" value="<%= user.id %>" />
+                                      </div>
+                                      <div class="col-md-12 mb-3">
+                                          <label for="validationDefault01">Upload Photo</label>
+                                          <input type="file" id="uploadpicture" name="upload_picture" placeholder="Upload Picture">
+                                      </div>
+                                      <div class="m-auto" id="preload-image">
+                                        <img style="width: 200px; height: 200px;" src="/<%= blog.image %>" id="preimage"> <BR>
+                                      </div>
+                                      <div class="col-md-12 mb-3">
+                                          <label for="validationDefault01">Story</label>
+                                          <textarea id="mytextarea" name="story" style="width: 100%; height: 250px;"><%= blog.story %></textarea>
+                                      </div>
+                                      <div>
+                                         <input type="hidden" value="<%= blog.id %>" name="id">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <button class="btn btn-primary" type="submit">Update form</button>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                 </div>
+              </div>
+           </div>
+           <div class="col-lg-4">
+            <div class="iq-card iq-card-stretch iq-card-height">
+                <div class="iq-card-header d-flex justify-content-between">
+                   <div class="iq-header-title">
+                      <h4 class="card-title">Blog Lists</h4>
+                   </div>
+                   
+                </div>
+                <div class="iq-card-body">
+                  <ul class="suggestions-lists m-0 p-0">
+                     <%
+                                          if(blog.length!=0){
+                                          var i=1;
+                                          blogs.forEach(function(data){
+                                       %>
+                   <li class="d-flex mb-4 align-items-center">
+                      <div class="profile-icon bg-primary"><span><img style="width: 40px; position: relative; top: -2px;" src="/<%= data.image %>" /></span></div>
+                      <div class="media-support-info ml-3">
+                         <h6>
+                             <form action="/blogdetail" method="post">
+                                 <input type="hidden" name="blogid" value="<%= data.id %>">
+                                 <button type="submit" class="btn btn-link"><%=data.title %></button>
+                             </form>
+                           <form action="/app/blog/remove" method="post"  onSubmit="return confirm('Are you sure you wish to delete?');">
+                              <input type="hidden" name="blogid" value="<%= data.id %>">
+                              <% switch(user.role)
+                              {
+                                 case 'super_admin':
+                                 case 'admin': %>
+                                   <a href="/blogedit/<%= data.id %>" class="btn btn-link mb-3 float-right"><i class="ri-edit-2-fill"></i></a>
+                                    <button type="submit" class="btn btn-link mb-3 float-right"><i class="ri-delete-bin-6-fill"></i></button>
+                              <%    break;
+                                 default: } %>
+                           </form>
+                         </h6>
+                         <p class="mb-0"><%=data.created_at %></p>
+
+                      </div>
+                      
+                   </li>
+                   <%  i++; }); } else{ %>
+                         <li class="d-flex mb-4 align-items-center"> No Blog yet </li>
+                    <% } %>
+                     
+                 </ul>
+                </div>
+             </div>
+             </div>
+           </div>
+        </div>
+     </div>
+  </div>
+  <script>
+   let image = document.getElementById("uploadpicture");
+        
+        image.addEventListener("change", function(evt) {
+           let preimage = document.getElementById("preimage");
+           if (evt.target.files.length > 0) {
+              if (preimage) {
+                 preimage.remove();
+              }
+           }
+  
+           let reader = new FileReader();
+           let divpreload = document.getElementById("preload-image");
+  
+           reader.addEventListener("load", function() {
+              let objImage = document.getElementById("objimage");
+              if (objImage) {
+                 objImage.remove();
+              }
+              let image = new Image();
+              image.height = 200;
+              image.width = 200;
+              image.title  = evt.target.files[0].name;
+              image.src    = this.result;
+              image.id = "objimage"
+              divpreload.append(image);
+           });
+           reader.readAsDataURL(evt.target.files[0]);
+         });   
+  </script>

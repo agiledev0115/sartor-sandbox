@@ -1,0 +1,242 @@
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <%- include ("./partials/sidebars") %>
+    
+    <!-- TOP Nav Bar -->
+    <%- include ("./partials/navbar") %>
+    <!-- TOP Nav Bar END -->
+    <!-- Page Content  -->
+    
+    <div id="content-page" class="content-page">
+        <div class="container-fluid relative">
+           <div class="row">
+              <div class="col-lg-3">
+                 <div class="iq-card">
+                    <div class="iq-card-body">
+                       <div class="">
+                        <%- include ("./partials/messages") %>
+                          <div class="iq-email-list">
+                             <% switch(user.role) { case 'super_admin': case 'admin': %>
+                                 <button class="btn btn-primary btn-lg btn-block mb-3 font-size-16 p-3" data-target="#compose-email-popup" data-toggle="modal"><i class="ri-send-plane-line mr-2"></i>New Message</button>
+                             <% } %>
+                             <div class="iq-progress-bar-linear d-inline-block w-100">
+                                <h6 class="mt-4 mb-3">Total Notification [<%= notifi.length %>]</h6>
+                                <div class="iq-progress-bar">
+                                    <%
+                                        var hunder = 100 * notifi.length;
+                                        var perc = hunder / 15000;
+                                        var percentage = 100 * perc;
+                                        if((percentage >= 0) && (percentage <= 21))
+                                        { %>
+                                            <span class="bg-success" data-percent="<%= Math.round(percentage) %>"></span>
+                                        <%  }
+
+                                        else if((percentage > 22 ) && (percentage < 41))
+                                        { %>
+                                            <span class="bg-primary" data-percent="<%= Math.round(percentage) %>"></span>
+                                        <% }
+                                        else if((percentage > 42 ) && (percentage < 51))
+                                        { %>
+                                            <span class="bg-info" data-percent="<%= Math.round(percentage) %>"></span>
+                                        <% }
+                                        else if((percentage > 52 ) && (percentage < 72))
+                                        { %>
+                                            <span class="bg-warning" data-percent="<%= Math.round(percentage) %>"></span>
+                                        <% }
+                                        else if((percentage > 73 ) && (percentage <= 100))
+                                        { %>
+                                            <span class="bg-danger" data-percent="<%= Math.round(percentage) %>"></span>
+                                        <% }
+                                        else if(percentage > 100)
+                                        { %>
+                                            <span class="bg-danger" data-percent="<%= Math.round(percentage) %>"></span>
+                                        <% } %>
+                                   
+                                </div>
+                                <span class="mt-1 d-inline-block w-100"><%= notifi.length %> Notification (<%= Math.round(percentage) %>%) of 15,000</span>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+              <div class="col-lg-9 mail-box-detail">
+                 <div class="iq-card">
+                    <div class="iq-card-body p-0">
+                       <div class="">
+                          <div class="iq-email-to-list p-3">
+                             <div class="d-flex justify-content-between">
+                                <div class="iq-email-search d-flex">
+                                   <div class="form-group mb-0">
+                                       <input type="text" id="exampleInputEmail1" onkeyup="myFunction()" class="form-control" placeholder="Search" >
+                                        <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                    </div>
+                                </div>
+                             </div>
+                          </div>
+                          <div class="iq-email-listbox">
+                             <div class="tab-content">
+                                <div class="tab-pane fade show active" id="mail-inbox" role="tabpanel">
+                                   <ul id="myUL" class="iq-email-sender-list">
+                                    <%
+                                        if(notifi.length!=0){
+                                            var i=1;
+                                            notifi.forEach(function(nata){
+                                        %>
+                                        <% if(nata.is_read == false) { %>
+                                      <li class="iq-unread">
+                                          <% } else if(nata.is_read == true) {  %>
+                                      <li> <% } %>
+                                         <div class="d-flex align-self-center">
+                                            <div class="iq-email-sender-info">
+                                               <div class="iq-checkbox-mail">
+                                                  <div class="custom-control custom-checkbox">
+                                                     <input type="checkbox" class="custom-control-input" id="mailk">
+                                                     <label class="custom-control-label" for="mailk"></label>
+                                                  </div>
+                                               </div>
+                                               <a href="javascript: void(0);" class="iq-email-title"><%= nata.customers.full_name %></a>
+                                            </div>
+                                            <div class="iq-email-content">
+                                                <a href="javascript: void(0);" class="iq-email-subject"><%= nata.title %>:-
+                                                   <span><%= nata.message %></span>
+                                                </a>
+                                               <div class="iq-email-date"><%= nata.created_at.toISOString().slice(0,10) %></div>
+                                            </div>
+                                            <ul class="iq-social-media">
+                                               <li>
+                                                   <form method="post" action="/app/notification/remove" onsubmit="return confirm('Are you sure?');">
+                                                        <input type="hidden" value="<%= nata._id %>" name="notificationid" />
+                                                        <button class="btn btn-link"><i class="ri-delete-bin-2-line"></i></button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                         </div>
+                                      </li>
+                                       <div class="email-app-details">
+                                         <div class="iq-card">
+                                            <div class="iq-card-body p-0">
+                                               <div class="">
+                                                  <div class="iq-email-to-list p-3">
+                                                     <div class="d-flex justify-content-between">
+                                                        <ul>
+                                                           <li class="mr-3">
+                                                              <a href="javascript: void(0);">
+                                                                 <h4 class="m-0"><i class="ri-arrow-left-line"></i></h4>
+                                                              </a>
+                                                           </li>
+                                                        </ul>
+                                                        
+                                                     </div>
+                                                  </div>
+                                                  <hr class="mt-0">
+                                                  <div class="iq-inbox-subject p-3">
+                                                     <h3 class="mt-0"><%= nata.title %></h3>
+                                                     <div class="iq-inbox-subject-info">
+                                                        <div class="iq-subject-info">
+                                                           <img src="<%= nata.customers.picture %>" class="img-fluid rounded-circle" alt="<%= nata.customers.full_name %>">
+                                                           <div class="iq-subject-status align-self-center">
+                                                              <h6 class="mb-0"><%= nata.customers.full_name %> <a href="<%= nata.customers.email %>"><%= nata.customers.email %></a></h6>
+                                                             
+                                                           </div>
+                                                           <span class="float-right align-self-center"><%= nata.created_at %></span>
+                                                        </div>
+                                                        <div class="iq-inbox-body mt-5">
+                                                           <p><%= nata.message %></p>
+                                                        </div>
+                                                     </div>
+                                                  </div>
+                                               </div>
+                                            </div>
+                                         </div>
+                                      </div>
+                                      <% i++; }); } %>
+                                    </ul>
+                                    
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+
+              <div id="compose-email-popup" class="compose-popup modal modal-sticky-bottom-right modal-sticky-lg">
+                 <div class="iq-card iq-border-radius-20 mb-0">
+                    <div class="iq-card-body">
+                       <div class="row align-items-center">
+                          <div class="col-md-12 mb-3">
+                             <h5 class="text-primary float-left"><i class="ri-pencil-fill"></i> Send Notification</h5>
+                             <button type="submit" class="float-right close-popup" data-dismiss="modal"><i class="ri-close-fill"></i></button>
+                          </div>
+                       </div>
+                       <form method="post" action="/app/notification" class="email-form">
+                          <div class="form-group row">
+                             <label for="inputEmail3" class="col-sm-2 col-form-label">To:</label>
+                             <div class="col-sm-10">
+                                <select name="clients" id="inputEmail3" class="select2jsMultiSelect form-control">
+                                   <option value="">Select customer</option>
+                                   <%
+                                        if(clients.length!=0){
+                                            var i=1;
+                                            clients.forEach(function(cata){ %>
+                                        <option value="<%= cata._id %>"><%= cata.full_name %></option>
+                                    <% i++; }); } %>
+                                </select>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="cc" class="col-sm-2 col-form-label">BroadCast</label>
+                             <div class="col-sm-10">
+                                <div class="custom-control custom-checkbox custom-control-inline">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck-f" name="castbroad">
+                                    <label class="custom-control-label" for="customCheck-f"> Broadcast Notification</label>
+                                 </div>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="subject" class="col-sm-2 col-form-label">Title:</label>
+                             <div class="col-sm-10">
+                                <input type="text" name="title" id="subject" class="form-control" required>
+                             </div>
+                          </div>
+                          <div class="form-group row">
+                             <label for="subject" class="col-sm-2 col-form-label">Your Message:</label>
+                             <div class="col-md-10">
+                                <textarea class="textarea form-control" name="message" rows="5" required placeholder="Write your message here..."></textarea>
+                             </div>
+                          </div>
+                          <div class="form-group row align-items-center compose-bottom pt-3 m-0">
+                             <div class="d-flex flex-grow-1 align-items-center">
+                                <div class="send-btn">
+                                   <button type="submit" class="btn btn-primary">Send</button>
+                                </div>
+                                
+                            </div>
+                             
+                          </div>
+                       </form>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+     <script>
+      function myFunction() {
+         var input, filter, ul, li, a, i, txtValue;
+         input = document.getElementById("exampleInputEmail1");
+         filter = input.value.toUpperCase();
+         ul = document.getElementById("myUL");
+         li = ul.getElementsByTagName("li");
+         for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+               li[i].style.display = "";
+            } else {
+               li[i].style.display = "none";
+            }
+         }
+      }
+   </script>

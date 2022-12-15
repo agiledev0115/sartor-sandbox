@@ -1,0 +1,148 @@
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <%- include ("./partials/sidebars") %>
+    
+    <!-- TOP Nav Bar -->
+    <%- include ("./partials/navbar") %>
+    <!-- TOP Nav Bar END -->
+    <!-- Page Content  -->
+    <div id="content-page" class="content-page">
+       <div class="container-fluid">
+          <div class="row">
+            <% switch(user.role) { case 'admin':
+            case 'super_admin':
+            %>
+             <!-- <div class="col-lg-8 row m-0 p-0">
+                <div class="col-md-12">
+                   <div class="iq-card iq-card-stretch iq-card-height">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-card-body">
+                                <h4 class="card-title">Brands</h4>
+                                <form action="/app/brands" method="POST" enctype="multipart/form-data">
+                                    <div class="form-row">
+                                        <%- include ('./partials/messages') %>
+                                        <div class="col-md-12 mb-3">
+                                            <label for="validationDefault01">Brand name</label>
+                                            <input type="text" class="form-control" id="validationDefault01" name="brandName" placeholder="Brand Name" required>
+                                            <input type="hidden" name="created_by" value="<%= user.id %>" />
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <label for="validationDefault01">Upload Brand Logo</label>
+                                            <input type="file" id="validationDefault01" name="uploadPicture" placeholder="Upload Picture" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit">Submit form</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+             </div> -->
+             <% break; } %>
+             <div class="col-lg-4">
+                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                   <div class="iq-card-header d-flex justify-content-between">
+                      <div class="iq-header-title">
+                         <h4 class="card-title">Brands Lists</h4>
+                      </div>
+                   </div>
+                   <div class="iq-card-body">
+                     <ul class="suggestions-lists m-0 p-0">
+                        <%
+                           if(brands.length!=0){
+                              var i=1;
+                              brands.forEach(function(data){
+                        %>
+                      <li class="d-flex mb-4 align-items-center">
+                         <div class="profile-icon bg-primary"><span><img style="width: 40px; position: relative; top: -2px;" src="<%= data.img %>" /></span></div>
+                         <div class="media-support-info ml-3">
+                            <h6><%=data.title %> 
+                            <form action="/app/brands/remove" method="post" onSubmit="return confirm('Are you sure you wish to delete this brand? Because if you remove this brand, that means you are going to also remove the seller and all other data associated with the seller');">
+                                 <input type="hidden" name="brandid" value="<%= data.id %>">
+                                 <% switch(user.role)
+                                 {
+                                    case 'super_admin':
+                                    case 'admin': %>
+                                       <button type="submit" class="btn btn-link mb-3 float-right"><i class="ri-delete-bin-6-fill"></i></button>
+                                 <%    break;
+                                    default: } %>
+                              </form>
+                              
+                            </h6>
+                            <p class="mb-0"><%=data.created_at %></p>
+                            <% switch(user.role) { case 'admin': case 'super_admin': %>
+                            <form action="/app/brands/top" method="post">
+                              <input type="hidden" name="brandid" value="<%= data.id %>" /><hr>
+                              <h6>Assign Top Brands</h6>
+                              <% switch(data.is_top)
+                              {
+                                 case true: %>
+                                    <div class="custom-control custom-radio custom-radio-color-checked custom-control-inline">
+                                       <input type="radio" id="customRadio-<%= i %>" name="is_top" class="custom-control-input bg-info" value="true" checked>
+                                       <label class="custom-control-label" for="customRadio-<%= i %>"> True </label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-radio-color-checked custom-control-inline">
+                                       <input type="radio" id="customRadio-1<%= i %>" name="is_top" class="custom-control-input bg-danger" value="false">
+                                       <label class="custom-control-label" for="customRadio-1<%= i %>"> False </label>
+                                    </div>
+                                 <% break;
+                                 case false:
+                                 %>
+                                 <div class="custom-control custom-radio custom-radio-color-checked custom-control-inline">
+                                    <input type="radio" id="customRadio-<%= i %>" name="is_top" class="custom-control-input bg-info" value="true">
+                                    <label class="custom-control-label" for="customRadio-<%= i %>"> True </label>
+                                 </div>
+                                 <div class="custom-control custom-radio custom-radio-color-checked custom-control-inline">
+                                    <input type="radio" id="customRadio-1<%= i %>" name="is_top" class="custom-control-input bg-danger" value="false" checked>
+                                    <label class="custom-control-label" for="customRadio-1<%= i %>"> False </label>
+                                 </div>
+                              <% break; } %>
+                                 <div class="custom-control-inline">
+                                    <button type="submit" class="btn btn-link mb-3"><i class="ri-star-fill pr-0"></i> </button>
+                                 </div>
+                              
+                           </form>
+                           <% break; default: } %>
+                            <!-- <div class="custom-control custom-switch custom-switch-icon custom-switch-color custom-control-inline">
+                              <div class="custom-switch-inner">
+                                 <form action="/app/brands/top" method="post">
+                                    <input type="hidden" name="brandid" value="<%= data.id %>" />
+                                    
+                                    <% switch(data.is_top)
+                                    {
+                                       case false: %>
+                                          <input type="checkbox" class="custom-control-input bg-info" id="customSwitch-<%= i %>" name="toggle">
+                                          <label class="custom-control-label" for="customSwitch-<%= i %>">
+                                             <span class="switch-icon-left"><i class="fa fa-check"></i></span>
+                                             <span class="switch-icon-right"><i class="fa fa-check"></i></span>
+                                          </label>
+                                       <% break;
+                                       case true: %>
+                                          <input type="checkbox" class="custom-control-input bg-info" id="customSwitch-<%= i %>" checked="" name="toggle">
+                                          <label class="custom-control-label" for="customSwitch-<%= i %>">
+                                             <span class="switch-icon-left"><i class="fa fa-check"></i></span>
+                                             <span class="switch-icon-right"><i class="fa fa-check"></i></span>
+                                          </label>
+                                       <% 
+                                    } %>
+                                 </form>
+                              </div>
+                           </div> -->
+
+                         </div>
+                         
+                      </li>
+                      <%  i++; }); } else{ %>
+                            <li class="d-flex mb-4 align-items-center"> No Brand yet </li>
+                       <% } %>
+                        
+                    </ul>
+                   </div>
+                </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>

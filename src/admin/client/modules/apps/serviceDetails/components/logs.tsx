@@ -1,0 +1,31 @@
+import { Paper } from "@material-ui/core"
+import moment from "moment"
+import React from "react"
+import { messages } from "../../../../lib"
+import style from "./style.module.sass"
+
+const ServiceLogs = ({ logs }) => {
+  const list = logs.map((action, index) => {
+    const date = moment(action.date)
+    const dateFormated = date.fromNow()
+    return (
+      <div className={style.logsItem} key={index}>
+        <div className={style.logMessage}>{action.message}</div>
+        <div className={style.logDate}>{dateFormated}</div>
+      </div>
+    )
+  })
+
+  return (
+    <div style={{ maxWidth: 720, width: "100%" }}>
+      <div className="gray-title" style={{ margin: "0px 0px 0px 20px" }}>
+        {messages.serviceLogs}
+      </div>
+      <Paper className="paper-box" elevation={4}>
+        <div className={style.logsBox}>{list}</div>
+      </Paper>
+    </div>
+  )
+}
+
+export default ServiceLogs

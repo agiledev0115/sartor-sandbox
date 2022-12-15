@@ -1,0 +1,317 @@
+<!-- Sidebar  -->
+<%- include ("./partials/sidebars") %>
+    
+<!-- TOP Nav Bar -->
+<%- include ("./partials/navbar") %>
+
+
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <%- include ("./partials/messages") %>
+        <div class="row">
+            <div class="col-lg-12 row m-0 p-0">
+                <% if(typeof product != "undefined"){
+                    if(product.length!=0){
+                    var i=1;
+                    product.forEach(function(data){ %>
+                <div class="col-md-3">
+                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-card-body">
+                                <div class="text-center">
+                                    <div class="h-56 d-flex align-items-center justify-content-center bg-white iq-border-radius-15">
+                                        <img src="<%=data.img.img0 %>" align="left" alt="<%=data.name %>" style="width: 93%" />
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-justify">
+                                            <form action="/detail" method="post">
+                                                <input type="hidden" value="<%= data.id %>" name="productid" />
+                                                <button type="submit" class="btn btn-link mb-3"><%=data.name %></button>
+                                            </form>
+                                          <p class="font-size-12 mb-0"><%=data.store %> <hr> Brand: <strong><%=data.brands.title %></strong></p>
+                                          <p class="font-size-16">Price $<%= thousands_separators(data.price) %></p>
+                                          <div class="ratting">
+                                              <ul class="ratting-item d-flex p-0 m-0">
+                                                  <% if((data.rating == 0) || (data.rating == '') || (data.rating == null)) { %>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                 <% } else {
+                                                     if(data.rating == 5)
+                                                     { %>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                     <% } else {
+                                                            let i = 0; let e = 0;
+                                                            var iEmpty = 5 - data.rating
+                                                            while (i < data.rating) { %>
+                                                                <li class="full"><i class="ri-star-fill"></i></li>
+                                                                <% i++;
+                                                            }
+                                                            while (e < iEmpty) { %>
+                                                                <li class="full"><i class="ri-star-line"></i></li>
+                                                                <% e++;
+                                                            }
+                                                        }
+                                                    }%>
+                                              </ul>
+                                          </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%  i++; }); } else { %> 
+                    <div class="col-sm-12 col-lg-6">
+                        <div class="alert alert-danger" role="alert">
+                           <div class="iq-alert-text">
+                              <h5 class="alert-heading">Oops!</h5>
+                              <p>Your search query could not be found on our database
+                              </p>
+                              <hr>
+                              <p class="mb-0">Please try again using a different query
+                              </p>
+                           </div>
+                        </div>
+                     </div>    
+                <% }
+                
+                    }
+                    else if(typeof customer != "undefined"){ 
+                        if(customer.length!=0){
+                            var i=1;
+                            customer.forEach(function(data){ %>
+                        <div class="col-md-3">
+                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                <div class="iq-card-header d-flex justify-content-between">
+                                    <div class="iq-card-body">
+                                        <div class="text-center">
+                                            <div class="h-56 d-flex align-items-center justify-content-center bg-white iq-border-radius-15">
+                                                <img src="<%=data.picture %>" align="left" alt="<%=data.full_name %>" style="width: 100%" />
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="text-justify">
+                                                    <form action="/customerdetail" method="post">
+                                                        <input type="hidden" value="<%= data.id %>" name="customerid" />
+                                                        <button type="submit" class="btn btn-link mb-3"><%=data.full_name %></button>
+                                                    </form>
+                                                  <p class="font-size-12 mb-0">Email: <strong><%=data.email %></strong></p>
+                                                  
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%  i++; }); } else { %> 
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="alert alert-danger" role="alert">
+                                   <div class="iq-alert-text">
+                                      <h5 class="alert-heading">Oops!</h5>
+                                      <p>Your search query could not be found on our database
+                                      </p>
+                                      <hr>
+                                      <p class="mb-0">Please try again using a different query
+                                      </p>
+                                   </div>
+                                </div>
+                             </div>    
+                        <% }
+                        
+                        }
+                        else if(typeof blog != "undefined"){ 
+                            if(blog.length!=0){
+                                var i=1;
+                                blog.forEach(function(data){ %>
+                            <div class="col-md-3">
+                                <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                    <div class="iq-card-header d-flex justify-content-between">
+                                        <div class="iq-card-body">
+                                            <div class="text-center">
+                                                <div class="h-56 d-flex align-items-center justify-content-center bg-white iq-border-radius-15">
+                                                    <img src="<%=data.image %>" align="left" alt="<%=data.title %>" style="width: 100%" />
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="text-justify">
+                                                        <form action="/blogdetail" method="post">
+                                                            <input type="hidden" value="<%= data.id %>" name="blogid" />
+                                                            <button type="submit" class="btn btn-link mb-3"><%=data.title %></button>
+                                                        </form>
+                                                      
+                                                      
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%  i++; }); } else { %> 
+                                <div class="col-sm-12 col-lg-6">
+                                    <div class="alert alert-danger" role="alert">
+                                       <div class="iq-alert-text">
+                                          <h5 class="alert-heading">Oops!</h5>
+                                          <p>Your search query could not be found on our database
+                                          </p>
+                                          <hr>
+                                          <p class="mb-0">Please try again using a different query
+                                          </p>
+                                       </div>
+                                    </div>
+                                 </div>    
+                            <% }
+                            
+                            }
+                            else if(typeof brand != "undefined"){ 
+                                if(brand.length!=0){
+                                    var i=1;
+                                    brand.forEach(function(data){ %>
+                                <div class="col-md-3">
+                                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                        <div class="iq-card-header d-flex justify-content-between">
+                                            <div class="iq-card-body">
+                                                <div class="text-center">
+                                                    <div class="h-56 d-flex align-items-center justify-content-center bg-white iq-border-radius-15">
+                                                        <img src="<%=data.img %>" align="left" alt="<%=data.title %>" style="width: 100%" />
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="text-justify">
+                                                            <center><h3><%= data.title %></h3>
+                                                                <span class="float-left">
+                                                                    <i class="ion-thumbsup" title="likes"></i> <%= data.likes.length %> 
+                                                                </span>
+                                                                <span class="float-right">
+                                                                    <div class="icon dripicons-feed" title="followers"> <%= data.followers.length %> </div>
+                                                                </span>
+                                                            </center>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%  i++; }); } else { %> 
+                                    <div class="col-sm-12 col-lg-6">
+                                        <div class="alert alert-danger" role="alert">
+                                           <div class="iq-alert-text">
+                                              <h5 class="alert-heading">Oops!</h5>
+                                              <p>Your search query could not be found on our database
+                                              </p>
+                                              <hr>
+                                              <p class="mb-0">Please try again using a different query
+                                              </p>
+                                           </div>
+                                        </div>
+                                     </div>    
+                                <% }
+                                
+                                }
+                                else if(typeof categories != "undefined"){ 
+                                    if(categories.length!=0){
+                                        var i=1;
+                                        categories.forEach(function(data){ %>
+                                    <div class="col-md-3">
+                                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                            <div class="iq-card-header d-flex justify-content-between">
+                                                <div class="iq-card-body">
+                                                    <div class="text-center">
+                                                        <div class="card-body">
+                                                            <div class="text-justify">
+                                                                <center><h4><%= data.name %></h3>
+                                                                    created: <%= data.created_at %>
+                                                                </center>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <%  i++; }); } else { %> 
+                                        <div class="col-sm-12 col-lg-6">
+                                            <div class="alert alert-danger" role="alert">
+                                               <div class="iq-alert-text">
+                                                  <h5 class="alert-heading">Oops!</h5>
+                                                  <p>Your search query could not be found on our database
+                                                  </p>
+                                                  <hr>
+                                                  <p class="mb-0">Please try again using a different query
+                                                  </p>
+                                               </div>
+                                            </div>
+                                         </div>    
+                                    <% }
+                                    
+                                    }
+
+                                    else if(typeof internal != "undefined"){ 
+                                        if(internal.length!=0){
+                                            var i=1;
+                                            internal.forEach(function(data){ %>
+                                                <div class="col-md-3">
+                                                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                                        <div class="iq-card-header d-flex justify-content-between">
+                                                            <div class="iq-card-body">
+                                                                <div class="text-center">
+                                                                    <div class="h-56 d-flex align-items-center justify-content-center bg-white iq-border-radius-15">
+                                                                        <% if (data.picture == null) { %> 
+                                                                        <img src="uploads/default_profile.png" align="left" alt="<%=data.full_name %>" style="width: 100%" />
+                                                                        <% } else{ %>
+                                                                        <img src="<%=data.picture %>" align="left" alt="<%=data.full_name %>" style="width: 100%" />
+                                                                        <% } %>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <div class="text-justify">
+                                                                        <center><h4><%= data.first_name %> <%= data.last_name %></h4></center>
+                                                                          <p class="font-size-12 mb-0">Email: <strong><%=data.user.username %></strong></p>
+                                                                          <p class="font-size-12 mb-0">Role: <strong><%=data.user.role %></strong></p>
+                                                                          <p class="font-size-12 mb-0">Joined Date: <strong><%=data.created_at %></strong></p>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        <%  i++; }); } else { %> 
+                                            <div class="col-sm-12 col-lg-6">
+                                                <div class="alert alert-danger" role="alert">
+                                                   <div class="iq-alert-text">
+                                                      <h5 class="alert-heading">Oops!</h5>
+                                                      <p>Your search query could not be found on our database
+                                                      </p>
+                                                      <hr>
+                                                      <p class="mb-0">Please try again using a different query
+                                                      </p>
+                                                   </div>
+                                                </div>
+                                             </div>    
+                                        <% }
+                                        
+                                        }
+                    %>
+               <!---->
+            </div>
+        </div>
+    </div>
+</div>
+
+<% function thousands_separators(num)
+{
+  var num_parts = num.toString().split(".");
+	num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return num_parts.join(".");
+} %>

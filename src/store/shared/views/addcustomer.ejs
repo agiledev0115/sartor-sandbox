@@ -1,0 +1,150 @@
+!-- Sidebar -->
+<%- include ("./partials/sidebars") %>
+
+<!-- TOP Nav Bar -->
+<%- include ("./partials/navbar") %>
+<!-- TOP Nav Bar END -->
+
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="iq-card">
+               <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                     <h4 class="card-title">Add New Customer</h4>
+                  </div>
+               </div>
+               <div class="iq-card-body">
+                  <form method="post" action="/addcustomer" enctype="multipart/form-data">
+                     <div class="form-group">
+                        <div class="add-img-user profile-img-edit">
+                           <img class="profile-pic img-fluid" src="/images/default_profile.png" alt="profile-pic">
+                           <div class="p-image">
+                              <a href="javascript:void();" class="upload-button btn iq-bg-primary">File Upload</a>
+                              <input id="picture" name="picture" class="file-upload" type="file" accept="image/*">
+                           </div>
+                        </div>
+                        <div class="img-extension mt-3">
+                           <div class="d-inline-block align-items-center">
+                              <span>Only</span>
+                              <a href="javascript:void();">.jpg</a>
+                              <a href="javascript:void();">.png</a>
+                              <a href="javascript:void();">.jpeg</a>
+                              <span>allowed</span>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="full_name">Name:</label>
+                        <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Name" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="phone">Contact:</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Contact" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="country">Country:</label>
+                        <input type="text" class="form-control" id="country" name="country" placeholder="Country" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="city">City:</label>
+                        <input type="text" class="form-control" id="city" name="city" placeholder="City" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="address">Address:</label>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Address" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select class="form-control" name="gender" id="gender" required>
+                           <option value="male">Male</option>
+                           <option value="female">Female</option>
+                        </select>
+                     </div>
+                  <!-- </form> -->
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-9">
+            <div class="iq-card">
+               <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                     <h4 class="card-title">Customer Body Measurements</h4>
+                  </div>
+               </div>
+               <div class="iq-card-body">
+                  <div class="new-user-info">
+                     <!-- <form method="post" action="/addcustomer" enctype="multipart/form-data"> -->
+                        <div class="row">
+                           <div class="form-group col-md-6">
+                              <label for="height">Height:</label>
+                              <input type="text" class="form-control" id="height" name="height" placeholder="Height" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="backshoulder">Back shoulder width:</label>
+                              <input type="text" class="form-control" id="backshoulder" name="backshoulder"
+                                 placeholder="Back shoulder width" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="outerarm">Outer arm length:</label>
+                              <input type="text" class="form-control" id="outerarm" name="outerarm" placeholder="Outer arm length" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="backneck">Back neck point to waist:</label>
+                              <input type="text" class="form-control" id="backneck" name="backneck"
+                                 placeholder="Back neck point to waist" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="chestgirth">Chest girth:</label>
+                              <input type="text" class="form-control" id="chestgirth" name="chestgirth" placeholder="Chest girth" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="waistgirth">Waist girth:</label>
+                              <input type="text" class="form-control" id="waistgirth" name="waistgirth" placeholder="Waist girth" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="hipgirth">Hip girth:</label>
+                              <input type="text" class="form-control" id="hipgirth"  name="hipgirth" placeholder="Hip girth" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="thighgirth">Thigh girth:</label>
+                              <input type="text" class="form-control" id="thighgirth"  name="thighgirth" placeholder="Thigh girth" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="insideleg">Inside leg height:</label>
+                              <input type="text" class="form-control" id="insideleg"  name="insideleg" placeholder="Inside leg height" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="outsideleg">Outside leg length:</label>
+                              <input type="text" class="form-control" id="outsideleg"  name="outsideleg" placeholder="Outside leg length" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="frontneck">Front neck height:</label>
+                              <input type="text" class="form-control" id="frontneck"  name="frontneck" placeholder="Front neck height" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="backneckpoint">Back neck point to waist length:</label>
+                              <input type="text" class="form-control" id="backneckpoint"  name="backneckpoint"
+                                 placeholder="Back neck point to waist length" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="torsoheight">Torso height:</label>
+                              <input type="text" class="form-control" id="torsoheight"  name="torsoheight" placeholder="Torso height" required>
+                           </div>
+                        </div>
+                        <hr>
+                        <button type="submit" class="btn btn-primary">Add New Customer</button>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

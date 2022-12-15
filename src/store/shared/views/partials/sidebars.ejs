@@ -1,0 +1,117 @@
+<div class="iq-sidebar-small bg-primary">
+    <div class="sidebar-top">
+        <div class="iq-sidebar-small-logo">
+            <a href="/dashboard">
+                <img src="/images/gradient-use-on-black-no-text.png" class="img-fluid" alt="" />
+            </a>
+        </div>
+        <div class="sidebar-menu-icon">
+            <a href="/dashboard" class="iq-waves-effect" data-toggle="tooltip" data-placement="right" title="" data-original-title="Home"><i class="ri-home-2-fill active"></i></a>
+            <a href="javascript:void(0);" class="iq-waves-effect" data-toggle="tooltip" data-placement="right" title="" data-original-title="Search"><i class="ri-search-fill"></i></a>
+            <a href="app/index.html" class="iq-waves-effect" data-toggle="tooltip" data-placement="right" title="" data-original-title="Mail"><i class="ri-mail-open-fill"></i></a>
+            <a href="profile.html" class="iq-waves-effect" data-toggle="tooltip" data-placement="right" title="" data-original-title="Social"><i class="ri-command-fill"></i></a>
+            <a href="javascript:void(0);" class="iq-waves-effect" data-toggle="tooltip" data-placement="right" title="" data-original-title="Upload"><i class="ri-file-upload-fill"></i></a>
+            <a href="javascript:void(0);" class="iq-waves-effect" data-toggle="tooltip" data-placement="right" title="" data-original-title="Cloud"><i class="ri-cloud-fill"></i></a>
+        </div>
+    </div>
+    <div class="sidebar-bottom">
+        <div class="sidebar-menu-icon">
+            <a href="account-setting.html" class="iq-waves-effect" data-toggle="tooltip" data-placement="right" title="" data-original-title="Setting"><i class="ri-settings-2-fill"></i></a>
+            <div class="iq-menu-bt align-self-center">
+                <div class="wrapper-menu">
+                    <div class="menu-close"><i class="ri-arrow-left-line"></i></div>
+                    <div class="menu-open"><i class="ri-arrow-right-line"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="iq-sidebar">
+    <div class="iq-sidebar-logo d-flex justify-content-between">
+        <a href="/dashboard">
+            <span>Sartor</span>
+        </a>
+    </div>
+    <div id="sidebar-scrollbar">
+        <nav class="iq-sidebar-menu">
+            <ul id="iq-sidebar-toggle" class="iq-menu">
+                <li class="iq-menu-title"><i class="ri-shopping-cart-line"></i><span>Home</span></li>
+                <li <% if (url === '/dashboard') { %>class="active" <% } %> >
+                    <a href="/dashboard" class="iq-waves-effect"><i class="ri-home-3-line"></i><span>Dashboard</span></a>
+                </li>
+                <li <% if (url === '/order' || url === '/order/add') { %>class="active" <% } %> >
+                    <a href="/order" class="iq-waves-effect"><i class="icon dripicons-ticket"></i><span>Orders</span></a>
+                </li>
+
+                <li <% if (url === '/category' || url === '/products' || url === '/product') { %>class="active" <% } %> >
+                    <a href="#components" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i class="icon dripicons-tags"></i><span>Products</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                    <ul id="components" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                        <li <% if (url === '/category') { %>class="active" <% } %> >
+                            <a href="/category"><i class="ri-profile-line"></i>Category</a>
+                        </li>
+                        <li>
+                            <a class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false" href="#sub-menu-products">
+                                <i class="ri-shopping-cart-line"></i><span>Add product</span><i class="ri-arrow-right-s-line iq-arrow-right"></i>
+                            </a>
+                            <ul id="sub-menu-products" class="iq-submenu iq-submenu-data collapse">
+                                <li <% if (url === '/products') { %>class="active" <% } %> >
+                                    <a href="/products"><i class="ri-record-circle-line"></i>Product</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li <% if (url === '/product') { %>class="active" <% } %>>
+                            <a href="/product"><i class="icon dripicons-store"></i>Inventory</a>
+                        </li>
+                    </ul>
+                </li>
+
+               
+
+                <li <% if (url === '/customerdata' || url === '/customerdata/add') { %>class="active" <% } %> >
+                    <a href="/customerdata" class="iq-waves-effect"><i class="fa fa-user-circle"></i><span>Customers</span></a>
+                </li>
+
+                <li <% if (url === '/bankdetails' || url === '/analytics' || url === '/payout') { %>class="active" <% } %> >
+                    <a href="#bank" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i class="icon dripicons-card"></i><span>Finances</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                    <ul id="bank" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                        <li <% if (url === '/bankdetails') { %>class="active" <% } %> >
+                            <a href="/bankdetails"><i class="icon dripicons-document-edit"></i>Bank details</a>
+                        </li>
+                        <li <% if (url === '/analytics') { %>class="active" <% } %> >
+                            <a href="/analytics"><i class="icon dripicons-graph-bar"></i>Analytics</a>
+                        </li>
+                        <li <% if (url === '/payout') { %>class="active" <% } %> >
+                            <a href="/payout"><i class="icon dripicons-wallet"></i>Payout</a>
+                        </li>
+                    </ul>
+                </li>
+                <li <% if (url === '/overview') { %>class="active" <% } %> >
+                    <a href="/overview" class="iq-waves-effect"><i class="fa fa-book"></i><span>Overview</span></a>
+                </li>
+                <li>
+                    <a href="/comingsoon" class="iq-waves-effect"><i class="icon dripicons-broadcast"></i><span>Marketing</span></a>
+                </li>
+                <li>
+                    <a href="/comingsoon" class="iq-waves-effect"><i class="fa fa-percent"></i><span>Discounts</span></a>
+                </li>
+
+                <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>apps</span></li>
+                
+                <li <% if (url === '/showcase') { %>class="active" <% } %> >
+                    <a href="/showcase" class="iq-waves-effect"><i class="icon dripicons-web"></i><span>OJA Connect</span></a>
+                </li>
+
+                <li <% if (url === '/blog' || url.split("/")[1] === "blogedit" || url.split("/")[1] === "blogdetail") { %>class="active" <% } %> >
+                    <a href="/blog" class="iq-waves-effect"><i class="ri-file-list-line"></i><span>Blog's</span></a>
+                </li>
+
+                <li <% if (url === '/chat') { %>class="active" <% } %> >
+                    <a href="/chat" class="iq-waves-effect"><i class="ri-message-line"></i><span>Chat</span></a>
+                </li>
+            </ul>
+        </nav>
+        <div class="p-3"></div>
+    </div>
+</div>

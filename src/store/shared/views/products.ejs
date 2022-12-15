@@ -1,0 +1,318 @@
+ <!-- <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'> -->
+ <style>
+     .box {
+         position: relative;
+         background: #ffffff;
+         width: 100%;
+     }
+
+     .box-header {
+         color: #444;
+         display: block;
+         padding: 10px;
+         position: relative;
+         border-bottom: 1px solid #f4f4f4;
+         margin-bottom: 10px;
+     }
+
+     .box-tools {
+         position: absolute;
+         right: 10px;
+         top: 5px;
+     }
+
+     .dropzone-wrapper {
+         border: 2px dashed #91b0b3;
+         color: #92b0b3;
+         position: relative;
+         height: 150px;
+     }
+
+     .dropzone-desc {
+         position: absolute;
+         margin: 0 auto;
+         left: 0;
+         right: 0;
+         text-align: center;
+         width: 40%;
+         top: 50px;
+         font-size: 16px;
+     }
+
+     .dropzone,
+     .dropzone:focus {
+         position: absolute;
+         outline: none !important;
+         width: 100%;
+         height: 150px;
+         cursor: pointer;
+         opacity: 0;
+     }
+
+     .dropzone-wrapper:hover,
+     .dropzone-wrapper.dragover {
+         background: #ecf0f5;
+     }
+
+     .preview-zone {
+         text-align: center;
+     }
+
+     .preview-zone .box {
+         box-shadow: none;
+         border-radius: 0;
+         margin-bottom: 0;
+     }
+
+     .btn-primary {
+         background-color: crimson;
+         border: 1px solid #212121;
+     }
+ </style>
+ <div class="wrapper">
+     <!-- Sidebar  -->
+     <%- include ("./partials/sidebars") %>
+
+     <!-- TOP Nav Bar -->
+     <%- include ("./partials/navbar") %>
+     <!-- TOP Nav Bar END -->
+     <!-- Page Content  -->
+     <div id="content-page" class="content-page">
+         <div class="container-fluid">
+             <div class="row">
+                 <div class="col-lg-8 row m-0 p-0 m-auto">
+                     <div class="col-md-12">
+                         <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                             <div class="iq-card-header d-flex justify-content-between">
+                                 <div class="iq-card-body">
+                                     <%- include ('./partials/messages') %>
+                                     <h4 class="card-title">Product</h4>
+                                     <form action="/app/products" method="POST" enctype="multipart/form-data">
+                                         <div class="form-row">
+                                             <div class="col-md-4 mb-3">
+                                                 <label for="validationDefault01">Product Name</label>
+                                                 <input type="text" class="form-control" id="product_name"
+                                                     name="name" placeholder="Product Name" required>
+                                                 <input type="hidden" name="created_by" value="<%= user.id %>" />
+                                             </div>
+                                             <div class="col-md-4 mb-3">
+                                                 <label for="validationDefault01">Product Store</label>
+                                                 <input type="text" class="form-control" id="validationDefault01"
+                                                     name="store" placeholder="Product Store"
+                                                     value="<%= user.internal.brands.title %>" disabled>
+                                             </div>
+                                             <div class="col-md-4 mb-3">
+                                                 <label for="validationDefault01">Product Price</label>
+                                                 <input type="number" min="0" class="form-control" id="validationDefault01"
+                                                     name="price" placeholder="Product Price" required>
+                                             </div>
+                                             <div class="col-md-4 mb-3">
+                                                 <label for="validationDefault01">Category</label>
+                                                 <select class="form-control" name="category"
+                                                     id="exampleFormControlSelect1" required>
+                                                     <option value="" selected disable> Select Category</option>
+                                                     <% if(catInfo.length!=0){
+                                                    catInfo.forEach(function(catInformation){ %>
+                                                     <option value="<%=catInformation.id %>"><%= catInformation.name %>
+                                                     </option>
+                                                     <% }) } %>
+                                                 </select>
+                                             </div>
+                                             <div class="col-md-4 mb-3">
+                                                 <label for="validationDefault01">Quantity</label>
+                                                 <input type="number" min="0" id="validationDefault01" class="form-control"
+                                                     name="qty" placeholder="QTY or Stock" required>
+                                             </div>
+                                             <div class="col-md-12 mb-3">
+                                                 <label class="control-label">Upload Images</label>
+                                                 <div class="preview-zone hidden">
+                                                     <div class="box box-solid">
+                                                         <div class="box-header with-border">
+                                                             <div><b>Preview</b></div>
+                                                             <div class="box-tools pull-right">
+                                                                 <button type="button"
+                                                                     class="btn btn-danger btn-xs remove-preview">
+                                                                     <i class="fa fa-times"></i> Reset The Field
+                                                                 </button>
+                                                             </div>
+                                                         </div>
+                                                         <div class="box-body"></div>
+                                                     </div>
+                                                 </div>
+                                                 <div class="dropzone-wrapper">
+                                                     <div class="dropzone-desc">
+                                                         <i class="glyphicon glyphicon-download-alt"></i>
+                                                         <p>Choose your 7 images and a video and drag and drop here .
+                                                         </p>
+                                                     </div>
+                                                     <input type="file" id="avatars" name="img_logo" class="dropzone"
+                                                         multiple required>
+                                                 </div>
+                                             </div>
+                                             
+                                        <label id="inputGroupFileAddon01" class="mb-4">Upload Video</label>
+                                             <div class="input-group mb-4">
+                                                 <div class="input-group-prepend">
+                                                    <span class="input-group-text"
+                                                         id="inputGroupFileAddon01">Upload</span>
+                                                 </div>
+                                                 <div class="custom-file">
+                                                    <input type="file" class="custom-file-input upload-video-file"
+                                                         id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="video" required>
+                                                     <label id="videoname" class="custom-file-label"
+                                                         for="inputGroupFile01">Choose file</label>
+                                                 </div>
+                                             </div>
+                                             <div style="display: none;" class="video-prev mb-3 mt-5 m-auto"
+                                                 class="pull-right">
+                                                 <video height="200" width="300" class="video-preview"
+                                                     controls="controls"></video>
+                                             </div>
+                                             <div class="col-md-12 mb-3">
+                                                 <label for="validationDefault01">Description</label>
+                                                 <textarea id="mytextarea" name="description"
+                                                     style="width: 100%; height: 250px;"></textarea>
+                                             </div>
+                                         </div>
+                                         <div class="form-group">
+                                             <button class="btn btn-primary" id="submit" type="submit">Submit Product</button>
+                                         </div>
+                                     </form>
+                                     <script>
+                                         const input = document.querySelector('#avatars');
+                                         // Listen for files selection
+                                         input.addEventListener('change', (e) => {
+                                             // Retrieve all files
+                                             const files = input.files;
+                                             // Check files count
+                                             if (files.length > 8) {
+                                                 alert('Only 8 files are allowed to upload.');
+                                                 return;
+                                             }
+                                         });
+                                     </script>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 
+             </div>
+         </div>
+     </div>
+ </div>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+ <script>
+     function readFile(evt) {
+         var wrapperZone = $(input).parent();
+         var previewZone = $(input).parent().parent().find('.preview-zone');
+         var boxZone = $(input).parent().parent().find('.preview-zone').find('.box').find('.box-body');
+         const files = evt.target.files || evt.dataTransfer.files;
+         if (files.length < 7 || files.length > 7) {
+          alert("You are only allowed to upload a maximum of 7 images");
+          return;
+        }
+
+         if (this.files) {
+             [].forEach.call(this.files, readAndPreview);
+         }
+
+         function readAndPreview(file) {
+             var reader = new FileReader();
+
+             reader.addEventListener("load", function () {
+                 var image = new Image();
+                 image.height = 200;
+                 image.width = 200;
+                 image.title = file.name;
+                 image.src = this.result;
+                 image.className = "p-3"
+
+                 boxZone.append(image);
+             })
+             reader.readAsDataURL(file);
+         }
+         previewZone.removeClass('hidden');
+         wrapperZone.removeClass('dragover');
+         boxZone.empty();
+     }
+
+     document.getElementsByClassName("dropzone")[0].addEventListener("change", readFile);
+
+     function reset(e) {
+         console.log(e.wrap('<form>'))
+         e.wrap('<form>').closest('form').get(0).reset();
+         e.unwrap();
+     }
+
+     $('.dropzone-wrapper').on('dragover', function (e) {
+         e.preventDefault();
+         e.stopPropagation();
+         $(this).addClass('dragover');
+     });
+
+     $('.dropzone-wrapper').on('dragleave', function (e) {
+         e.preventDefault();
+         e.stopPropagation();
+         $(this).removeClass('dragover');
+     });
+
+     $('.remove-preview').on('click', function () {
+         var boxZone = $(this).parents('.preview-zone').find('.box-body');
+         var previewZone = $(this).parents('.preview-zone');
+         var dropzone = $(this).parents('.form-group').find('.dropzone');
+         boxZone.empty();
+         previewZone.addClass('hidden');
+         reset(dropzone);
+     });
+
+     $(function () {
+         $('.upload-video-file').on('change', function () {
+             if (isVideo($(this).val())) {
+                 $('.video-preview').attr('src', URL.createObjectURL(this.files[0]));
+                 $('.video-prev').show();
+                 let name = this.files[0].name;
+                 let ext = getExtension(name);
+                 $("#videoname").css({
+                     fontSize: 13
+                 })
+                 if (name.length > 10) {
+                     let newName = this.files[0].name.substring(0, 40)
+                     $("#videoname").text(newName + "..." + ext);
+                 } else {
+                     $("#videoname").text(this.files[0].name);
+                 }
+             } else {
+                 $('.upload-video-file').val('');
+                 $('.video-prev').hide();
+                 // alert("Only video files are allowed to upload.")
+             }
+         });
+     });
+
+     function isVideo(filename) {
+         let ext = getExtension(filename);
+         switch (ext.toLowerCase()) {
+             case 'm4v':
+             case 'avi':
+             case 'mp4':
+             case 'mov':
+             case 'mpg':
+             case 'mpeg':
+                 return true;
+         }
+         return false;
+     }
+
+     function getExtension(filename) {
+         var parts = filename.split('.');
+         return parts[parts.length - 1];
+     }
+    
+    let val = document.querySelector("#product_name")
+    let submit = document.querySelector("#submit");
+    submit.addClass = "disabled"
+
+    
+ </script>

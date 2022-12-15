@@ -1,0 +1,321 @@
+<%- include ("./partials/sidebars") %>
+
+<!-- TOP Nav Bar -->
+<%- include ("./partials/navbar") %>
+
+         <div id="content-page" class="content-page">
+            <div class="container-fluid">
+               <a class="d-inline-block btn btn-primary mt-0 mb-4" href="/customerdata">Back</a>
+               <div class="row">
+                  <div class="col-lg-3">
+                     <div class="iq-card iq-card iq-card-block iq-card-stretch iq-card-height">
+                        <div class="iq-card-body">
+                           <img src="/<%= cust.picture %>" class="profile-pic img-fluid" alt="page-img">
+                           <div class="mt-5">
+                              <%- include ('./partials/messages') %>
+                           </div>
+                           </div>
+                            <div class="iq-card">
+                                    <div class="iq-card-header d-flex justify-content-between">
+                                       <div class="iq-header-title">
+                                          <h4 class="card-title"><%= cust.full_name %></h4>
+                                       </div>
+                                    </div>
+                                    <div class="iq-card-body">
+                                       <span class="table-add float-right mb-3 mr-2">
+                                          <span class="pl-1">
+                                             <a class="btn btn-sm iq-bg-success" href="/customerdatainfo/addtag/<%= cust._id %>">Add Tag</a>
+                                          </span>
+                                       </span>
+                                      <div class="user-bio mb-2">
+                                          <h6>Tag's</h6>
+                                          <% if (cust.tags.length > 0 && cust.tags[0].length > 0) { %>
+                                            <% for(let tag of cust.tags) { %>
+                                             <span class="badge badge-primary"><%= tag %></span>
+                                            <% } %>
+                                          <% } else { %> 
+                                             <p>There are no tags to show.</p>
+                                          <% } %>
+                                      </div> 
+                                        <h6>Gender:</h6>
+                                       <p><%= cust.gender %></p>
+                                      <!-- <div class="mt-2">
+                                       <h6>Joined:</h6>
+                                       <p>November 15, 2012</p>
+                                      </div> -->
+                                      <div class="mt-2">
+                                       <h6>Address</h6>
+                                       <p><%= cust.address %></p>
+                                      </div>
+                                      <div class="mt-2">
+                                       <h6>Email:</h6>
+                                       <p><a href="mailto:<%= cust.email %>"> <%= cust.email %></a></p>
+                                      </div>
+                                      <div class="mt-2">
+                                       <h6>Contact:</h6>
+                                       <p><a href="#"><%= cust.phone %></a></p>
+                                      </div>
+                                    </div>
+                                 </div>
+                           <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">Order timeline</h4>
+                           </div>
+                           <div class="iq-card-header-toolbar d-flex align-items-center">
+                              <div class="dropdown">
+                                 <span class="dropdown-toggle text-primary" id="dropdownMenuButton4" data-toggle="dropdown">
+                                 View All
+                                 </span>
+                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton4">
+                                    <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>View</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-delete-bin-6-fill mr-2"></i>Delete</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Edit</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-printer-fill mr-2"></i>Print</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-file-download-fill mr-2"></i>Download</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                            
+                        <div class="iq-card-body">
+                           <ul class="iq-timeline">
+                              <% for (let timelines of orderobj) { %>
+                                 <li>
+                                    <div class="timeline-dots"></div>
+                                    <h6 class="float-left mb-1"><%= timelines.timeline.action_message %></h6>
+                                    <% const ops = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
+                                    <small class="float-right mt-1"><%= timelines.timeline.created_at.toLocaleDateString("en-US", ops) %></small>
+                                    <div class="d-inline-block w-100">
+                                       <% const regex = /(<([^>]+)>)/ig %>
+                                       <p><%= timelines.timeline.product_description.replace(regex, "") %></p>
+                                    </div>
+                                 </li>
+                              <% } %>
+                           </ul>
+                        </div>         
+                     </div>
+                  </div>
+                  <div class="col-lg-9">
+                     <div class="row">
+                        <div class="col-xl-9">
+                           <div class="row">
+                              <div class="col-sm-12">
+                                 <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                                    <div class="iq-card-body">
+                                       <div class="row">
+                                          <div class="col-md-6 col-lg-3">
+                                             <div class="d-flex align-items-center mb-3 mb-lg-0">
+                                                <div class="rounded-circle iq-card-icon iq-bg-primary mr-3"> <i class="ri-mail-open-line"></i></div>
+                                                <div class="text-left">
+                                                   <h4><%= orderobj.length %></h4>
+                                                   <p class="mb-0">Order</p>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="col-md-6 col-lg-3">
+                                             <div class="d-flex align-items-center mb-3 mb-lg-0">
+                                                <div class="rounded-circle iq-card-icon iq-bg-info mr-3"> <i class="ri-message-3-line"></i></div>
+                                                <div class="text-left">
+                                                   <h4>0</h4>
+                                                   <p class="mb-0">Discount used</p>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="col-md-6 col-lg-3">
+                                             <div class="d-flex align-items-center mb-3 mb-md-0">
+                                                <div class="rounded-circle iq-card-icon iq-bg-danger mr-3"> <i class="ri-group-line"></i></div>
+                                                <div class="text-left">
+                                                   <h4>0</h4>
+                                                   <p class="mb-0">Review</p>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="col-md-6 col-lg-3">
+                                             <div class="d-flex align-items-center mb-3 mb-md-0">
+                                                <div class="rounded-circle iq-card-icon iq-bg-warning mr-3"> <i class="ri-task-line"></i></div>
+                                                <div class="text-left">
+                                                   <h4>0</h4>
+                                                   <p class="mb-0">Returns</p>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           <table class="table table-borderless ">
+                              <thead>
+                                 <tr>
+                                    
+                                    <th scope="col">Body Parts</th>
+                                    <th scope="col">Mesaurment (in)</th>
+                                  
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                    <tr>
+                                    <th scope="row">Height</th>
+                                    <td><%= cust.height %></td>
+                                    
+                                 </tr>
+                                 <tr>
+                                    <th scope="row">Back shoulder width</th>
+                                    <td><%= cust.backshoulder %></td>
+                                    
+                                 </tr>
+                                 <tr>
+                                    <th scope="row">Outer arm length</th>
+                                    <td><%= cust.outerarm %></td>
+                                    
+                                 </tr>
+                                 <tr>
+                                    <th scope="row">Back neck point to waist</th>
+                                    <td colspan="2"><%= cust.backneck %></td>
+                                    
+                                 </tr>
+                                  <tr>
+                                    <th scope="row">Chest girth</th>
+                                    <td colspan="2"><%= cust.chestgirth %></td>
+                                    
+                                 </tr>
+                                  <tr>
+                                    <th scope="row">Waist girth</th>
+                                    <td colspan="2"><%= cust.waistgirth %></td>
+                                   
+                                 </tr>
+                                  <tr>
+                                    <th scope="row">Hip girth</th>
+                                    <td colspan="2"><%= cust.hipgirth %></td>
+                                    
+                                 </tr>
+                                  <tr>
+                                    <th scope="row">Thigh girth</th>
+                                    <td colspan="2"><%= cust.thighgirth %></td>
+                                    
+                                 </tr>
+                                 
+                                  <tr>
+                                    <th scope="row">Inside leg height</th>
+                                    <td colspan="2"><%= cust.insideleg %></td>
+                                    
+                                 </tr>
+                                  <tr>
+                                    <th scope="row">Outside leg length</th>
+                                    <td colspan="2"><%= cust.outsideleg %></td>
+                                    
+                                 </tr>
+                                  <tr>
+                                    <th scope="row">Front neck height</th>
+                                    <td colspan="2"><%= cust.frontneck %></td>
+
+                                 </tr>
+                                  <tr>
+                                    <th scope="row">Back neck point to waist length</th>
+                                    <td colspan="2"><%= cust.backneckpoint %></td>
+                                    
+                                 </tr>
+                                  <tr>
+                                    <th scope="row">Torso height</th>
+                                    <td colspan="2"><%= cust.torsoheight %></td>
+                                   
+                                 </tr>
+                              </tbody>
+                           </table>
+                                 
+                           </div>
+                        </div>
+                        <div class="col-xl-3">
+                           <div class="iq-card iq-card-block iq-card-stretch">
+                              <div class="iq-card-body">
+                                 <% let count = 0
+                                 for (let products of orderobj ) { 
+                                    count += products.product.price
+                                 } %>
+                                 <h2 class="mb-0"><span>$</span><span class="counter"><%= count %></span></h2>
+                                 <p class="mb-0">total amount ordered</p>
+                                 <a href="javascript:void();" class="btn btn-success d-block mt-5 mb-5"> Message</a>
+                                 <hr>
+                                 
+                              </div>
+                           </div>
+                            
+                            
+                          
+                        </div>
+                        <div class="col-lg-6">
+                           <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                              <div class="iq-card-header d-flex justify-content-between">
+                                 <div class="iq-header-title">
+                                    <h4 class="card-title"> Order's </h4>
+                                 </div>
+                              </div>
+                              <div class="iq-card-body">
+                                 <div class="table-responcive">
+                                 <table class="table mb-0 table-borderless">
+                                       <thead>
+                                          <tr>
+                                             <th scope="col"></th>
+                                             <th scope="col">Product</th>
+                                             <th scope="col">Invoice</th>
+                                             <th scope="col">Price</th>
+                                             <th scope="col">Status</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <% for (let order of orderobj) { %>
+                                             <tr>
+                                                <td class="text-center">
+                                                   <img class="rounded-circle img-fluid avatar-40" src="/<%= order.customer.picture %>" alt="profile">
+                                                </td>
+                                                <td><%= order.product.name %></td>
+                                                <td>#<%= order.order_id %></td>
+                                                <td>$<%= order.product.price %></td>
+                                                <% if (order.status === "pending") { %>
+                                                   <td><div class="badge badge-pill badge-danger"><%= order.status %></div></td>
+                                                <% } else { %>
+                                                   <td><div class="badge badge-pill badge-success"><%= order.status %></div></td>
+                                                <% } %>
+                                             </tr>
+                                          <% } %>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                  <div class="col-lg-6">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">Top item brought </h4>
+                           </div>
+                        </div>
+                        <div class="iq-card-body">
+                           <table class="table mb-0 table-borderless">
+                                 <thead>
+                                    <tr>
+                                       <th scope="col">Product</th>
+                                       <th scope="col">Price</th>
+                                       <th scope="col">Discount</th>
+                                       <th scope="col">Sold</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <% for (let products of orderobj) { %>
+                                       <tr>
+                                          <td><%= products.product.name %></td>
+                                          <td><%= products.product.price %></td>
+                                          <td>0</td>
+                                          <td><%= products.product_quantity %></td>
+                                       </tr>
+                                    <% } %>
+                                 </tbody>
+                              </table>
+                        </div>
+                     </div>
+                  </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>

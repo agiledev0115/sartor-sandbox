@@ -1,0 +1,96 @@
+#cookieNotice.display-right {
+    right: 30px;
+    bottom: 30px;
+    max-width: 395px;
+}
+#cookieNotice.light {
+    background-color: #2e7b9b;
+    color: #FFF;
+}
+#cookieNotice {
+    box-sizing: border-box;
+    position: fixed;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 6px rgb(0 0 0 / 25%);
+    font-family: inherit;
+    z-index: 999997;
+}
+#cookieNotice #closeIcon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    color: #bfb9b9;
+    overflow: hidden;
+    opacity: .85;
+    z-index: 999999;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: url(../images/close-icon.svg) 0 0 / 20px 20px no-repeat;
+}
+#cookieNotice * {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+#cookieNotice .title-wrap {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    background: url(../images/cookie-icon.svg) 0 0 / 40px 40px no-repeat;
+    padding-left: 45px;
+    height: 40px;
+}
+#cookieNotice .title-wrap svg {
+    margin-right: 10px;
+}
+#cookieNotice h4 {
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 18px;
+}
+#cookieNotice.light p, #cookieNotice.light ul {
+    color: #393d4d;
+    color: var(--cookieNoticeProDark);
+}
+#cookieNotice p, #cookieNotice ul {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+#cookieNotice .btn-wrap {
+    display: flex;
+    flex-direction: row;
+    font-weight: 700;
+    justify-content: center;
+    margin: 0 -5px 0 -5px;
+    flex-wrap: wrap;
+}
+#cookieNotice .btn-wrap button {
+    flex-grow: 1;
+    padding: 0 7px;
+    margin: 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    min-width: 130px;
+    line-height: 36px;
+    border: none;
+    font-family: inherit;
+    font-size: 16px;
+    transition: box-shadow .3s;
+}
+#cookieNotice button {
+    outline: 0;
+    border: none;
+    appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+#cookieNotice .btn-wrap button:hover {
+    transition: box-shadow .4s cubic-bezier(.25,.8,.25,1),transform .4s cubic-bezier(.25,.8,.25,1);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 30%);
+    transform: translate3d(0,-1px,0);
+}

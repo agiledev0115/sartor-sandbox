@@ -1,0 +1,157 @@
+!-- Sidebar  -->
+<%- include ("./partials/sidebars") %>
+
+<!-- TOP Nav Bar -->
+<%- include ("./partials/navbar") %>
+<!-- TOP Nav Bar END -->
+
+<div id="content-page" class="content-page">
+   <div class="container-fluid">
+      <a class="d-inline-block btn btn-primary mt-0 mb-4" href="/customerdata">Back</a>
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="iq-card">
+               <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                     <h4 class="card-title">Add New Customer</h4>
+                  </div>
+               </div>  
+               <div class="iq-card-body">
+                  <form method="post" action="/customerdata/edit" enctype="multipart/form-data">
+                     <div class="form-group">
+                        <div class="add-img-user profile-img-edit">
+                           <img class="profile-pic img-fluid" src="/<%= cust.picture %>" alt="profile-pic">
+                           <div class="p-image">
+                              <a href="javascript:void();" class="upload-button btn iq-bg-primary">File Upload</a>
+                              <input id="picture" name="picture" class="file-upload" type="file" accept="image/*">
+                           </div>
+                        </div>
+                        <div class="img-extension mt-3">
+                           <div class="d-inline-block align-items-center">
+                              <span>Only</span>
+                              <a href="javascript:void();">.jpg</a>
+                              <a href="javascript:void();">.png</a>
+                              <a href="javascript:void();">.jpeg</a>
+                              <span>allowed</span>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="full_name">Name:</label>
+                        <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Name" value="<%= cust.full_name %>" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="phone">Contact:</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Contact" value="<%= cust.phone %>" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<%= cust.email %>"required>
+                     </div>
+                     <div class="form-group">
+                        <label for="country">Country:</label>
+                        <input type="text" class="form-control" id="country" name="country" placeholder="Country" value="<%= cust.country %>" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="city">City:</label>
+                        <input type="text" class="form-control" id="city" name="city" placeholder="City" value="<%= cust.city %>" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="address">Address:</label>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Address" value="<%= cust.address %>"required>
+                     </div>
+                     <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select class="form-control" name="gender" id="gender" required>
+                           <% if(cust.gender === "male") { %>
+                              <option value="male" selected>Male</option>
+                              <option value="female">Female</option>
+                            <% } else { %>
+                               <option value="male">Male</option>
+                               <option value="female"selected>Female</option>
+                            <% } %>
+                        </select>
+                     </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-9">
+            <div class="iq-card">
+               <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                     <h4 class="card-title">Customer Body Measurements</h4>
+                  </div>
+               </div>
+               <div class="iq-card-body">
+                  <div class="new-user-info">
+                        <div class="row">
+                           <div class="form-group col-md-6">
+                              <label for="height">Height:</label>
+                              <input type="text" class="form-control" id="height" name="height" placeholder="Height" value="<%= cust.height %>" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="backshoulder">Back shoulder width:</label>
+                              <input type="text" class="form-control" id="backshoulder" name="backshoulder"
+                                 placeholder="Back shoulder width" value="<%= cust.backshoulder %>" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="outerarm">Outer arm length:</label>
+                              <input type="text" class="form-control" id="outerarm" name="outerarm" placeholder="Outer arm length" value="<%= cust.outerarm %>" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="backneck">Back neck point to waist:</label>
+                              <input type="text" class="form-control" id="backneck" name="backneck"
+                                 placeholder="Back neck point to waist" value="<%= cust.backneck %>" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="chestgirth">Chest girth:</label>
+                              <input type="text" class="form-control" id="chestgirth" name="chestgirth" placeholder="Chest girth" value="<%= cust.chestgirth %>" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="waistgirth">Waist girth:</label>
+                              <input type="text" class="form-control" id="waistgirth" name="waistgirth" placeholder="Waist girth" value="<%= cust.waistgirth %>" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="hipgirth">Hip girth:</label>
+                              <input type="text" class="form-control" id="hipgirth"  name="hipgirth" placeholder="Hip girth" value="<%= cust.hipgirth %>" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="thighgirth">Thigh girth:</label>
+                              <input type="text" class="form-control" id="thighgirth"  name="thighgirth" placeholder="Thigh girth" value="<%= cust.thighgirth %>" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="insideleg">Inside leg height:</label>
+                              <input type="text" class="form-control" id="insideleg"  name="insideleg" placeholder="Inside leg height" value="<%= cust.insideleg %>" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="outsideleg">Outside leg length:</label>
+                              <input type="text" class="form-control" id="outsideleg"  name="outsideleg" placeholder="Outside leg length" value="<%= cust.outsideleg %>" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="frontneck">Front neck height:</label>
+                              <input type="text" class="form-control" id="frontneck"  name="frontneck" placeholder="Front neck height" value="<%= cust.frontneck %>" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="backneckpoint">Back neck point to waist length:</label>
+                              <input type="text" class="form-control" id="backneckpoint"  name="backneckpoint"
+                                 placeholder="Back neck point to waist length" value="<%= cust.backneckpoint %>" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="torsoheight">Torso height:</label>
+                              <input type="text" class="form-control" id="torsoheight"  name="torsoheight" placeholder="Torso height" value="<%= cust.torsoheight %>" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="torsoheight">Torso height:</label>
+                              <input type="hidden" class="form-control" id="id"  name="id" placeholder="Torso height" value="<%= cust._id %>" required>
+                           </div>
+                        </div>
+                        <hr>
+                        <button type="submit" class="btn btn-primary">Edit Customer</button>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

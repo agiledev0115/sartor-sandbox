@@ -1,0 +1,303 @@
+<!-- Sidebar  -->
+<%- include ("./partials/sidebars") %>
+
+<!-- TOP Nav Bar -->
+<%- include ("./partials/navbar") %>
+
+<div id="content-page" class="content-page">
+  <div class="container-fluid">
+    <a class="d-inline-block btn btn-primary mt-0 mb-4" href="/showcase">Back</a>
+    <div class="row">
+      
+      <!-- <div class="col-lg-12">
+        <div class="iq-card">
+          <div class="iq-card-body p-0">
+            <div class="iq-edit-list">
+              <ul class="iq-edit-profile d-flex nav nav-pills">
+                <li class="col-md-3 p-0">
+                  <a class="nav-link active" data-toggle="pill" href="#personal-information">
+                    Brand Information
+                  </a>
+                </li>
+                <li class="col-md-3 p-0">
+                  <a class="nav-link" data-toggle="pill" href="#chang-pwd">
+                    Change Password
+                  </a>
+                </li>
+                <li class="col-md-3 p-0">
+                  <a class="nav-link" data-toggle="pill" href="#emailandsms">
+                    Email and SMS
+                  </a>
+                </li>
+                <li class="col-md-3 p-0">
+                  <a class="nav-link" data-toggle="pill" href="#manage-contact">
+                    Manage Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+       -->
+      <div class="col-lg-12">
+        <div class="iq-edit-list-data">
+          <div class="tab-content">
+            <%- include ('./partials/messages') %>
+            <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
+              <div class="iq-card">
+                <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                    <h4 class="card-title">Brand Information Detail</h4>
+                  </div>
+                </div>
+                <div class="iq-card-body">
+                  <form method="post" action="/showcase/udpatestoredetail" enctype="multipart/form-data">
+                    <div class=" row align-items-center">
+                      <div class="form-group col-sm-6">
+                        <label id="inputGroupFileAddon01" class="mb-4">Upload Showcase Video</label>
+                        <div class="input-group mb-4">
+                             <div class="input-group-prepend">
+                                <span class="input-group-text"
+                                     id="inputGroupFileAddon01">Upload</span>
+                             </div>
+                             <div class="custom-file">
+                                <input type="file" class="custom-file-input upload-video-file"
+                                     id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="video">
+                                 <% if(videoTitle){ %>
+                                 <label id="videoname" class="custom-file-label"
+                                     for="inputGroupFile01"><%= videoTitle %></label>
+                                  <% }else{ %>
+                                 <label id="videoname" class="custom-file-label"
+                                     for="inputGroupFile01">Choose file</label>
+                                  <% } %>
+                             </div>
+                         </div>
+                       </div>
+                       <% if(brand.show_case_video){ %>
+                         <div class="video-prev mb-3 mt-5 m-auto"
+                             class="pull-right">
+                             <video height="200" width="300" class="video-preview"
+                                 controls="controls" src="/<%= brand.show_case_video %>" ></video>
+                         </div>
+                       <% }else{ %>
+                         <div style="display: none;" class="video-prev mb-3 mt-5 m-auto"
+                             class="pull-right">
+                             <video height="200" width="300" class="video-preview"
+                                 controls="controls"></video>
+                         </div>
+                       <% } %>
+                      <div class="form-group col-sm-6">
+                        <label for="fname">About Store:</label>
+                        <textarea class="form-control" name="about_store" placeholder="About Store:"><%= brand.about %></textarea>                      </div>                      
+                      <div class="form-group col-sm-6">
+                        <label for="fname">public policy:</label>
+                        <textarea class="form-control" name="public_policy" placeholder="public policy:"><%= brand.privacy_policy %></textarea>
+                      </div>                      
+                      <div class="form-group col-sm-6">
+                        <label for="fname">refund policy:</label>
+                        <textarea class="form-control" name="refund_policy" placeholder="refund policy:"><%= brand.refund_policy %></textarea>
+                      </div>                      
+                      <div class="form-group col-sm-6">
+                        <label for="fname">Shipping policy:</label>
+                        <textarea class="form-control" name="shiping_policy" placeholder="Shipping policy:"><%= brand.shiping_policy %></textarea>
+                      </div>                      
+                      <div class="form-group col-sm-6">
+                        <label for="fname">Terms of services:</label>
+                        <textarea class="form-control" name="terms_of_services" placeholder="term of service:"><%= brand.terms_of_services %></textarea>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button type="reset" class="btn iq-bg-danger">Cancle</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="tab-pane fade" id="chang-pwd" role="tabpanel">
+              <div class="iq-card">
+                <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                    <h4 class="card-title">Change Password</h4>
+                  </div>
+                </div>
+                <div class="iq-card-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="cpass">Current Password:</label>
+                      <a href="javascripe:void();" class="float-right">Forgot Password</a>
+                      <input type="Password" class="form-control" id="cpass" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="npass">New Password:</label>
+                      <input type="Password" class="form-control" id="npass" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="vpass">Verify Password:</label>
+                      <input type="Password" class="form-control" id="vpass" value="">
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button type="reset" class="btn iq-bg-danger">Cancle</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="emailandsms" role="tabpanel">
+              <div class="iq-card">
+                <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                    <h4 class="card-title">Email and SMS</h4>
+                  </div>
+                </div>
+                <div class="iq-card-body">
+                  <form>
+                    <div class="form-group row align-items-center">
+                      <label class="col-md-3" for="emailnotification">Email Notification:</label>
+                      <div class="col-md-9 custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="emailnotification" checked="">
+                        <label class="custom-control-label" for="emailnotification"></label>
+                      </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                      <label class="col-md-3" for="smsnotification">SMS Notification:</label>
+                      <div class="col-md-9 custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="smsnotification" checked="">
+                        <label class="custom-control-label" for="smsnotification"></label>
+                      </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                      <label class="col-md-3" for="npass">When To Email</label>
+                      <div class="col-md-9">
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="email01">
+                          <label class="custom-control-label" for="email01">You have new notifications.</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="email02">
+                          <label class="custom-control-label" for="email02">You're sent a direct message</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="email03" checked="">
+                          <label class="custom-control-label" for="email03">Someone adds you as a connection</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                      <label class="col-md-3" for="npass">When To Escalate Emails</label>
+                      <div class="col-md-9">
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="email04">
+                          <label class="custom-control-label" for="email04"> Upon new order.</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="email05">
+                          <label class="custom-control-label" for="email05"> New membership approval</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="email06" checked="">
+                          <label class="custom-control-label" for="email06"> Member registration</label>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button type="reset" class="btn iq-bg-danger">Cancle</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="manage-contact" role="tabpanel">
+              <div class="iq-card">
+                <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                    <h4 class="card-title">Manage Contact</h4>
+                  </div>
+                </div>
+                <div class="iq-card-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="cno">Contact Number:</label>
+                      <input type="text" class="form-control" id="cno" value="001 2536 123 458">
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email:</label>
+                      <input type="text" class="form-control" id="email" value="nikjone@demo.com">
+                    </div>
+                    <div class="form-group">
+                      <label for="url">Url:</label>
+                      <input type="text" class="form-control" id="url" value="https://getbootstrap.com">
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button type="reset" class="btn iq-bg-danger">Cancle</button>
+                  </form>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $(function () {
+       $('.upload-video-file').on('change', function () {
+           if (isVideo($(this).val())) {
+              let VideoDuration = 0;
+              let Vid = document.createElement('video');
+              let fileURL = URL.createObjectURL(this.files[0]);
+              Vid.src = fileURL;
+              Vid.ondurationchange = function() {
+                VideoDuration = this.duration;
+              };
+              let that = this;
+              setTimeout(function() {
+                if(VideoDuration <= 30){
+                  $('.video-preview').attr('src', URL.createObjectURL(that.files[0]));
+                  $('.video-prev').show();
+                  let name = that.files[0].name;
+                  let ext = getExtension(name);
+                  $("#videoname").css({
+                      fontSize: 13
+                  })
+                  if (name.length > 10) {
+                      let newName = that.files[0].name.substring(0, 40)
+                      $("#videoname").text(newName + "..." + ext);
+                  } else {
+                      $("#videoname").text(that.files[0].name);
+                  }
+                } else {
+                  alert("A video of more than 30 sec is not allowed.")
+                  $('.upload-video-file').val('');
+                  $('.video-prev').hide();
+                }
+              }, 500);
+             } else {
+                $('.upload-video-file').val('');
+                $('.video-prev').hide();
+                // alert("Only video files are allowed to upload.")
+             }
+       });
+      });
+
+      function isVideo(filename) {
+         let ext = getExtension(filename);
+         switch (ext.toLowerCase()) {
+             case 'm4v':
+             case 'avi':
+             case 'mp4':
+             case 'mov':
+             case 'mpg':
+             case 'mpeg':
+                 return true;
+         }
+         return false;
+     }
+
+     function getExtension(filename) {
+         var parts = filename.split('.');
+         return parts[parts.length - 1];
+     }
+
+  });
+</script>

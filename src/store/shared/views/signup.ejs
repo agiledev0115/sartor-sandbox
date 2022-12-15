@@ -1,0 +1,116 @@
+<section class="sign-in-page">
+  <div class="container bg-white p-0">
+    <div class="row no-gutters vh-100">
+      <div class="col-sm-6 align-self-center">
+        <div class="sign-in-from">
+          <h1 class="mb-0">Sign Up</h1>
+          <%- include ('./partials/messages') %>
+            <div class="stepwizard mt-4" style="display: none;">
+              <div class="stepwizard-row setup-panel">
+                <div id="user" class="wizard-step active">
+                  <a href="#first-step" class="active btn"></a>
+                </div>
+                <div id="document" class="wizard-step">
+                  <a href="#second-step" class="btn btn-default disabled"></a>
+                </div>
+                <div id="bank" class="wizard-step">
+                  <a href="#third-step" class="btn btn-default disabled"></a>
+                </div>
+              </div>
+            </div>
+            <form method="POST" action="/app/register" class="mt-4 needs-validation" enctype="multipart/form-data"
+              novalidate>
+              <div class="row setup-content" id="first-step">
+                <div class="col-sm-12">
+                  <div class="col-md-12 p-0">
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label for="validationCustom01" class="form-label">First Name</label>
+                        <input type="text" class="form-control mb-0" id="validationCustom01" name="first_name"
+                          placeholder="Your First Name" required>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="validationCustom02" class="form-label">Last Name</label>
+                        <input type="text" class="form-control mb-0" id="validationCustom02" name="last_name"
+                          placeholder="Your Last Name" required>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+                  </div>
+                </div>
+              </div>
+              <div class="row setup-content" id="second-step">
+                <div class="col-sm-12">
+                  <div class="col-md-12 p-0">
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label for="validationCustom03" class="form-label">Email address</label>
+                        <input type="email" class="form-control mb-0" id="validationCustom03" name="username"
+                          placeholder="Enter email" required>
+                      </div>
+                      <div class="form-group col-md-6"></div>
+                      <div class="form-group col-md-6">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control mb-0" id="password" name="password"
+                          placeholder="Password" required>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="confirmpassword" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control mb-0" id="confirmpassword" name="c_password"
+                          placeholder="Confirm Password" required>
+                        <div class="form-text confirm-message"></div>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+                  </div>
+                </div>
+              </div>
+              <div class="row setup-content" id="third-step">
+                <div class="col-sm-12">
+                  <div class="col-md-12 p-0">
+                    <div class="row">
+                      <h3>Brand Name</h3>
+                      <div class="col-md-12 mb-3">
+                        <label for="validationCustom06" class="form-label">Brand Name</label>
+                        <input type="text" class="form-control" id="validationDefault06" name="brandName"
+                          placeholder="Brand Name" required>
+                      </div>
+                      <div class="col-md-12 mb-3">
+                        <label for="validationCustom07" class="form-label">Upload Brand Logo</label>
+                        <input type="file" id="validationDefault07" name="uploadPicture" placeholder="Upload Picture">
+                      </div>
+                      <input type="hidden" name="role" value="salers" />
+                    </div>
+                    <div class="d-inline-block w-100">
+                      <button type="submit" class="btn btn-primary float-left">Sign Up</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="sign-info">
+                <span class="dark-color d-inline-block line-height-2">Already Have Account ? <a href="/">Log
+                    In</a></span>
+              </div>
+            </form>
+        </div>
+      </div>
+      <%- include ('./partials/sign_log_carousel') %>
+    </div>
+  </div>
+</section>
+
+<!-- <script>
+  $('#password, #confirmpassword').on('keyup', function () {
+    $('.confirm-message').removeClass('success-message').removeClass('error-message');
+
+    let password = $('#password').val();
+    let confirm_password = $('#confirmpassword').val();
+
+    if (confirm_password === password) {
+      $('.confirm-message').text('').addClass('success-message');
+    }
+    else if (confirm_password != "" && confirm_password !== password) {
+      $('.confirm-message').text("Password Doesn't Match!").css("color", "red");
+    }
+  });
+</script> -->

@@ -1,0 +1,84 @@
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <%- include ("./partials/sidebars") %>
+    
+    <!-- TOP Nav Bar -->
+    <%- include ("./partials/navbar") %>
+    <!-- TOP Nav Bar END -->
+    <!-- Page Content  -->
+    <div id="content-page" class="content-page">
+       <div class="container-fluid">
+          <div class="row">
+             <div class="col-lg-8 row m-0 p-0">
+                <div class="col-md-12">
+                   <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-card-body">
+                                <div class="m-2">
+                                 <h4 class="card-title m-10"><%= blog.title %></h4>
+                                </div>
+                                <div>
+                                 <img class="m-auto" style="width: 620px;" src="<%= blog.image %>"> 
+                                </div>
+                                <BR>
+                                 <div class="m-2">
+                                    <p class="m-10"><%- blog.story %></p>
+                                 </div>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+             </div>
+
+             <div class="col-lg-4">
+                <div class="iq-card iq-card-stretch iq-card-height">
+                   <div class="iq-card-header d-flex justify-content-between">
+                      <div class="iq-header-title">
+                         <h4 class="card-title">Blog Lists</h4>
+                      </div>
+                     
+                   </div>
+                   <div class="iq-card-body">
+                     <ul class="suggestions-lists m-0 p-0">
+                        <%
+                                             if(blogs.length!=0){
+                                             var i=1;
+                                             blogs.forEach(function(data){
+                                          %>
+                      <li class="d-flex mb-4 align-items-center">
+                         <div class="profile-icon bg-primary"><span><img style="width: 40px; position: relative; top: -2px;" src="/<%= data.image %>" /></span></div>
+                         <div class="media-support-info ml-3">
+                            <h6>
+                              <form action="/blogdetail" method="post">
+                                 <input type="hidden" name="blogid" value="<%= data.id %>">
+                                 <button type="submit" class="btn btn-link"><%=data.title %></button>
+                             </form>
+                              <form action="/app/blog/remove" method="post">
+                                 <input type="hidden" name="blogid" value="<%= data.id %>">
+                                 <% switch(user.role)
+                                 {
+                                    case 'super_admin':
+                                    case 'admin': %>
+                                    <a href="/blogedit/<%= data.id %>" class="btn btn-link mb-3 float-right"><i class="ri-edit-2-fill"></i></a>
+                                       <button type="submit" class="btn btn-link mb-3 float-right"><i class="ri-delete-bin-6-fill"></i></button>
+                                 <%    break;
+                                    default: } %>
+                              </form>
+                            </h6>
+                            <p class="mb-0"><%=data.created_at %></p>
+
+                         </div>
+                         
+                      </li>
+                      <%  i++; }); } else{ %>
+                            <li class="d-flex mb-4 align-items-center"> No Blog yet </li>
+                       <% } %>
+                        
+                    </ul>
+                   </div>
+                </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>

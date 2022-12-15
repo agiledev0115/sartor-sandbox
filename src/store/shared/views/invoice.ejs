@@ -1,0 +1,180 @@
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <%- include ("./partials/sidebars") %>
+
+    <!-- TOP Nav Bar -->
+    <%- include ("./partials/navbar") %>
+    <!-- TOP Nav Bar END -->
+    <!-- Page Content  -->
+
+    
+    <body>
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+        <form action="/invoice/update" method="post" enctype="application/x-www-form-urlencoded" >
+            <div class="row">
+                <div class="col-sm-12">
+                    <%- include ('./partials/messages') %>
+                    <div class="iq-card">
+                        <div class="iq-card-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <img src="/<%= orders.customer.picture %>" class="img-fluid w-25" alt="" />
+                                </div>
+                                <div class="col-lg-6 align-self-center">
+                                    <h4 class="mb-0 float-right">Invoice</h4>
+                                </div>
+                                <div class="col-sm-12">
+                                    <hr class="mt-3" />
+                                    <h5 class="mb-0"><%= orders.customer.full_name %></h5>
+                                    <p>
+                                        <%= orders.message %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive-sm">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Order Date</th>
+                                                    <th scope="col">Order Status</th>
+                                                    <th scope="col">Order ID</th>
+                                                    <th scope="col">Shipping Address</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><%= orders.created_at %></td>
+                                                    <td>
+                                                        <div class="custom-control custom-switch custom-control-inline">
+                                                            <% if (orders.status !== 'pending') {  %>
+                                                                <input type="checkbox" class="custom-control-input" id="customSwitch1" name="checkbox" checked />
+                                                            <% } else { %>
+                                                                <input type="checkbox" class="custom-control-input" id="customSwitch1" name="checkbox" />
+                                                            <% } %>
+                                                            <label class="custom-control-label" for="customSwitch1">Pending / Fulfilled</label>
+                                                        </div>
+                                                    </td>
+                                                    <td><%= orders.order_id %></td>
+                                                    <td>
+                                                        <p class="mb-0">
+                                                            <%= orders.customer.city %><br />
+                                                            Phone: <%= orders.customer.phone %><br />
+                                                            Email: <%= orders.customer.email %><br />
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h5>Order Summary</h5>
+                                    <div class="table-responsive-sm">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center" scope="col">#</th>
+                                                    <th scope="col">Item</th>
+                                                    <th class="text-center" scope="col">Quantity</th>
+                                                    <th class="text-center" scope="col">Price</th>
+                                                    <th class="text-center" scope="col">Totals</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th class="text-center" scope="row">1</th>
+                                                    <td>
+                                                        <h6 class="mb-0"><%= orders.product.name %></h6>
+                                                        <!-- <p class="mb-0"><%= orders.product.description %></p> -->
+                                                    </td>
+                                                    <td class="text-center"><%= orders.product_quantity %></td>
+                                                    <td class="text-center">$<%= orders.product.price %></td>
+                                                    <td class="text-center"><b>$<%= orders.product.price * orders.product_quantity %></b></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <div class="iq-card">
+                                    <div class="iq-card-header d-flex justify-content-between">
+                                        <div class="iq-header-title">
+                                            <h4 class="card-title">Customer Body measurement</h4>
+                                        </div>
+                                    </div>
+                                    <div class="iq-card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Gender(M/F)</th>
+                                                    <th scope="col">Height(in)</th>
+                                                    <th scope="col">Back shoulder width(in)</th>
+                                                    <th scope="col">Outer arm length(in)</th>
+                                                    <th scope="col">Back neck point to waist(in)</th>
+                                                    <th scope="col">Chest girth(in)</th>
+                                                    <th scope="col">Waist girth(in)</th>
+                                                    <th scope="col">Hip girth(in)</th>
+                                                    <th scope="col">Thigh girth(in)</th>
+                                                    <th scope="col">Inside leg height(in)</th>
+                                                    <th scope="col">Ouside leg length(in)</th>
+                                                    <th scope="col">Front neck height(in)</th>
+                                                    <th scope="col">BackNeck point to wrist length(in)</th>
+                                                    <th scope="col">Torso height(in)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row"><%= orders.customer.gender %></th>
+                                                    <td><%= orders.customer.height %></td>
+                                                    <td><%= orders.customer.backshoulder %></td>
+                                                    <td><%= orders.customer.outerarm %></td>
+                                                    <td><%= orders.customer.backneck %></td>
+                                                    <td><%= orders.customer.chestgirth %></td>
+                                                    <td><%= orders.customer.waistgirth %></td>
+                                                    <td><%= orders.customer.hipgirth %></td>
+                                                    <td><%= orders.customer.thighgirth %></td>
+                                                    <td><%= orders.customer.insideleg %></td>
+                                                    <td><%= orders.customer.outsideleg %></td>
+                                                    <td><%= orders.customer.frontneck %></td>
+                                                    <td><%= orders.customer.backneckpoint %></td>
+                                                    <td><%= orders.customer.torsoheight %></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="validationCustom01">Tracking Number</label>
+                                    <input type="text" class="form-control" id="validationCustom01" disabled value="<%= orders.tracking_n %>" />
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 mt-5">
+                                    <div class="mb-3">
+                                        <label for="validationTextarea">Note</label>
+                                        <textarea class="form-control" id="validationTextarea" placeholder="Message" name="note"><%= orders.note %></textarea>
+                                        <div class="invalid-feedback">
+                                            Please enter a message in the textarea.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6"></div>
+                                <div class="col-sm-6 text-right">
+                                    <input type="hidden" name="id" value="<%= orders._id %>">
+                                    <button type="button" class="btn btn-link mr-3"><i class="ri-printer-line"></i> Download Print</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+
+    </body>

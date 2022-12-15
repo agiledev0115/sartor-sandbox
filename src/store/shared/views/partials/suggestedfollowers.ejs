@@ -1,0 +1,18 @@
+<% if (otherbrands.length){ %>
+  <% for (const [index, brand] of otherbrands.entries()){ %>
+    <li class="d-flex mb-4 align-items-center">
+      <div class="user-img img-fluid"><img src="<%= brand.brands.img %>" alt="story-img"
+          class="rounded-circle avatar-40" /></div>
+      <div class="media-support-info ml-3">
+        <h6><%= brand.brands.title %></h6>
+        <p class="mb-0">0 mutual friends</p>
+      </div>
+      <% if( JSON.stringify(brand.brands.followers).includes(JSON.stringify(user.internal.brands._id))){%>
+        <div class="add-suggestion add-suggestion-follow"><img src="https://api.iconify.design/akar-icons/person-check.svg"></div>
+      <%} else { console.log(JSON.stringify(brand.brands.followers)); console.log(JSON.stringify(user.internal.brands._id));
+      %>
+        <div class="add-suggestion add-suggestion-follow"><a class="Follow-brand" href="javascript:void();" ><i data-brand="<%= brand.brands._id %>" data-type="follow" class="ri-user-add-line"></i></a></div>
+      <%} %>
+    </li>
+  <% } %>
+<% } %>

@@ -1,0 +1,243 @@
+<style>
+    .box {
+      position: relative;
+      background: #ffffff;
+      width: 100%;
+    }
+     
+    .box-header {
+      color: #444;
+      display: block;
+      padding: 10px;
+      position: relative;
+      border-bottom: 1px solid #f4f4f4;
+      margin-bottom: 10px;
+    }
+     
+    .box-tools {
+      position: absolute;
+      right: 10px;
+      top: 5px;
+    }
+     
+    .dropzone-wrapper {
+      border: 2px dashed #91b0b3;
+      color: #92b0b3;
+      position: relative;
+      height: 150px;
+    }
+     
+    .dropzone-desc {
+      position: absolute;
+      margin: 0 auto;
+      left: 0;
+      right: 0;
+      text-align: center;
+      width: 40%;
+      top: 50px;
+      font-size: 16px;
+    }
+     
+    .dropzone,
+    .dropzone:focus {
+      position: absolute;
+      outline: none !important;
+      width: 100%;
+      height: 150px;
+      cursor: pointer;
+      opacity: 0;
+    }
+     
+    .dropzone-wrapper:hover,
+    .dropzone-wrapper.dragover {
+      background: #ecf0f5;
+    }
+     
+    .preview-zone {
+      text-align: center;
+    }
+     
+    .preview-zone .box {
+      box-shadow: none;
+      border-radius: 0;
+      margin-bottom: 0;
+    }
+     
+    .btn-primary {
+      background-color: crimson;
+      border: 1px solid #212121;
+    }
+</style>
+    <!-- Sidebar  -->
+    <%- include ("./partials/sidebars") %>
+    
+    <!-- TOP Nav Bar -->
+    <%- include ("./partials/navbar") %>
+    <!-- TOP Nav Bar END -->
+    <!-- Page Content  -->
+<div class="wrapper">
+    <div id="content-page" class="content-page">
+       <div class="container-fluid">
+          <div class="row">
+             <div class="col-lg-6 row m-0 p-0">
+                <div class="col-md-12">
+                   <div class="iq-card iq-card-stretch iq-card-height">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="col-md-12 iq-card-body">
+                                <%- include ("./partials/messages") %>
+                                <h4 class="card-title">Profile</h4>
+                                <table class="table table-responsive-md table-striped text-center">
+                                    <thead>
+                                      <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Username</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <form action="/app/change_profile" method="post" enctype="multipart/form-data">
+                                            <tr>
+                                                <td><input style="border-color: transparent" type="text" class="form-control" name="first_name" value="<%= user.internal.first_name; %>"></td>
+                                                <td><input style="border-color: transparent" type="text" class="form-control" name="last_name" value="<%= user.internal.last_name; %>"></td>
+                                                <td><input style="border-color: transparent" type="text" class="form-control" name="username" value="<%= user.username; %>"></td>
+                                                <input type="hidden" name="userid" value="<%= user.id %>">
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td colspan="3"><button type="submit" class="float-left btn btn-primary">Update <i class="ri-edit-line"></i></button></td>
+                                            </tr>
+                                        </form>
+                                    </tbody>
+                                </table>
+                                    
+                            </div>
+                         </div>
+                   </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="col-md-12 iq-card-body">
+                                <h4 class="card-title">Change Password</h4>
+                                <form class="form-horizontal" action="/app/change_password" method="post">
+                                    <div class="form-group row">
+                                       <label class="control-label col-sm-2 align-self-center mb-0" for="email">Old Password:</label>
+                                       <div class="col-sm-10">
+                                          <input type="password" class="form-control" name="old" id="pwd" placeholder="Password" required>
+                                       </div>
+                                    </div>
+                                    <div class="form-group row">
+                                       <label class="control-label col-sm-2 align-self-center mb-0" for="pwd1">New Password:</label>
+                                       <div class="col-sm-10">
+                                          <input type="password" class="form-control" name="newPass" id="pwd1" placeholder="New password" required>
+                                       </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="control-label col-sm-2 align-self-center mb-0" for="pwd1">Confirm Password:</label>
+                                        <div class="col-sm-10">
+                                           <input type="password" class="form-control" name="confrm" id="pwd2" placeholder="Confirm password" required>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="userid" value="<%= user.id %>"/>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Update <i class="ri-edit-line"></i></button>
+                                        <button type="reset" class="btn iq-bg-danger">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6 row m-0 p-0">
+               
+                <div class="col-md-12">
+                    <div class="iq-card iq-card-stretch iq-card-height">
+                         <div class="iq-card-header d-flex justify-content-between">
+                             <div class="col-md-12 iq-card-body">
+                                <div class="form-group">
+                                    <form method="post" action="/app/uploadProfile" enctype="multipart/form-data">
+                                        <label for="exampleFormControlFile1"><h3>Profile Picture</h3></label>
+                                        <input type="file" name="picture" class="form-control-file" id="exampleFormControlFile1">
+                                        <div class="row">
+                                            <div class="col-md-6 row m-0 p-0">
+                                                <input type="hidden" name="userid" value="<%= user.internal.id %>" />
+                                            </div>
+                                            <div class="col-md-6 row m-0 p-0">
+                                                <button style="position: relative; top: -32px;" type="submit" class="float-right btn btn-primary">Upload <i class="ion-upload"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <h4>My Profile Picture</h4>
+                                    <% if(user.internal.picture == null) { %>
+                                        <img src="/images/user/default-user.png" class="img-fluid rounded mr-3" alt="user">
+                                    <% } else { %>
+                                      <img src="<%= user.internal.picture %>" class="img-fluid rounded mr-3" alt="user">
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+<script>
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+            
+                reader.onload = function(e) {
+                    var htmlPreview =
+                        '<img width="200" src="' + e.target.result + '" />' +
+                        '<p>' + input.files[0].name + '</p>';
+                    var wrapperZone = $(input).parent();
+                    var previewZone = $(input).parent().parent().find('.preview-zone');
+                    var boxZone = $(input).parent().parent().find('.preview-zone').find('.box').find('.box-body');
+                
+                    wrapperZone.removeClass('dragover');
+                    previewZone.removeClass('hidden');
+                    boxZone.empty();
+                    boxZone.append(htmlPreview);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    
+        function reset(e) {
+            e.wrap('<form>').closest('form').get(0).reset();
+            e.unwrap();
+        }
+        
+        $(".dropzone").change(function() {
+            readFile(this);
+        });
+        
+        $('.dropzone-wrapper').on('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).addClass('dragover');
+        });
+        
+        $('.dropzone-wrapper').on('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('dragover');
+        });
+        
+        $('.remove-preview').on('click', function() {
+            var boxZone = $(this).parents('.preview-zone').find('.box-body');
+            var previewZone = $(this).parents('.preview-zone');
+            var dropzone = $(this).parents('.form-group').find('.dropzone');
+            boxZone.empty();
+            previewZone.addClass('hidden');
+            reset(dropzone);
+        });
+    </script>

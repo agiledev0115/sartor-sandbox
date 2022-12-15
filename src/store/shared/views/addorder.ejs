@@ -1,0 +1,122 @@
+!-- Sidebar -->
+<%- include ("./partials/sidebars") %>
+
+<!-- TOP Nav Bar -->
+<%- include ("./partials/navbar") %>
+<!-- TOP Nav Bar END -->
+
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-lg-15">
+            <div class="iq-card">
+               <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                     <h4 class="card-title">Order Information</h4>
+                  </div>
+               </div>
+               <div class="iq-card-body">
+                  <div class="new-user-info">
+                     <form method="post" action="/order/add" enctype="application/x-www-form-urlencoded">
+                        <div class="row">
+                           <div class="form-group col-md-6">
+                              <label for="customer">Select Customer:</label>
+                              <select class="custom-select" name="customer" id="customer" required>
+                                <option value="" selected disabled hidden>Select a Customer</option>
+                                <% for (customer of customers) { %>
+                                  <option value="<%= customer._id %>"><%= customer.full_name %></option>
+                                <% } %>
+                              </select>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="product">Product:</label>
+                              <select class="custom-select" name="product" id="product" required>
+                                <option value="" selected disabled hidden>Select a Product</option>
+                                <% for (product of products) { %>
+                                  <option value="<%= product._id %>"><%= product.name %></option>
+                                <% } %>
+                              </select>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="shipping_address">Shipping Address:</label>
+                              <input type="text" class="form-control" id="shipping_address" name="shipping_address" placeholder="Shipping Address" required>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <label for="billing_address">Billing Address:</label>
+                              <input type="text" class="form-control" id="billing_address" name="billing_address" placeholder="Billing Address" required>
+                           </div>
+                           <div class="form-group col-md-4">
+                            <label for="backneck">Product Quantity:</label>
+                            <input type="number" class="form-control" id="product_quantity" name="product_quantity" placeholder="Product Quantity" required>
+                            <!-- <select class="custom-select" name="product_quantity" id="product_quantity" required>
+                              <option value="" selected disabled hidden>Select a Quantity</option>
+                              <% for (let i = 1; i <= Array(20).fill(null).length; i++) { %>
+                                <option value="<%= i %>"><%= i %></option>
+                              <% } %>
+                            </select> -->
+                           </div>
+                           <div class="form-group col-md-4">
+                              <label for="status">Status:</label>
+                              <select class="custom-select" name="status" id="status">
+                                 <option value="pending" selected>Pending</option>
+                                 <option value="fulfilled">Fulfilled</option>
+                                 <option value="retuned">Retuned</option>
+                              </select>
+                           </div>
+                           <div class="form-group col-md-4">
+                              <label for="sku">SKU</label>
+                              <input type="text" class="form-control" id="sku" name="sku" placeholder="SKU" required>
+                           </div>
+                           <div class="form-group col-md-12">
+                              <label for="meta_discription">Meta Description</label>
+                              <input type="text" class="form-control" id="meta_discription" name="meta_discription" placeholder="Meta Description" required>
+                           </div>
+                           <div class="form-group col-md-4">
+                              <label for="stock">Stock</label>
+                              <input type="number" class="form-control" id="stock" name="stock" placeholder="Stock Quantity" required>
+                           </div>
+                           <div class="form-group col-md-4">
+                              <label for="weight">Weight</label>
+                              <input type="text" class="form-control" id="weight" name="weight" placeholder="Weight" required>
+                           </div>
+                           <div class="form-group col-md-4">
+                              <label for="product_color">Color</label>
+                              <input type="text" class="form-control" id="product_color" name="product_color" placeholder="Color" required>
+                           </div>
+                           <div class="form-group col-md-4">
+                              <div class="custom-control custom-switch custom-control-inline">
+                                 <input type="checkbox" name="preorder" class="custom-control-input" id="preorder" />
+                                 <label class="custom-control-label" for="preorder">Is preorder</label>
+                              </div>
+                           </div>
+                           <div class="form-group col-md-4">
+                              <div class="custom-control custom-switch custom-control-inline">
+                                 <input type="checkbox" name="allow_backorder" class="custom-control-input" id="allow_backorder" />
+                                 <label class="custom-control-label" for="allow_backorder">Allow backorder</label>
+                              </div>
+                           </div>
+                           <div class="form-group col-md-4">
+                              <div class="custom-control custom-switch custom-control-inline">
+                                 <input type="checkbox" name="discontunied" class="custom-control-input" id="discontunied" />
+                                 <label class="custom-control-label" for="discontunied">Discontunied</label>
+                              </div>
+                           </div>
+                           <div class="form-group col-md-12">
+                              <!-- <label for="message">Message:</label>
+                              <input type="text" class="form-control" id="message" name="message"
+                                 placeholder="Message" required> -->
+                              <label for="message">Message:</label>
+                              <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+                           </div>
+                        </div>
+                        <hr>
+                        <button type="submit" class="btn btn-primary">Add New Order</button>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,142 @@
+<!-- Sidebar  -->
+<%- include ("./partials/sidebars") %>
+    
+<!-- TOP Nav Bar -->
+<%- include ("./partials/navbar") %>
+
+
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <%- include ("./partials/messages") %>
+        <div class="row">
+            <div class="col-lg-12 row m-0 p-0">
+            <% if(user.role == 'super_admin' || user.role == 'admin') { %>
+                <% if(product.length!=0){
+                    var i=1;
+                    product.forEach(function(data){ %>
+                <div class="col-md-3">
+                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-card-body">
+                                <div class="text-center">
+                                    <div class="h-56 d-flex align-items-center justify-content-center bg-white iq-border-radius-15">
+                                        <img src="<%=data.img.img0 %>" align="left" alt="<%=data.name %>" style="width: 60%" />
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-justify">
+                                            <div class="mt-8">
+                                                <a style="font-size: 17px;" href="/app/product/<%= data.id %>"><%=data.name %></a> 
+                                            </div>  
+                                          <p class="font-size-12 mb-0"><%=data.store %> <hr> Brand: <strong><%=data.brands.title %></strong></p>
+                                          <p class="font-size-16">Price $<%= thousands_separators(data.price) %></p>
+                                          <div class="ratting">
+                                              <ul class="ratting-item d-flex p-0 m-0">
+                                                  <% if((data.rating == 0) || (data.rating == '') || (data.rating == null)) { %>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                 <% } else {
+                                                     if(data.rating == 5)
+                                                     { %>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                     <% } else {
+                                                            let i = 0; let e = 0;
+                                                            var iEmpty = 5 - data.rating
+                                                            while (i < data.rating) { %>
+                                                                <li class="full"><i class="ri-star-fill"></i></li>
+                                                                <% i++;
+                                                            }
+                                                            while (e < iEmpty) { %>
+                                                                <li class="full"><i class="ri-star-line"></i></li>
+                                                                <% e++;
+                                                            }
+                                                        }
+                                                    }%>
+                                               </ul>
+                                           </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%  i++; }); } }
+                <!---->
+                if(user.role == 'salers') {
+                   if(YourProducts.length!=0){
+                    var i=1;
+                    YourProducts.forEach(function(data){ 
+                %>
+                <div class="col-md-3">
+                    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-card-body">
+                                <div class="text-center">
+                                    <div class="h-56 d-flex align-items-center justify-content-center bg-white iq-border-radius-15">
+                                        <img src="<%=data.img.img0 %>" align="left" alt="<%=data.name %>" style="width: 90%" />
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-justify">
+                                            <form action="/detail" method="post">
+                                                <input type="hidden" value="<%= data.id %>" name="productid" />
+                                                <button type="submit" class="btn btn-link mb-3"><%=data.name %></button>
+                                            </form>
+                                          <p class="font-size-12 mb-0"><%=data.store %> <hr> Brand: <strong><%=data.brands.title %></strong></p>
+                                          <p class="font-size-16">Price $<%= thousands_separators(data.price) %></p>
+                                          <div class="ratting">
+                                              <ul class="ratting-item d-flex p-0 m-0">
+                                                  <% if((data.rating == 0) || (data.rating == '') || (data.rating == null)) { %>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                    <li class="full"><i class="ri-star-line"></i></li>
+                                                 <% } else {
+                                                     if(data.rating == 5)
+                                                     { %>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                                     <% } else {
+                                                            let i = 0; let e = 0;
+                                                            var iEmpty = 5 - data.rating
+                                                            while (i < data.rating) { %>
+                                                                <li class="full"><i class="ri-star-fill"></i></li>
+                                                                <% i++;
+                                                            }
+                                                            while (e < iEmpty) { %>
+                                                                <li class="full"><i class="ri-star-line"></i></li>
+                                                                <% e++;
+                                                            }
+                                                        }
+                                                    }%>
+                                              </ul>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%  i++; }); } } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% function thousands_separators(num)
+{
+  var num_parts = num.toString().split(".");
+	num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return num_parts.join(".");
+} %>

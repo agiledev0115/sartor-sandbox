@@ -1,0 +1,101 @@
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <%- include ("./partials/sidebars") %>
+    
+    <!-- TOP Nav Bar -->
+    <%- include ("./partials/navbar") %>
+    <!-- TOP Nav Bar END -->
+    
+    <!-- Page Content  -->
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+            
+            <%- include ("./partials/messages") %>
+            <div class="row">
+                <div class="col-lg-4 row m-0 p-0">
+                    <div class="col-md-12">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                            <div class="iq-card-header d-flex justify-content-between">
+                                <div class="iq-card-body">
+                                    
+                                    <h2 class="card-title"><div data-icon="Q" class="icon"> <span>Checkout</span></div> </h2>
+                                    <span class="icon" data-icon="P"> <%= checkdata.cardname %> </span> <br>
+                                    <i class="fa fa-id-card" aria-hidden="true"></i> <%= checkdata.cardnumber %> <BR>
+                                    <i class="fa fa-id-card" aria-hidden="true"></i> Expiry Month <%= checkdata.cardExpirmont %> <BR>
+                                    <i class="fa fa-id-card" aria-hidden="true"></i> Expiry Year <%= checkdata.cardExpirYear %><hr>
+                                    <h4>Billing Address</h4>
+                                        Billing  <%= checkdata.billing %> <BR>
+                                        Country  <%= checkdata.country %> <BR>
+                                            State  <%= checkdata.state %> <BR>
+                                            ZipCode  <%= checkdata.zipcode %> <BR><HR>
+                                    <h4>Payment Amount <strong><u>$<%= thousands_separators(checkdata.amount) %></u></strong></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 row m-0 p-0">
+                    <div class="col-md-12">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                            <div class="iq-card-header d-flex justify-content-between">
+                                <div class="iq-card-body">
+                                    <h2>Products Bought <i class="fa fa-folder" aria-hidden="true"></i></h2><BR>
+                                    <% if(sales.length!=0){
+                                        var i=1;
+                                        sales.forEach(function(data){ %>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-4">
+                                                <img src="<%= data.products.img.img0 %>" style="width: 100%; "/>
+                                            </div>
+                                            <div class="col-md-8 col-lg-8">
+                                                Product Name: <strong><%= data.products.name %></strong> <BR>
+                                                Product Store: <strong><%= data.products.store %></strong> <BR>
+                                                Product Brand: <strong><%= data.products.brands.title %></strong> <BR>
+                                                Product Price: <strong>$<%= thousands_separators(data.products.price) %></strong> <BR>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        
+
+                                    <% i++; }); } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 row m-0 p-0">
+                    <div class="col-md-12">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                            <div class="iq-card-header d-flex justify-content-between">
+                                <div class="iq-card-body">
+                                    <h4>Customer Profile <i class="ri-account-box-fill"></i></h4><BR>
+                                    <div class="row">
+                                        <div class="col-md-4 col-lg-4">
+                                            <img src="<%= checkdata.created_by.customers.picture %>" style="width: 100%; "/>
+                                         </div>
+                                         <div class="col-md-8 col-lg-8">
+                                            Customer Name: <strong><%= checkdata.created_by.customers.full_name %></strong> <BR>
+                                            Customer Email: <strong><%= checkdata.created_by.customers.email %></strong> <BR>
+                                            Customer Phone: <strong><%= checkdata.created_by.customers.phone %></strong> <BR>
+                                            <h4>Date Created: <%= checkdata.created_at %> </h4>
+                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2><center>ID [<%= checkdata.id.toUpperCase() %> ]</center></h2>
+        </div>
+    </div>
+</div>
+<% function thousands_separators(num)
+{
+  var num_parts = num.toString().split(".");
+	num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return num_parts.join(".");
+} %>

@@ -1,0 +1,1032 @@
+<!-- Sidebar  -->
+<%- include ("./partials/sidebars") %>
+
+  <!-- TOP Nav Bar -->
+  <%- include ("./partials/navbar") %>
+    <!-- TOP Nav Bar END -->
+    <!-- Page Content  -->
+
+    <style>
+      .__image_container {
+          height:200px;
+          width:200px;
+          display: inline-block;
+          position: relative;
+      }
+
+      .__image_body.__quarter:nth-child(3),.__image_body:first-child,.__image_body:last-child {
+          float: left
+      }
+
+      .__image_body.__single {
+          width: 100%;
+          height: 100%
+      }
+
+      .__image_body.__quarter,.__image_body.__triple {
+          height: 50%
+      }
+
+      .__image_body.__more_image:nth-child(4),.__image_body.__quarter:last-child,.__image_body.__quarter:nth-child(2),.__image_body.__triple:nth-child(2) {
+          float: right
+      }
+
+      .__image_count {
+          display: inline-flex!important;
+          align-items: center!important;
+          justify-content: center;
+          position: absolute;
+          bottom: 0;
+          color: #fff;
+          font-size: 1em;
+          background: rgba(0,0,0,.5)!important
+      }
+
+      .__image_body.__triple:last-child {
+          width: 100%
+      }
+
+      .__image_body {
+          width: 50%;
+          height: 100%;
+          background: #d8d8d8;
+          -o-object-fit: cover;
+          object-fit: cover;
+          display: inline
+      }
+      .spinner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 25px;
+      }
+      .load-more-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 25px;
+      }
+      .page-end {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        display: none;
+      }
+    </style>
+
+    <div id="content-page" class="content-page">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            <%- include ('./partials/messages') %>
+            <div class="iq-card">
+              <div class="iq-card-body profile-page p-0">
+                <div class="profile-header">
+                  <div class="cover-container">
+                    <% if(brand.banner){ %>
+                      <img src="<%= brand.banner %>" alt="profile-bg" class="rounded img-fluid">
+                    <% }else{ %>
+                        <img src="/images/page-img/profile-bg.jpg" alt="profile-bg" class="rounded img-fluid">
+                    <% } %>
+                    <ul class="header-nav d-flex flex-wrap justify-end p-0 m-0">
+                      <li><a href="/showcase/edit"><i class="ri-pencil-line"></i></a></li>
+                      <li><a href="javascript:void();"><i class="ri-settings-4-line"></i></a></li>
+                    </ul>
+                  </div>
+                  <div class="profile-info p-4">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6">
+                        <div class="user-detail pl-5">
+                          <div class="d-flex flex-wrap align-items-center">
+                            <div class="profile-img pr-4">
+                                <% if(brand.img){ %>
+                                  <img src="<%= brand.img %>" alt="profile-img" class="avatar-130 img-fluid" />
+                                <% }else{ %>
+                                    <img src="/images/gradient-use-on-black-no-text.png" alt="profile-img" class="avatar-130 img-fluid" />
+                                <% } %>
+                              </div>
+                            <div class="profile-detail d-flex align-items-center">
+                              <h3><%= brand.title %></h3>
+                              <p class="m-0 pl-3"> - Brand</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-6">
+                        <ul class="nav nav-pills d-flex align-items-end float-right profile-feed-items p-0 m-0">
+                          <li>
+                            <a class="nav-link active" data-toggle="pill" href="#profile-feed">feed</a>
+                          </li>
+                          <li>
+                            <a class="nav-link" data-toggle="pill" href="#profile-activity">Activity</a>
+                          </li>
+                          <li>
+                            <a class="nav-link" data-toggle="pill" href="#profile-friends">Followers</a>
+                          </li>
+                          <li>
+                            <a class="nav-link" data-toggle="pill" href="#profile-profile">profile</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-lg-3 profile-left">
+
+                <div class="iq-card">
+                  <div class="iq-card-header d-flex justify-content-between">
+                    <div class="iq-header-title">
+                      <h4 class="card-title">Gallery</h4>
+                    </div>
+                    <div class="iq-card-header-toolbar d-flex align-items-center">
+                      <% if (images.count){ %>
+                        <p class="m-0">
+                          <%= images.count %> pics
+                        </p>
+                      <% } %>
+                    </div>
+                  </div>
+                  <div class="iq-card-body p-0">
+                    
+                    <ul class="profile-img-gallary d-flex flex-wrap p-0 m-0">
+                      <% if (typeof images.images != 'undefined'){ %>
+                        <% if (images.images.length){ %>
+                          <% for (let image of images.images){ %>
+                            <li class="col-md-4 col-6 pl-1 pr-0 pb-1">
+                              <a href="/<%= image.media.path %>" target="_blank">
+                                <img
+                                  src="/<%= image.media.path %>" alt="gallary-image" class="img-fluid w-100" />
+                              </a>
+                            </li>
+                          <% } %>
+                        <% } else { %>
+                          <li class="col pl-1 pr-0 pb-1 text-center">
+                           <p>No images found</p>
+                          </li>
+                        <% } %>
+                      <% } %>
+                    </ul>
+                  </div>
+                </div>
+                <div class="iq-card">
+                  <div class="iq-card-header d-flex justify-content-between">
+                    <div class="iq-header-title">
+                      <h4 class="card-title"> Brands Following <%= user.internal.brands.title %></h4>
+                    </div>
+                  </div>
+                  <div id="js-following-container" class="iq-card-body">
+                    <ul class="js-following pages-lists m-0 p-0">
+                    </ul>
+                    <div class="spinner following-spinner" style="display: none;">
+                      <img src="/images/spinner.gif" width="50" height="50" />
+                    </div>
+                    <div class="following-load-more-container">
+                      <!-- <button class="posts-load-more btn btn-secondary" data-page="0" data-num-pages="10">Load more</button> -->
+                      <a href="javascript:void();" id="following-load-more" class="following-load-more btn btn-primary d-block" data-page="0" data-num-pages="10"><i class="ri-add-line"></i> Load More</a>
+                    </div>
+                    <div class="following-page-end" style="display: none">
+                      <p>No more data!</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-lg-6 profile-center">
+                <div class="tab-content">
+                  <div class="tab-pane fade active show" id="profile-feed" role="tabpanel">
+                    <!-- Start Post Form -->
+                    
+                    <form method="post" action="/app/showcase/add" enctype="multipart/form-data">
+                      <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                          <div class="iq-header-title">
+                            <h4 class="card-title">Create Post</h4>
+                          </div>
+                          <div class="iq-card-header-toolbar d-flex align-items-center"></div>
+                        </div>
+                        <div class="container mt-4">
+                          <div class="row">
+                            <div class="col-md-2">
+
+                              <% if(brand.img){ %>
+                                    <img src="<%= brand.img %>" alt="profile-img" class="img-fluid" />
+                              <% }else{ %>
+                                      <img src="/images/gradient-use-on-black-no-text.png" alt="profile-img" class="img-fluid" />
+                              <% } %>
+
+                              <!-- <img
+                                src="/vito/vue/dist/img/user-01.22e5a823.jpg"
+                                class="rounded-circle"
+                              /> -->
+
+                            </div>
+                            <div class="col-md-10">
+                              <div class="form-group">
+                                <textarea
+                                  type="text"
+                                  placeholder="Write something about post..."
+                                  class="rounded form-control"
+                                  required="required"
+                                  name="description"
+                                ></textarea>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="row pl-1">
+                                <div class="d-flex mb-1" id="media-preview"></div>
+                                <div class="col-md-3 p-0 pl-2 height-100">
+                                  <div
+                                    class="d-flex align-items-center justify-content-center py-2 position-relative"
+                                    style="
+                                      background-color: rgb(238, 238, 238);
+                                      border: 2px dashed rgb(175, 169, 169);
+                                      color: rgb(221, 221, 221);
+                                      height: 100%;
+                                    "
+                                  >
+                                    <span class="font-size-32 text-gray" style="font-weight: 500"
+                                      >+</span
+                                    ><input
+                                      type="file"
+                                      accept="image/*"
+                                      id="post_upload"
+                                      multiple="multiple"
+                                      name="media"
+                                      class="file position-absolute w-100 h-100"
+                                      style="opacity: 0"
+                                      required="required"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="row">
+                            <div class="col m-0 float-md-right pb-3">
+                              <button class="btn btn-primary float-right">Post</button
+                              ><button class="btn btn-outline-secondary mr-2 float-right">
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- End Post Form -->
+
+                    <div id="js-posts-container">
+
+                      <div id="js-posts">
+                        <!-- Posts -->
+                      </div>
+                      <div class="spinner posts-spinner" style="display: none;">
+                        <img src="/images/spinner.gif" width="50" height="50" />
+                      </div>
+                      
+                      <div class="load-more-container">
+                        <button class="posts-load-more btn btn-secondary" data-page="0" data-num-pages="10">Load more</button>
+                      </div>
+
+                      <div class="page-end">
+                        <p>No more data!</p>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="profile-activity" role="tabpanel">
+                    <div class="iq-card">
+                      <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                          <h4 class="card-title">Activity timeline</h4>
+                        </div>
+                        <div class="iq-card-header-toolbar d-flex align-items-center">
+                          <div class="dropdown">
+                            <span class="dropdown-toggle text-primary" id="dropdownMenuButton5" data-toggle="dropdown">
+                              View All
+                            </span>
+                            <div class="dropdown-menu dropdown-menu-right p-0">
+                              <a class="dropdown-item" href="#"><i class="ri-user-unfollow-line mr-2"></i>View</a>
+                              <a class="dropdown-item" href="#"><i class="ri-close-circle-line mr-2"></i>Delete</a>
+                              <a class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Edit</a>
+                              <a class="dropdown-item" href="#"><i class="ri-printer-fill mr-2"></i>Print</a>
+                              <a class="dropdown-item" href="#"><i class="ri-file-download-fill mr-2"></i>Download</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="iq-card-body">
+                        <ul class="iq-timeline">
+                          <% if (typeof activities != 'undefined'){ %>
+                            <% if (activities.length){ %>
+                              <% for (const activity of activities) {  %>
+                                <li>
+                                  <div class="timeline-dots"></div>
+                                  <h6 class="float-left mb-1"> <%= activity.activity_type %> </h6>
+                                  <small class="float-right mt-1"> <%=  moment(activity.created_at).format('DD MMMM YYYY'); %> </small>
+                                  <div class="d-inline-block w-100">
+                                    <p> <%= activity.activity_detail %> </p>
+                                  </div>
+                                </li>
+                              <% }%>
+                            <% }%>
+                          <% }%>
+<!--                           <li>
+                            <div class="timeline-dots"></div>
+                            <h6 class="float-left mb-1">Client Login</h6>
+                            <small class="float-right mt-1">24 November 2019</small>
+                            <div class="d-inline-block w-100">
+                              <p>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="timeline-dots border-success"></div>
+                            <h6 class="float-left mb-1">Scheduled Maintenance</h6>
+                            <small class="float-right mt-1">23 November 2019</small>
+                            <div class="d-inline-block w-100">
+                              <p>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="timeline-dots border-danger"></div>
+                            <h6 class="float-left mb-1">Dev Meetup</h6>
+                            <small class="float-right mt-1">20 November 2019</small>
+                            <div class="d-inline-block w-100">
+                              <p>Bonbon macaroon jelly beans <a href="#">gummi bears</a>gummi bears jelly lollipop apple
+                              </p>
+                              <div class="iq-media-group">
+                                <a href="#" class="iq-media">
+                                  <img class="img-fluid avatar-40 rounded-circle" src="images/user/05.jpg" alt="">
+                                </a>
+                                <a href="#" class="iq-media">
+                                  <img class="img-fluid avatar-40 rounded-circle" src="images/user/06.jpg" alt="">
+                                </a>
+                                <a href="#" class="iq-media">
+                                  <img class="img-fluid avatar-40 rounded-circle" src="images/user/07.jpg" alt="">
+                                </a>
+                                <a href="#" class="iq-media">
+                                  <img class="img-fluid avatar-40 rounded-circle" src="images/user/08.jpg" alt="">
+                                </a>
+                                <a href="#" class="iq-media">
+                                  <img class="img-fluid avatar-40 rounded-circle" src="images/user/09.jpg" alt="">
+                                </a>
+                                <a href="#" class="iq-media">
+                                  <img class="img-fluid avatar-40 rounded-circle" src="images/user/10.jpg" alt="">
+                                </a>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="timeline-dots border-primary"></div>
+                            <h6 class="float-left mb-1">Client Call</h6>
+                            <small class="float-right mt-1">19 November 2019</small>
+                            <div class="d-inline-block w-100">
+                              <p>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="timeline-dots border-warning"></div>
+                            <h6 class="float-left mb-1">Mega event</h6>
+                            <small class="float-right mt-1">15 November 2019</small>
+                            <div class="d-inline-block w-100">
+                              <p>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</p>
+                            </div>
+                          </li> -->
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="profile-friends" role="tabpanel">
+                    <div class="iq-card">
+                      <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                          <h4 class="card-title">Followers</h4>
+                        </div>
+                      </div>
+                      <div id="js-followers-container" class="iq-card-body">
+                        <ul class="js-followers suggestions-lists suggestions-lists-followed m-0 p-0">
+                        </ul>
+                        <div class="spinner followers-spinner" style="display: none;">
+                          <img src="/images/spinner.gif" width="50" height="50" />
+                        </div>
+                        <div class="followers-load-more-container">
+                          <!-- <button class="posts-load-more btn btn-secondary" data-page="0" data-num-pages="10">Load more</button> -->
+                          <a href="javascript:void();" id="followers-load-more" class="followers-load-more btn btn-primary d-block" data-page="0" data-num-pages="10"><i class="ri-add-line"></i> Load More</a>
+                        </div>
+                        <div class="followers-page-end" style="display: none">
+                          <p>No more data!</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="profile-profile" role="tabpanel">
+                    <div class="iq-card">
+                      <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                          <h4 class="card-title">Profile</h4>
+                        </div>
+                      </div>
+                      <div class="iq-card-body">
+                        <div class="user-detail text-center">
+                          <div class="user-profile">
+                            <img src="/images/gradient-use-on-black-no-text.png" alt="profile-img"
+                              class="avatar-130 img-fluid">
+                          </div>
+                          <div class="profile-detail mt-3">
+                            <h3 class="d-inline-block">Sartor</h3>
+
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <ul class="header-nav d-flex flex-wrap justify-end p-0 m-0">
+                      <li><a href="/showcase/editdetail"><i class="ri-pencil-line"></i></a></li>
+                    </ul>
+                    <div>
+                      <a style="display: block;text-align: right;font-size: 23px;" href="/showcase/editdetail"><i class="ri-pencil-line"></i></a>
+                    </div>
+                    <div class="iq-card">
+                      <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                          <h4 class="card-title">Brand showcase video</h4>
+                        </div>
+                      </div>
+                      <div class="iq-card-body">
+
+                        <!-- 4:3 aspect ratio -->
+                        <div class="embed-responsive embed-responsive-4by3">
+                          <% if(brand.show_case_video){ %>
+                            <iframe class="embed-responsive-item" src="/<%= brand.show_case_video %>"
+                            allowfullscreen></iframe>
+                          <% }else{ %>
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
+                            allowfullscreen></iframe>
+                           <% } %>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="iq-card">
+                      <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                          <h4 class="card-title">About This Brand</h4>
+                        </div>
+                      </div>
+                      <div class="iq-card-body">
+                        <div class="user-bio">
+                          <% if(brand.about){ %>
+                            <p><%= brand.about %></p>  
+                          <% } else {%>
+                            <p>In this day and age What does skin color have to do with making great fashion? Nothing; yet
+                            for years, Black artists and designers have struggled to get eyes on their work, been passed
+                            over for opportunities, and made to feel like there isn't a spot for them at the table.
+                            Sartor is the global platform for style, founded in 2020 to bring trust to the fashion
+                            community. Sartor technology platform has integrated measurement applications to ensure our
+                            customers worry less about the right- fit and focus on the occasion. At sartor, we believe
+                            fashion shopping online should be stress-free, and enjoyable with apparel and accessories
+                            from the world’s leading contemporary, avant-garde Black designer brands.</p>
+                          <% }%>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+
+                    <div class="iq-card">
+                      <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                          <h4 class="card-title">privacy policy</h4>
+                        </div>
+                      </div>
+                      <div class="iq-card-body">
+                        <div class="user-bio">
+                          <% if(brand.privacy_policy){ %>
+                            <p><%= brand.privacy_policy %></p>
+                          <% } else { %>
+                                <p>In this day and age What does skin color have to do with making great fashion? Nothing; yet
+                            for years, Black artists and designers have struggled to get eyes on their work, been passed
+                            over for opportunities, and made to feel like there isn't a spot for them at the table.
+                            Sartor is the global platform for style, founded in 2020 to bring trust to the fashion
+                            community. Sartor technology platform has integrated measurement applications to ensure our
+                            customers worry less about the right- fit and focus on the occasion. At sartor, we believe
+                            fashion shopping online should be stress-free, and enjoyable with apparel and accessories
+                            from the world’s leading contemporary, avant-garde Black designer brands.</p>
+                          <% } %>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+
+
+
+                    <div class="iq-card">
+                      <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                          <h4 class="card-title">Refund Policy</h4>
+                        </div>
+                      </div>
+                      <div class="iq-card-body">
+                        <div class="user-bio">
+                          <% if(brand.refund_policy){ %>
+                            <p><%= brand.refund_policy %></p> 
+                          <% } else {%>
+                            <p>In this day and age What does skin color have to do with making great fashion? Nothing; yet
+                            for years, Black artists and designers have struggled to get eyes on their work, been passed
+                            over for opportunities, and made to feel like there isn't a spot for them at the table.
+                            Sartor is the global platform for style, founded in 2020 to bring trust to the fashion
+                            community. Sartor technology platform has integrated measurement applications to ensure our
+                            customers worry less about the right- fit and focus on the occasion. At sartor, we believe
+                            fashion shopping online should be stress-free, and enjoyable with apparel and accessories
+                            from the world’s leading contemporary, avant-garde Black designer brands.</p>
+                          <% }%>
+
+                        </div>
+
+                      </div>
+                    </div>
+
+
+
+                    <div class="iq-card">
+                      <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                          <h4 class="card-title">Shipping Policy</h4>
+                        </div>
+                      </div>
+                      <div class="iq-card-body">
+                        <div class="user-bio">
+                          <% if(brand.shiping_policy){ %>
+                            <p><%= brand.shiping_policy %></p>
+                          <% } else { %>
+                            <p>In this day and age What does skin color have to do with making great fashion? Nothing; yet
+                            for years, Black artists and designers have struggled to get eyes on their work, been passed
+                            over for opportunities, and made to feel like there isn't a spot for them at the table.
+                            Sartor is the global platform for style, founded in 2020 to bring trust to the fashion
+                            community. Sartor technology platform has integrated measurement applications to ensure our
+                            customers worry less about the right- fit and focus on the occasion. At sartor, we believe
+                            fashion shopping online should be stress-free, and enjoyable with apparel and accessories
+                            from the world’s leading contemporary, avant-garde Black designer brands.</p>
+                          <% } %>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="iq-card">
+                      <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                          <h4 class="card-title">Terms of service</h4>
+                        </div>
+                      </div>
+                      <div class="iq-card-body">
+                        <div class="user-bio">
+                          <% if(brand.terms_of_services){ %>
+                            <p><%= brand.terms_of_services %></p>
+                          <% } else {%>
+                              <p>In this day and age What does skin color have to do with making great fashion? Nothing; yet
+                            for years, Black artists and designers have struggled to get eyes on their work, been passed
+                            over for opportunities, and made to feel like there isn't a spot for them at the table.
+                            Sartor is the global platform for style, founded in 2020 to bring trust to the fashion
+                            community. Sartor technology platform has integrated measurement applications to ensure our
+                            customers worry less about the right- fit and focus on the occasion. At sartor, we believe
+                            fashion shopping online should be stress-free, and enjoyable with apparel and accessories
+                            from the world’s leading contemporary, avant-garde Black designer brands.</p>
+                          <% } %>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-3 profile-right">
+                <div class="iq-card">
+                  <div class="iq-card-header d-flex justify-content-between">
+                    <div class="iq-header-title">
+                      <h4 class="card-title">Suggested Brands to follow</h4>
+                    </div>
+                    <div class="iq-card-header-toolbar d-flex align-items-center">
+                      <a href="#"><i class="ri-more-fill"></i></a>
+                    </div>
+                  </div>
+                  <div class="js-suggested-container iq-card-body">
+                    <ul class="js-suggested suggestions-lists suggestions-lists-followers m-0 p-0">
+                    </ul>
+                  <div class="spinner suggested-spinner" style="display: none;">
+                    <img src="/images/spinner.gif" width="50" height="50" />
+                  </div>
+                  <div class="suggested-load-more-container">
+                    <!-- <button class="posts-load-more btn btn-secondary" data-page="0" data-num-pages="10">Load more</button> -->
+                    <a href="javascript:void();" id="suggested-load-more" class="suggested-load-more btn btn-primary d-block" data-page="0" data-num-pages="10"><i class="ri-add-line"></i> Load More</a>
+                  </div>
+                  <div class="suggested-page-end" style="display: none">
+                    <p>No more data!</p>
+                  </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      
+      $(document).ready(function(){
+        
+
+        $('#post_upload').on('change', function () {
+          if (this.files && this.files.length) {
+            let $container = $("body #media-preview");
+            let $str = "";
+            $.each(this.files, function(ind, file){
+              if (file.type.split("/")[0] == "image"){
+                $str += '<div class="height-100"><img src="'+URL.createObjectURL(file)+'" class="preview w-100 h-100"></div>';
+              }
+            });
+            $container.html($str);
+          }
+        });
+
+        $spinner = $('.posts-spinner');
+        $posts_container = $('#js-posts-container');
+        $load_more = $('.posts-load-more');
+        $posts = $("#js-posts");
+        $page_end = $('.page-end');
+        $load_more_followers = $('.followers-load-more');
+        $followers = $(".js-followers");
+        $followers_page_end = $('.followers-page-end');
+        $followers_spinner = $('.followers-spinner');
+        $request_in_progress = false;
+        $end_reached = false;
+
+        // for suggested pagination:
+        $suggested = $(".js-suggested");
+        $load_more_suggested = $('.suggested-load-more');
+        $suggested_page_end = $('.suggested-page-end');
+        $suggested_spinner = $('.suggested-spinner');        
+
+        // for suggested pagination:
+        $following = $(".js-following");
+        $load_more_following = $('.following-load-more');
+        $following_page_end = $('.following-page-end');
+        $following_spinner = $('.following-spinner');
+
+        $(document).on("click", ".Follow-brand" , function(e) {
+          console.log('clicked');
+          console.log(e.target);
+          let brand = e.target.getAttribute('data-brand');
+          let action_type = e.target.getAttribute('data-type');
+          console.log(brand);
+          console.log(action_type);
+          e.preventDefault();
+          $.ajax({
+              url: "/app/addfollower",
+              type: "POST",
+              data:  {'brandid':brand ,'type': action_type},
+              success: function(data){
+                  if(data.status == 200){        
+                    let $suggested_list_container = $('.suggestions-lists-followers');
+                    let $followed_container = $('.suggestions-lists-followed');
+                    console.log('data.SuggestListHtml');           
+                    console.log(data.SuggestListHtml);
+
+                    $suggested_list_container.html(data.SuggestListHtml);
+                    $followed_container.html(data.htmlall);
+                    // document.getElementsByClassName("add-suggestion-follow")[index].innerHTML = '<img src="https://api.iconify.design/akar-icons/person-check.svg">';
+                  }
+              }
+          })
+        });
+        function throttle(fn, wait) {
+          let time = Date.now();
+          return function() {
+            if ((time + wait - Date.now()) < 0) {
+              fn();
+              time = Date.now();
+            }
+          }
+        }
+
+        function showSpinner(){
+          $spinner.css("display", "block");
+        }        
+
+        function showFollowerSpinner(){
+          $followers_spinner.css("display", "block");
+        }
+
+        function hideSpinner(){
+          $spinner.css("display", "none");
+        }        
+
+        function hideFollowerSpinner(){
+          $followers_spinner.css("display", "none");
+        }
+
+        function showLoadMore(){
+          $load_more.css("display", "block");
+        }
+
+        function hideLoadMore(){
+          $load_more.css("display", "none");
+        }
+
+        function hideFollowerLoadMore(){
+          $load_more_followers.css("display", "none");
+        }
+
+        function setCurrentPage(page,pages) {
+          $load_more.data('page', page);
+          $load_more.data('num-pages', pages);
+        }
+
+        function setFollowersCurrentPage(page,pages) {
+          $load_more_followers.data('page', page);
+          $load_more_followers.data('num-pages', pages);
+        }
+
+        function showPageEnd(){
+          $page_end.css("display", "flex");
+        }        
+
+        function showFollowersPageEnd(){
+          $followers_page_end.css("display", "block");
+          $followers_page_end.css("textAlign", "center");
+        }
+
+        function scrollReaction() {
+          let $content_height = $posts_container.outerHeight(true);
+          let $current_y = window.innerHeight + window.pageYOffset;
+          if($current_y >= $content_height) {
+            loadPosts();
+          }
+        }
+
+        // suggested pagination related functions:
+
+        function showsuggestedSpinner(){
+          $suggested_spinner.css("display", "block");
+        }
+
+        function hidesuggestedSpinner(){
+          $suggested_spinner.css("display", "none");
+        }
+
+        function hidesuggestedLoadMore(){
+          $load_more_suggested.css("display", "none");
+        }
+
+        function setsuggestedCurrentPage(page,pages) {
+          $load_more_suggested.data('page', page);
+          $load_more_suggested.data('num-pages', pages);
+        }
+
+        function showsuggestedPageEnd(){
+          $suggested_page_end.css("display", "block");
+          $suggested_page_end.css("textAlign", "center");
+        }        
+
+
+        // following  related functions:
+
+        function showfollowingSpinner(){
+          $following_spinner.css("display", "block");
+        }
+
+        function hidefollowingSpinner(){
+          $following_spinner.css("display", "none");
+        }
+
+        function hidefollowingLoadMore(){
+          $load_more_following.css("display", "none");
+        }
+
+        function setfollowingCurrentPage(page,pages) {
+          $load_more_following.data('page', page);
+          $load_more_following.data('num-pages', pages);
+        }
+
+        function showfollowingPageEnd(){
+          $following_page_end.css("display", "block");
+          $following_page_end.css("textAlign", "center");
+        }
+
+
+        let throttled =  throttle(scrollReaction, 500);
+
+        function loadPosts(){
+          if($request_in_progress) { return; }
+          $request_in_progress = true;
+          let $page = parseInt($load_more.data('page'));
+          let $next_page = $page + 1;
+          let $num_pages = parseInt($load_more.data('num-pages'));
+          if ($next_page <= $num_pages) {
+            showSpinner();
+            hideLoadMore();
+            $.get("/app/showcase?limit=10&page="+$next_page, function(data,status){
+              if (status =="success"){
+                hideSpinner();
+                $posts.append(data.html);
+                setCurrentPage($next_page, data.pages);
+                showLoadMore();
+                $request_in_progress = false;
+              }else{
+                alert("Failed to load posts");
+              }
+            });
+          }else{
+            $(window).off('scroll',  throttled);
+            hideLoadMore();
+            showPageEnd();
+          }
+        }
+
+        function loadFollowersList(){
+          // if($request_in_progress) { return; }
+          $request_in_progress = true;
+          let $page = parseInt($load_more_followers.data('page'));
+          let $next_page = $page + 1;
+          let $num_pages = parseInt($load_more_followers.data('num-pages'));
+          if ($next_page <= $num_pages) {
+            // showFollowerSpinner();
+            // hideFollowerLoadMore();
+            const el = document.querySelector('#followers-load-more');
+            el.classList.add("d-block");
+            $.get("/app/getfollowers?limit=10&page="+$next_page, function(data,status){
+              if (status =="success"){
+                // hideFollowerSpinner();
+                $followers.append(data.html);
+                setFollowersCurrentPage($next_page, data.pages);
+                // showLoadMore();
+                $request_in_progress = false;
+              }else{
+                alert("Failed to load posts");
+              }
+            });
+          }else{
+            // $(window).off('scroll',  throttled);
+            // console.log("no more results hide add more button....");
+            const el = document.querySelector('#followers-load-more');
+            el.classList.remove("d-block");
+            hideFollowerLoadMore();
+            showFollowersPageEnd();
+          }
+        }        
+
+        function loadSuggestedList(){
+          // if($request_in_progress) { return; }
+          $request_in_progress = true;
+          let $page = parseInt($load_more_suggested.data('page'));
+          let $next_page = $page + 1;
+          let $num_pages = parseInt($load_more_suggested.data('num-pages'));
+          if ($next_page <= $num_pages) {
+            // showFollowerSpinner();
+            // hideFollowerLoadMore();
+            const el = document.querySelector('#suggested-load-more');
+            el.classList.add("d-block");
+            $.get("/app/getsuggested?limit=10&page="+$next_page, function(data,status){
+              if (status =="success"){
+                // hideFollowerSpinner();
+                $suggested.append(data.html);
+                setsuggestedCurrentPage($next_page, data.pages);
+                // showLoadMore();
+                $request_in_progress = false;
+              }else{
+                alert("Failed to load posts");
+              }
+            });
+          }else{
+            // $(window).off('scroll',  throttled);
+            const el = document.querySelector('#suggested-load-more');
+            el.classList.remove("d-block");
+            hidesuggestedLoadMore();
+            showsuggestedPageEnd();
+          }
+        }
+
+        function loadFollowingList(){
+          // if($request_in_progress) { return; }
+          $request_in_progress = true;
+          let $page = parseInt($load_more_following.data('page'));
+          let $next_page = $page + 1;
+          let $num_pages = parseInt($load_more_following.data('num-pages'));
+          if ($next_page <= $num_pages) {
+            // showFollowerSpinner();
+            // hideFollowerLoadMore();
+            const el = document.querySelector('#following-load-more');
+            el.classList.add("d-block");
+            $.get("/app/getfollowings?limit=10&page="+$next_page, function(data,status){
+              if (status =="success"){                
+                // hideFollowerSpinner();
+                $following.append(data.html);
+                setfollowingCurrentPage($next_page, data.pages);
+                // showLoadMore();
+                $request_in_progress = false;
+              }else{
+                alert("Failed to load posts");
+              }
+            });
+          }else{
+            const el = document.querySelector('#following-load-more');
+            el.classList.remove("d-block");
+            hidefollowingLoadMore();
+            showfollowingPageEnd();
+          }
+        }
+
+
+        $load_more.on("click", loadPosts);
+        $load_more_followers.on("click", loadFollowersList);
+        $load_more_suggested.on("click", loadSuggestedList);
+        $load_more_following.on("click", loadFollowingList);
+        $(window).on('scroll',  throttled);
+        loadPosts();
+        loadFollowersList();
+        loadSuggestedList();
+        loadFollowingList();
+
+        function postComment(post_id,comment){
+          $.post("/app/showcase/comment", {showcase: post_id, comment: comment}, function(data,status){
+            let $comments_container = $('body #comments_'+post_id);
+            let $comments_form = $('body #comments_form_'+post_id);
+            let $comments_count_container = $('body #comments_count_'+post_id);
+            if(status == "success"){
+              $comments_form[0].reset();
+              $comments_container.html(data.html);
+              $comments_count_container.text(data.count);
+            }else{
+              alert("Failed to add comment");
+            }
+          });
+        }
+
+
+        $('body').on("keypress", "[name='comment']", function(e){
+          if(e.keyCode == 13){
+            let $post_id = $(e.target).data('post-id');
+            let $comment = $(e.target).val().trim();
+            if ($comment ==""){
+              return false;
+            }
+            console.log($post_id, $comment)
+            postComment($post_id, $comment)
+          }
+        });
+
+        $('body').on("click", ".post-comment", function(e){
+          let $post_id = $(e.target).data('post-id');
+          let $comment = $('input[data-post-id="'+$post_id+'"]').val().trim();
+          if ($comment ==""){
+            return false;
+          }
+          console.log($post_id, $comment)
+          postComment($post_id, $comment)
+        });
+
+        $('body').on('click', '.like-showcase', function(e){
+          let $post_id = $(e.target).data('post-id');
+          let $val = $(e.target).data('value');
+          let $like_button = $('body #like_button_'+ $post_id);
+          let $likes_count = $('body #likes_count_'+ $post_id);
+
+          $.post("/app/showcase/like", {showcase: $post_id, val: $val}, function(data,status){
+            if (status == "success") {
+              $likes_count.text(data.count);
+              if (data.liked == true){
+                $like_button.removeClass('ri-heart-line');
+                $like_button.addClass('ri-heart-fill');
+                $(e.target).data('value', 1);
+              }else{
+                $like_button.removeClass('ri-heart-fill');
+                $like_button.addClass('ri-heart-line');
+                $(e.target).data('value', 0);
+              }
+            }else{
+              alert("Failed to Like")
+            }
+          });
+        });
+      });
+
+    </script>

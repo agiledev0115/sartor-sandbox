@@ -1,0 +1,17 @@
+<% if (typeof followers != 'undefined'){ %>
+  <% if (followers.length){ %>
+    <%for(let follower of followers){%>
+    <li class="d-flex mb-4 align-items-center">
+      <div class="user-img img-fluid"><img src="<%=follower.picture%>" alt="story-img"
+          class="rounded-circle avatar-40"></div>
+      <div class="media-support-info ml-3">
+        <h6><%= follower.brands.title %></h6>
+        <p class="mb-0"><%= follower.user.role%></p>
+      </div>
+      <div class="add-suggestion">
+        <a href="javascript:void();" class="text-warning"><i class="ri-star-half-line"></i></a>
+      </div>
+    </li>
+    <%}%>
+  <%}%>
+<%}%>

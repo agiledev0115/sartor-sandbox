@@ -1,0 +1,30 @@
+<% if (typeof comments != "undefined") { %>
+ <% if (comments.length) { %>
+  <% for( let comment of comments ) { %>
+    <li class="mb-2">
+      <div class="d-flex flex-wrap">
+        <div class="user-img">
+          <img src="<%= comment.created_by.img %>" alt="userimg" class="avatar-35 rounded-circle img-fluid">
+        </div>
+        <div class="comment-data-block ml-3">
+          <h6><%= comment.created_by.title %> </h6>
+          <p class="mb-0"><%= comment.comment %></p>
+          <div class="d-flex flex-wrap align-items-center comment-activity">
+            <!-- <a href="javascript:void();">like</a>
+            <a href="javascript:void();">reply</a>
+            <a href="javascript:void();">translate</a> -->
+            <span><%= timeSince(comment.created_at) %> </span>
+          </div>
+        </div>
+      </div>
+    </li>
+ <% } %>
+  <% } else{ %>
+    <li class="mb-2">
+      <div class="d-flex flex-wrap">
+        <span>No comments</span>
+      </div>
+    </li>
+  <% } %>
+<% } %>
+

@@ -1,0 +1,85 @@
+<div class="wrapper">
+   <!-- Sidebar  -->
+   <%- include ("./partials/sidebars") %>
+
+      <!-- TOP Nav Bar -->
+      <%- include ("./partials/navbar") %>
+         <!-- TOP Nav Bar END -->
+         <!-- Page Content  -->
+         <div id="content-page" class="content-page">
+            <div class="container-fluid">
+               <div class="row">
+                  <% switch(user.role) { case 'admin' : case 'super_admin' : %>
+                     <div class="col-lg-8 row m-0 p-0">
+                        <div class="col-md-12">
+                           <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                              <div class="iq-card-header d-flex justify-content-between">
+                                 <div class="iq-card-body">
+                                    <h4 class="card-title">Category</h4>
+                                    <form action="/app/category" method="POST">
+                                       <div class="form-row">
+                                          <div class="col-md-12 mb-3">
+                                             <label for="validationDefault01">Category name</label>
+                                             <%- include ('./partials/messages') %>
+                                                <input type="text" class="form-control" id="validationDefault01"
+                                                   name="categoryname" placeholder="Category Name" required>
+                                                <input type="hidden" name="created_by" value="<%= user.id %>" />
+                                          </div>
+                                       </div>
+                                       <div class="form-group">
+                                          <button class="btn btn-primary" type="submit">Submit form</button>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <% break; } %>
+                        <div class="col-lg-4">
+                           <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                              <div class="iq-card-header d-flex justify-content-between">
+                                 <div class="iq-header-title">
+                                    <h4 class="card-title">Category Lists</h4>
+                                 </div>
+
+                              </div>
+
+                              <div class="iq-card-body">
+                                 <ul class="suggestions-lists m-0 p-0">
+                                    <% if(catInfo.length!=0){ var i=1; catInfo.forEach(function(data){ %>
+                                       <li class="d-flex mb-4 align-items-center">
+                                          <div class="profile-icon bg-secondary"><span><i
+                                                   class="ri-refresh-line"></i></span></div>
+                                          <div class="media-support-info ml-3">
+                                             <h6>
+                                                <%=data.name %>
+                                                   <form action="/app/category/remove" method="post"
+                                                      onSubmit="return confirm('Are you sure you wish to delete?');">
+                                                      <input type="hidden" name="catid" value="<%= data.id %>">
+                                                      <% switch(user.role) { case 'super_admin' : case 'admin' : %>
+                                                         <button type="submit" class="btn btn-link mb-3 float-right"><i
+                                                               class="ri-delete-bin-6-fill"></i></button>
+                                                         <% break; default: } %>
+                                                   </form>
+                                             </h6>
+                                             <p class="mb-0">
+                                                <%=data.created_at %>
+                                             </p>
+                                          </div>
+                                       </li>
+                                       <% i++; }) %>
+                                          <% } else{ %>
+                                       %>
+                                       <li class="d-flex mb-4 align-items-center">
+                                          No category yet
+                                       </li>
+                                       <% } %>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+               </div>
+            </div>
+         </div>
+</div>

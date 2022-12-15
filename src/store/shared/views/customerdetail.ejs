@@ -1,0 +1,279 @@
+<%- include ("./partials/sidebars") %>
+<!-- TOP Nav Bar -->
+<%- include ("./partials/navbar") %>
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+       <div class="row">
+          <div class="col-sm-12">
+             <div class="iq-card">
+                <div class="iq-card-body profile-page p-0">
+                   <div class="profile-header">
+                      <div class="cover-container">
+                         <img src="images/page-img/profile-bg.jpg" alt="profile-bg" class="rounded img-fluid">
+                         <!-- <ul class="header-nav d-flex flex-wrap justify-end p-0 m-0">
+                            <li><a href="javascript:void();"><i class="ri-pencil-line"></i></a></li>
+                            <li><a href="javascript:void();"><i class="ri-settings-4-line"></i></a></li>
+                         </ul> -->
+                      </div>
+                      <div class="profile-info p-4">
+                         <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                               <div class="user-detail pl-5">
+                                  <div class="d-flex flex-wrap align-items-center">
+                                     <div class="profile-img pr-4">
+                                        <img src="<%= customer.picture %>" alt="profile-img" class="avatar-130 img-fluid" />
+                                     </div>
+                                     <div class="profile-detail d-flex align-items-center">
+                                        <h3><%= customer.full_name %></h3>
+                                        <p class="m-0 pl-3"> - <%= customer.address %></p>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                               <ul class="nav nav-pills d-flex align-items-end float-right profile-feed-items p-0 m-0">
+                                  <li>
+                                     <a class="nav-link active" data-toggle="pill" href="#profile-feed">feed</a>
+                                  </li>
+                                  <li>
+                                     <a class="nav-link" data-toggle="pill" href="#profile-activity">Orders</a>
+                                  </li>
+                                  <li>
+                                     <a class="nav-link" data-toggle="pill" href="#profile-friends">Following</a>
+                                  </li>
+                                  <li>
+                                     <a class="nav-link" data-toggle="pill" href="#profile-profile">profile</a>
+                                  </li>
+                               </ul>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="col-sm-12">
+             <div class="row">
+                <div class="col-lg-3 profile-left">
+                   <div class="iq-card">
+                      <div class="iq-card-header d-flex justify-content-between">
+                         <div class="iq-header-title">
+                            <h4 class="card-title">Reviews</h4>
+                         </div>
+                      </div>
+                      <div class="iq-card-body">
+                         <ul class="m-0 p-0">
+                           <% if(customer.reviews.length!=0){
+                              var r=1;
+                              customer.reviews.forEach(function(revData){
+                           %>
+                            <li class="d-flex mb-2">
+                              <div class="news-icon"><img class="float-left" src="<%= revData.img %>" style="width: 50%; margin-right: 12px;"/>
+                                 <p class="news-detail mb-0"><%= revData.review %></p>
+                              </div>
+                               
+                            </li>
+                           <% r++; }); } else { %>
+                              There are no review yet <% } %>
+                         </ul>
+                      </div>
+                   </div>
+                   
+                   <div class="iq-card">
+                      <div class="iq-card-header d-flex justify-content-between">
+                         <div class="iq-header-title">
+                            <h4 class="card-title">Favourite Products</h4>
+                         </div>
+                      </div>
+                      <div class="iq-card-body">
+                         <ul class="pages-lists m-0 p-0">
+                            <% if(customer.favorite.length!=0){
+                                var i=1;
+                                customer.favorite.forEach(function(favData){
+                            %>
+                            <li class="d-flex mb-4 align-items-center">
+                               <div class="user-img img-fluid"><img src="<%= favData.product.img.img0 %>" alt="story-img" class="rounded-circle avatar-40"></div>
+                               <div class="media-support-info ml-3">
+                                  <h6><%= favData.product.name %></h6>
+                                  <p class="mb-0"><%= favData.product.store %></p>
+                               </div>
+                               <div class="add-suggestion">
+                                  <a href="javascript:void();" class="text-warning"><i class="ri-star-half-line"></i></a>
+                               </div>
+                            </li>
+                            <% i++; }); } %>
+                        </ul>
+                      </div>
+                   </div> 
+                </div>
+                <div class="col-lg-6 profile-center">
+                   <div class="tab-content">
+                      <div class="tab-pane fade active show" id="profile-feed" role="tabpanel">
+                        <% if(brands.length!=0){
+                           var b=1;
+                           brands.forEach(function(brandata){
+                              if(brandata.likes.indexOf(customer.id) >= 0)
+                              {
+                                 %>
+                         <div class="iq-card">
+                            <div class="iq-card-body p-0">
+                               <div class="user-post-data p-3">
+                                  <div class="d-flex flex-wrap">
+                                     
+                                     <div class="media-support-info mt-2">
+                                        <h5 class="mb-0"><a href="#" class=""><%= brandata.title %></a></h5>
+                                     </div>
+                                     
+                                  </div>
+                               </div>
+                               <div class="user-post">
+                                  <a href="javascript:void();"><img src="<%= brandata.img %>" alt="post-image" class="img-fluid" /></a>
+                               </div>
+                               
+                            </div>
+                         </div>
+                         <% } i++; }); } %>
+                         
+                      </div>
+                      <div class="tab-pane fade" id="profile-activity" role="tabpanel">
+                         <div class="iq-card">
+                            <div class="iq-card-header d-flex justify-content-between">
+                               <div class="iq-header-title">
+                                  <h4 class="card-title">Order timeline</h4>
+                               </div>
+                               
+                            </div>
+                            <div class="iq-card-body">
+                               <ul class="iq-timeline">
+                                 <% if(bought.length!=0){
+                                    var o=1;
+                                    bought.forEach(function(orderData){
+                                      if(orderData.created_by.customers._id == customer.id) { %>
+                                       <li>
+                                          <div class="timeline-dots"></div>
+                                          <h6 class="float-left mb-1">Billing Address <%= orderData.checkouts.billing %> <%= orderData.checkouts.state %> <%= orderData.checkouts.country %></h6>
+                                          <small class="float-right mt-1"><%= orderData.created_at %></small>
+                                          <div class="d-inline-block w-100">
+                                             Products Bought
+                                             <ul class="iq-timeline">
+                                                <li><%= orderData.products.name %> <span class="float-right"><img src="<%= orderData.products.img.img0 %>" style="width: 20%"/></span></li>
+                                             </ul>
+                                             Amount Payed is $<%= orderData.products.price %>
+                                          </div>
+                                       </li>
+                                  <% } else{} o++; }); } %>
+                               </ul>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="tab-pane fade" id="profile-friends" role="tabpanel">
+                         <div class="iq-card">
+                            <div class="iq-card-header d-flex justify-content-between">
+                               <div class="iq-header-title">
+                                  <h4 class="card-title">Following Brand</h4>
+                               </div>
+                            </div>
+                            <div class="iq-card-body">
+                               <ul class="suggestions-lists m-0 p-0">
+                                 <% if(brands.length!=0){
+                                    var b=1;
+                                    brands.forEach(function(brandata){
+                                       if(brandata.followers.indexOf(customer.id) >= 0)
+                                       {
+                                          %>
+
+
+                                  <li class="d-flex mb-4 align-items-center">
+                                     <div class="user-img img-fluid"><img src="<%= brandata.img %>" alt="story-img" class="rounded-circle avatar-40"></div>
+                                     <div class="media-support-info ml-3">
+                                        <h6><%= brandata.title %></h6>
+                                     </div>
+                                    
+                                  </li>
+                                  <% } else {} b++; }); } %>
+                                  
+                               </ul>
+                              
+                            </div>
+                         </div>
+                      </div>
+                      <div class="tab-pane fade" id="profile-profile" role="tabpanel">
+                         <div class="iq-card">
+                            <div class="iq-card-header d-flex justify-content-between">
+                               <div class="iq-header-title">
+                                  <h4 class="card-title">Profile</h4>
+                               </div>
+                            </div>
+                            <div class="iq-card-body">
+                               <div class="user-detail text-center">
+                                  <div class="user-profile">
+                                     <img src="<%= customer.picture %>" alt="profile-img" class="avatar-130 img-fluid">
+                                  </div>
+                                  <div class="profile-detail mt-3">
+                                     <h3 class="d-inline-block"><%= customer.full_name %></h3>
+                                     <p class="d-inline-block pl-3"> - <%= customer.address %></p>
+                                     <p class="mb-0">
+                                         <%= customer.full_name %> live in <%= customer.city %>, <%= customer.address %>. The Customer can either be reached via cellphone <u><%= customer.phone %></u> or Email address <u><%= customer.email %></u>
+                                     </p>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                         <div class="iq-card">
+                            <div class="iq-card-header d-flex justify-content-between">
+                               <div class="iq-header-title">
+                                  <h4 class="card-title">About User</h4>
+                               </div>
+                            </div>
+                            <div class="iq-card-body">
+                              
+                              <div class="mt-2">
+                               <h6>Joined:</h6>
+                               <p><%= customer.created_at %></p>
+                              </div>
+                              <div class="mt-2">
+                               <h6>Lives:</h6>
+                               <p><%= customer.city %></p>
+                              </div>
+                              <div class="mt-2">
+                               <h6>Email:</h6>
+                               <p><a href="mailto:<%= customer.email %>"> <%= customer.email %></a></p>
+                              </div>
+                              
+                              <div class="mt-2">
+                               <h6>Contact:</h6>
+                               <p><a href="#"><%= customer.phone %></a></p>
+                              </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+                <div class="col-lg-3 profile-right">
+                   <div class="iq-card">
+                      <div class="iq-card-header d-flex justify-content-between">
+                         <div class="iq-header-title">
+                            <h4 class="card-title">About</h4>
+                         </div>
+                      </div>
+                      <div class="iq-card-body">
+                         <div class="about-info m-0 p-0">
+                            <div class="row">
+                               <div class="col-3">Email:</div>
+                               <div class="col-9"><a href="mailto:<%= customer.email %>"> <%= customer.email %> </a></div>
+                               <div class="col-3">Phone:</div>
+                               <div class="col-9"><a href="#"><%= customer.phone %></a></div>
+                               <div class="col-3">Location:</div>
+                               <div class="col-9"><%= customer.address %>, <%= customer.city %></div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                   
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+</div>

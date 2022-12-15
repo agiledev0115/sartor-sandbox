@@ -1,0 +1,293 @@
+<!-- Sidebar  -->
+<%- include ("./partials/sidebars") %>
+    
+<!-- TOP Nav Bar -->
+<%- include ("./partials/navbar") %>
+<form action="/app/product/update" method="post" enctype="multipart/form-data">
+   <input type="hidden" name="productid" value="<%= product._id %>" />
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+       <div class="row">
+          <div class="col-lg-12">
+            <%- include ('./partials/messages') %>
+            <div class="iq-card">
+                <div class="iq-card-body">
+                   <div class="row">
+                      <div class="col-md-6 iq-item-product-left">
+                        <div class="iq-image-container">
+                           <div class="iq-product-cover d-flex justify-content-center">
+                               <img src="<%= product.img.img0 %>" alt="product-image" class="img-fluid">
+                           </div>
+                           <div class="iq-additional_slider">
+                               <ul id="product-additional-slider" class="d-flex m-0 p-0">
+                                  <li><img src="<%= product.img.img1 %>" alt="product-image" class="img-fluid"></li>
+                                  <li><img src="<%= product.img.img2 %>" alt="product-image" class="img-fluid"></li>
+                                  <li><img src="<%= product.img.img3 %>" alt="product-image" class="img-fluid"></li>
+                                  <li><img src="<%= product.img.img4 %>" alt="product-image" class="img-fluid"></li>
+                                  <li><img src="<%= product.img.img5 %>" alt="product-image" class="img-fluid"></li>
+                                  <li><img src="<%= product.img.img6 %>" alt="product-image" class="img-fluid"></li>
+                                  <li>
+                                     <video width="200" class="img-fluid">
+                                        <source src="<%= product.video %>"></source>
+                                     </video> 
+                                  </li>
+                               </ul>
+                           </div>
+                           <div class="mt-5">
+                              <button type="button" class="btn btn-danger" id="reset-inputs">Reset File Fields</button>
+                           </div>
+                           <div class="mt-5 mb-3">
+                              <label>Edit Images:</label>
+                              <input type="file" accept="image/*" name="img_logo" class="dropzone"  id="images-input" 
+                              multiple/>
+                           </div>
+                           <div id="prev-new-images"></div>
+                           <div class="mt-5 mb-3">
+                              <label>Edit Video:</label>
+                              <input type="file" accept="video/*" name="video" class="dropzone upload-video-file" id="video-input" />
+                           </div>
+                           <div style="display: none;" id="video-preview" class="video-prev mb-3 mt-5 m-auto"class="pull-right">
+                              <video height="200" width="300" class="video-preview" controls="controls"><video src=""></video>
+                           </div>
+                           <div class="tab-content" id="myTabContent-3">
+                              <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab-justify">
+                                 <p><label>Edit Description of the Product</label><textarea id="mytextarea" name="description" style="width: 100%; height: 350px;">
+                                   <%= product.description %>
+                                     </textarea>
+                                   <button type="submit" class="btn btn-primary">Update <i class="ri-pencil-fill"></i></button>
+                                   </p>
+                              </div>
+                           </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 iq-item-product-right">
+                         <div class="product-additional-details">
+                            <h3 class="productpage_title"><label>Product Name</label><BR><input type="text" name="name" value="<%= product.name %>" /></h3><HR>
+                            <p><label>Store</label><BR><input type="text" name="store" value="<%= product.store %>" /><hr>
+                                
+                            <label>Brand</label><BR>
+                            <select name="brands" required>
+                               <option value="<%= product.brands._id %>" selected><%= product.brands.title %></option>
+                               <%
+                                                if(Brand.length!=0){
+                                                    var i=1;
+                                                    Brand.forEach(function(data){
+                                                      if( product.brands.title == data.title) { }
+                                                      else{
+
+                                            %>
+                              <option value="<%= data._id %>"><%= data.title %></option>
+                              <% } i++; }); } %>
+                            </select>
+                            <hr>
+                            Category: <BR>
+                            <select name="category" required>
+                              <option value="<%= iCat._id %>"><%= iCat.name %></option>
+                              <%
+                              if(category.length!=0){
+                                  var c=1;
+                                  category.forEach(function(catData){
+                                     if(iCat.name == catData.name) { }
+                                     else{
+                              %>
+                              <option value="<%= catData._id %>"><%= catData.name %></option>
+                              <% } c++; }); } %>
+                            </select> <HR>
+                              Quantity: <BR>
+                                 <input type="number" name="qty" value="<%= product.qty %>" />
+                             </p>
+                            <div class="ratting">
+                               <labe>Product Rating</labe><BR>
+                                <select name="rating">
+                                    <% if(product.rating == 1)
+                                     { %>
+                                       <option value="1" selected>1 *</option>
+                                       <option value="2">2 **</option>
+                                       <option value="3" >3 ***</option>
+                                       <option value="4">4 ****</option>
+                                       <option value="5">5 *****</option>
+                                    <% } else if(product.rating == 2) { %>
+                                       <option value="1">1 *</option>
+                                       <option value="2" selected>2 **</option>
+                                       <option value="3">3 ***</option>
+                                       <option value="4">4 ****</option>
+                                       <option value="5">5 *****</option>
+                                    <% } else if(product.rating == 3) { %>
+                                          <option value="1">1 *</option>
+                                          <option value="2">2 **</option>
+                                          <option value="3" selected>3 ***</option>
+                                          <option value="4">4 ****</option>
+                                          <option value="5" >5 *****</option>
+                                    <% } else if(product.rating == 4) { %>
+                                          <option value="1">1 *</option>
+                                          <option value="2">2 **</option>
+                                          <option value="3">3 ***</option>
+                                          <option value="4" selected>4 ****</option>
+                                          <option value="5">5 *****</option>
+                                    <% } else if(product.rating == 5) { %>
+                                          <option value="1" >1 *</option>
+                                          <option value="2">2 **</option>
+                                          <option value="3">3 ***</option>
+                                          <option value="4">4 ****</option>
+                                          <option value="5" selected>5 *****</option>
+                                    <% }  %>
+                                </select> <BR>
+                               <ul class="ratting-item d-flex p-0 m-0">
+                                <% if((product.rating == 0) || (product.rating == '') || (product.rating == null)) { %>
+                                    <li class="full"><i class="ri-star-line"></i></li>
+                                    <li class="full"><i class="ri-star-line"></i></li>
+                                    <li class="full"><i class="ri-star-line"></i></li>
+                                    <li class="full"><i class="ri-star-line"></i></li>
+                                    <li class="full"><i class="ri-star-line"></i></li>
+                                 <% } else {
+                                     if(product.rating == 5)
+                                     { %>
+                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                        <li class="full"><i class="ri-star-fill"></i></li>
+                                     <% } else {
+                                            let i = 0; let e = 0;
+                                            var iEmpty = 5 - product.rating
+                                            while (i < product.rating) { %>
+                                                <li class="full"><i class="ri-star-fill"></i></li>
+                                                <% i++;
+                                            }
+                                            while (e < iEmpty) { %>
+                                                <li class="full"><i class="ri-star-line"></i></li>
+                                                <% e++;
+                                            }
+                                        }
+                                    }%>
+                               </ul>
+                            </div>
+                             
+                            <div class="product-price">
+                               <div class="regular-price"> <label>Price: </label><BR> <input type="number" name="price" value="<%= product.price %>" /></div>
+                            </div>
+                            
+                         </div>
+                      </div>
+                      
+                      
+                   </div>
+                </div>
+             </div>
+             
+          </div>
+       </div>
+    </div>
+ </div>
+</div>
+</form>
+<% function thousands_separators(num)
+{
+  var num_parts = num.toString().split(".");
+	num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return num_parts.join(".");
+} %>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+<script>
+   function previewImages(evt) {
+     let preview = document.querySelector('#prev-new-images');
+     const files = evt.target.files || evt.dataTransfer.files;
+      if (files.length < 7 || files.length > 7) {
+         alert("You are only allowed to upload a maximum of 7 images");
+         let inputs = [
+         document.querySelector("#images-input"),
+         document.querySelector("#video-input")
+      ]
+      for (let i = 0; i < inputs.length; i++) {
+         try{
+            inputs[i].value = '';
+            $("#video-preview").css("display", "none");
+            $("#prev-new-images").css("display", "none");
+            if(inputs[i].value) {
+               inputs[i].type = "text";
+               inputs[i].type = "file";
+            }
+         } catch(e){
+            console.error(e);
+         }
+      }
+         return;
+      }
+     if (this.files) {
+       [].forEach.call(this.files, readAndPreview);
+     }
+
+      function readAndPreview(file) {
+         if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
+            return alert(file.name + " is not an image");
+         }
+  
+         let reader = new FileReader();
+  
+         reader.addEventListener("load", function() {
+            let image = new Image();
+            image.height = 100;
+            image.title  = file.name;
+            image.src    = this.result;
+            preview.appendChild(image);
+         });
+         reader.readAsDataURL(file);
+      }
+   }
+
+   document.querySelector('#images-input').addEventListener("change", previewImages); 
+   
+   $(function () {
+      $('.upload-video-file').on('change', function () {
+         if (isVideo($(this).val())) {
+            $('.video-preview').attr('src', URL.createObjectURL(this.files[0]));
+            $('.video-prev').show()
+         }
+     });
+   });
+
+   function isVideo(filename) {
+      let ext = getExtension(filename);
+      switch (ext.toLowerCase()) {
+         case 'm4v':
+         case 'avi':
+         case 'mp4':
+         case 'mov':
+         case 'mpg':
+         case 'mpeg':
+            return true;
+      }
+      return false;
+   }
+
+   function getExtension(filename) {
+      let parts = filename.split('.');
+      return parts[parts.length - 1];
+   }
+    
+   let val = document.querySelector("#product_name")
+   let submit = document.querySelector("#submit");
+   
+   let resets = document.querySelector("#reset-inputs");
+   resets.addEventListener("click", function(evt) {
+      evt.preventDefault();
+      let inputs = [
+         document.querySelector("#images-input"),
+         document.querySelector("#video-input")
+      ]
+      for (let i = 0; i < inputs.length; i++) {
+         try{
+            inputs[i].value = '';
+            $("#video-preview").css("display", "none");
+            $("#prev-new-images").css("display", "none");
+            if(inputs[i].value) {
+               inputs[i].type = "text";
+               inputs[i].type = "file";
+            }
+         } catch(e){
+            console.error(e);
+         }
+      }
+   });
+</script>

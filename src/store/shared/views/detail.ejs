@@ -1,0 +1,345 @@
+<!-- Sidebar  -->
+<%- include ("./partials/sidebars") %>
+
+<!-- TOP Nav Bar -->
+<%- include ("./partials/navbar") %>
+<div id="content-page" class="content-page">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="iq-card">
+               <div class="iq-card-body">
+                  <div class="row">
+                     <div class="col-md-6 iq-item-product-left">
+                        <div class="iq-image-container">
+                           <div class="iq-product-cover d-flex justify-content-center" id="prev">
+                              <img width="600" src="/<%= product.img.img0 %>" alt="<%= product.name %>" class="img-fluid">
+                           </div>
+                           <div class="iq-additional_slider">
+                              <ul id="product-additional-slider" class="d-flex m-0 p-0">
+                                 <li><button id="change-img-0" style="border: 0;"><img src="/<%= product.img.img0 %>"
+                                          alt="<%= product.name %>" class="img-fluid"></button></li>
+                                 <li><button id="change-img-1" style="border: 0;">
+                                       <img src="/<%= product.img.img1 %>" alt="<%= product.name %>" class="img-fluid">
+                                    </button></li>
+                                 <li><button id="change-img-2" style="border: 0;">
+                                       <img src="/<%= product.img.img2 %>" alt="<%= product.name %>" class="img-fluid">
+                                    </button></li>
+                                 <li><button id="change-img-3" style="border: 0;"><img src="/<%= product.img.img3 %>"
+                                          alt="<%= product.name %>" class="img-fluid"></button></li>
+                                 <li><button id="change-img-4" style="border: 0;"><img src="/<%= product.img.img4 %>"
+                                          alt="<%= product.name %>" class="img-fluid"></button></li>
+                                 <li><button id="change-img-5" style="border: 0;"><img src="/<%= product.img.img5 %>"
+                                          alt="<%= product.name %>" class="img-fluid"></button></li>
+                                 <li><button id="change-img-6" style="border: 0;"><img src="/<%= product.img.img6 %>"
+                                          alt="<%= product.name %>" class="img-fluid"></button></li>
+                                 <li>
+                                    <button id="change-img-7" style="border: 0;">
+                                       <video class="img-fluid" width="170" src="/<%= product.img.video %>">
+                                    </button>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-md-6 iq-item-product-right">
+                        <div class="product-additional-details">
+                           <% var difference = product.qty - soldLists;
+
+                              if((difference < 3) && (difference > 0)) { %>
+                           <div class="alert text-white bg-warning" role="alert">
+                              <div class="iq-alert-icon">
+                                 <i class="ri-alert-line"></i>
+                              </div>
+                              <div class="iq-alert-text">You only have <%= difference %> item[s] left</div>
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                 <i class="ri-close-line"></i>
+                              </button>
+                           </div>
+
+                           <% }
+                              else if(difference <= 0){ %>
+                           <div class="alert text-white bg-danger" role="alert">
+                              <div class="iq-alert-icon">
+                                 <i class="ri-information-line"></i>
+                              </div>
+                              <div class="iq-alert-text">You don't have this item in your stock</div>
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                 <i class="ri-close-line"></i>
+                              </button>
+                           </div>
+                           <% } console.log(user.role) %>
+
+
+                           <h3 class="productpage_title"><%= product.name %>
+                              <% switch(user.role){ case 'admin': case 'super_admin': %>
+                              <form action="/detailupdate" method="post">
+                                 <input type="hidden" value="<%= product._id %>" name="productid" />
+                                 <span class="float-right">
+                                    <button class="btn btn-link" type="submit"><i class="las la-pen"></i></button>
+                                 </span>
+                              </form>
+                              <form action="/detaildelete" method="post">
+                                 <input type="hidden" value="<%= product._id %>" name="productid" />
+                                 <span class="float-right">
+                                    <input class="btn btn-link" type="submit"onclick="return confirm('Are you sure you want to delete this item')" value="Delete" />
+                                 </span>
+                              </form>
+                              <% break; case 'salers':
+                                      if(user.id == product.created_by._id) { %>
+                              <form action="/detailupdate" method="POST">
+                                 <input type="hidden" value="<%= product._id %>" name="productid" />
+                                 <span class="float-right">
+                                    <button class="btn btn-link" type="submit"><i class="las la-pen"></i></button>
+                                 </span>
+                              </form>
+                              <% 
+                                       }
+                                       break;
+                                       default:
+                                    } 
+                                 %>
+                           </h3>
+                           <p>
+                              <%= product.store %><BR>
+                              Brand: <%= product.brands.title %> <BR>
+                              Category: <%= iCat.name %> <BR>
+                              Quantity: <%= product.qty %> <BR>
+                              <% switch(user.role)
+                                 {
+                                    case 'super_admin':
+                                    case 'admin':
+                                    %>
+                              Created By: <strong class="iq-bg-primary"><%= product.created_by.internal.first_name %>
+                                 <%= product.created_by.internal.last_name %></strong>
+                              <%
+                                       break;
+                                    default:
+                                 }
+                                 %>
+                           </p>
+                           <div class="ratting">
+                              <ul class="ratting-item d-flex p-0 m-0">
+                                 <% if((product.rating == 0) || (product.rating == '') || (product.rating == null)) { %>
+                                 <li class="full"><i class="ri-star-line"></i></li>
+                                 <li class="full"><i class="ri-star-line"></i></li>
+                                 <li class="full"><i class="ri-star-line"></i></li>
+                                 <li class="full"><i class="ri-star-line"></i></li>
+                                 <li class="full"><i class="ri-star-line"></i></li>
+                                 <% } else {
+                                     if(product.rating == 5)
+                                     { %>
+                                 <li class="full"><i class="ri-star-fill"></i></li>
+                                 <li class="full"><i class="ri-star-fill"></i></li>
+                                 <li class="full"><i class="ri-star-fill"></i></li>
+                                 <li class="full"><i class="ri-star-fill"></i></li>
+                                 <li class="full"><i class="ri-star-fill"></i></li>
+                                 <% } else {
+                                            let i = 0; let e = 0;
+                                            var iEmpty = 5 - product.rating
+                                            while (i < product.rating) { %>
+                                 <li class="full"><i class="ri-star-fill"></i></li>
+                                 <% i++;
+                                            }
+                                            while (e < iEmpty) { %>
+                                 <li class="full"><i class="ri-star-line"></i></li>
+                                 <% e++;
+                                            }
+                                        }
+                                    }%>
+                              </ul>
+                           </div>
+
+                           <div class="product-price">
+                              <div class="regular-price"><b> $<%= thousands_separators(product.price) %></b> </div>
+                           </div>
+                           <div>
+                              <form action="/send/like" method="post" enctype="application/x-www-form-urlencoded">
+                                    <button type="submit" class="btn btn-info">
+                                    <input type="hidden" value="<%= product._id %>" name="productid" class="btn btn-info">
+                                   Like <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                 </button>   
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-sm-12 product-description-details">
+                        <div class="description-tabs">
+                           <ul class="nav nav-tabs justify-content-center" id="myTab-2" role="tablist">
+                              <li class="nav-item">
+                                 <a class="nav-link active" id="description-tab-justify" data-toggle="tab"
+                                    href="#description" role="tab" aria-selected="true">Description</a>
+                              </li>
+
+                              <li class="nav-item">
+                                 <a class="nav-link" id="review-tab-justify" data-toggle="tab" href="#review" role="tab"
+                                    aria-selected="false">Review</a>
+                              </li>
+
+                              <li class="nav-item">
+                                 <a class="nav-link" id="review-tab-justify" data-toggle="tab" href="#sales" role="tab"
+                                    aria-selected="false">Sales Report</a>
+                              </li>
+                           </ul>
+                           <div class="tab-content" id="myTabContent-3">
+                              <div class="tab-pane fade show active" id="description" role="tabpanel"
+                                 aria-labelledby="description-tab-justify">
+                                 <p><%- product.description %></p>
+                              </div>
+
+                              <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledy="sales-tab-justify">
+                                 <div class="row">
+                                    <table class="col-md-6 table table-striped">
+                                       <thead>
+                                          <tr>
+                                             <th>Total Quantity</th>
+                                             <th>No of Sold Items</th>
+                                             <th>Current Stock</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td><%= product.qty %></td>
+                                             <td><%= soldLists %></td>
+                                             <td><% var stock = product.qty - soldLists %> <%= stock %></td>
+                                          </tr>
+                                          <tr>
+                                             <td colspan="2">
+                                                <h3>Total Sales Coverage</h3>
+                                             </td>
+                                             <td>
+                                                <% var sales = product.price * soldLists %>$<%= thousands_separators(sales) %>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+
+                              <div class="tab-pane fade" id="review" role="tabpanel"
+                                 aria-labelledby="review-tab-justify">
+                                 <p><% if(review.length!=0){
+                                    var i=1;
+                                    review.forEach(function(data){ %>
+                                    <img class="float-left" style="width: 120px; margin-right: 25px;"
+                                       src="<%=data.img %>" />
+                                    <%= data.review %>
+                                    <!--<form class="float-right" action="/app/review/remove" method="POST">
+                                             <input type="hidden" value="<%= data.id %>" name="removeid" />
+                                             <button  type="submit" class="btn btn-link mb-3"><i class="ri-delete-bin-6-fill"></i></button>
+                                          </form> --> <BR>
+                                    Reviewed By <strong><%= data.customer.full_name %></strong>
+                                    <BR>
+                                    <div class="ratting">
+                                       <ul class="ratting-item d-flex p-0 m-0">
+                                          <% if((data.rate == 0) || (data.rate == '') || (data.rate == null)) { %>
+                                          <li class="full"><i class="ri-star-line"></i></li>
+                                          <li class="full"><i class="ri-star-line"></i></li>
+                                          <li class="full"><i class="ri-star-line"></i></li>
+                                          <li class="full"><i class="ri-star-line"></i></li>
+                                          <li class="full"><i class="ri-star-line"></i></li>
+                                          <% } else {
+                                                       if(data.rate == 5)
+                                                       { %>
+                                          <li class="full"><i class="ri-star-fill"></i></li>
+                                          <li class="full"><i class="ri-star-fill"></i></li>
+                                          <li class="full"><i class="ri-star-fill"></i></li>
+                                          <li class="full"><i class="ri-star-fill"></i></li>
+                                          <li class="full"><i class="ri-star-fill"></i></li>
+                                          <% } else {
+                                                              let i = 0; let e = 0;
+                                                              var iEmpty = 5 - data.rate
+                                                              while (i < data.rate) { %>
+                                          <li class="full"><i class="ri-star-fill"></i></li>
+                                          <% i++;
+                                                              }
+                                                              while (e < iEmpty) { %>
+                                          <li class="full"><i class="ri-star-line"></i></li>
+                                          <% e++;
+                                                              }
+                                                          }
+                                                      }%>
+                                       </ul>
+                                    </div>
+                                    <hr>
+                                    <% i++; }); } %>
+                                 </p>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+
+<% function thousands_separators(num)
+{
+  var num_parts = num.toString().split(".");
+	num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return num_parts.join(".");
+} %>
+<script>
+   let prev = document.getElementById("prev");
+   let img0 = document.getElementById("change-img-0");
+   img0.addEventListener("click", function(evt) {
+      evt.preventDefault();
+      prev.innerHTML = `<div class="iq-product-cover d-flex justify-content-center" id="prev">
+                               <img width="600" src="/<%= product.img.img0 %>" alt="<%= product.name %>" class="img-fluid">
+                            </div>`
+   });
+   let img1 = document.getElementById("change-img-1");
+   img1.addEventListener("click", function(evt) {
+      evt.preventDefault();
+      prev.innerHTML = `<div class="iq-product-cover d-flex justify-content-center" id="prev">
+                               <img width="600" src="/<%= product.img.img1 %>" alt="<%= product.name %>" class="img-fluid">
+                            </div>`
+   });
+   let img2 = document.getElementById("change-img-2");
+   img2.addEventListener("click", function(evt) {
+      evt.preventDefault();
+      prev.innerHTML = `<div class="iq-product-cover d-flex justify-content-center" id="prev">
+                               <img width="600" src="/<%= product.img.img2 %>" alt="<%= product.name %>" class="img-fluid">
+                            </div>`
+   });
+   let img3 = document.getElementById("change-img-3");
+   img3.addEventListener("click", function(evt) {
+      evt.preventDefault();
+      prev.innerHTML = `<div class="iq-product-cover d-flex justify-content-center" id="prev">
+                               <img width="600" src="/<%= product.img.img3 %>" alt="<%= product.name %>" class="img-fluid">
+                            </div>`
+   });
+   let img4 = document.getElementById("change-img-4");
+   img4.addEventListener("click", function(evt) {
+      evt.preventDefault();
+      prev.innerHTML = `<div class="iq-product-cover d-flex justify-content-center" id="prev">
+                               <img width="600" src="/<%= product.img.img4 %>" alt="<%= product.name %>" class="img-fluid">
+                            </div>`
+   });
+   let img5 = document.getElementById("change-img-5");
+   img5.addEventListener("click", function(evt) {
+      evt.preventDefault();
+      prev.innerHTML = `<div class="iq-product-cover d-flex justify-content-center" id="prev">
+                               <img width="600" src="/<%= product.img.img5 %>" alt="<%= product.name %>" class="img-fluid">
+                            </div>`
+   });
+   let img6 = document.getElementById("change-img-6");
+   img6.addEventListener("click", function(evt) {
+      evt.preventDefault();
+      prev.innerHTML = `<div class="iq-product-cover d-flex justify-content-center" id="prev">
+                               <img width="600" src="/<%= product.img.img6 %>" alt="<%= product.name %>" class="img-fluid">
+                            </div>`
+   });
+   let video = document.getElementById("change-img-7");
+   video.addEventListener("click", function(evt) {
+      evt.preventDefault();
+      prev.innerHTML = `<video width="700" height="800" class="video-preview m-auto" src="/<%= product.img.video %>"
+      controls="controls" />`
+   });
+</script>
