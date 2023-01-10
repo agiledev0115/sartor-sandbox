@@ -149,7 +149,7 @@
     "prop-types": "^15.6.2",
     "query-string": "^6.1.0",
     "react": "^17.0.1",
-    "react-chartjs-2": "^2.7.4",
+    "react-chartjs-2": "^2.11.2",
     "react-dom": "^16.4.2",
     "react-dropzone": "^11.2.4",
     "react-helmet": "^6.1.0",
